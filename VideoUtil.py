@@ -24,7 +24,10 @@ def creation_time(filename):
     time = str(t[14][18:37])
     return time
 
+
 def time_str_to_datetime(timeStr):
+    """convert time string into datetime format"""
+    #format of timeStr: [2015-04-29 07:55:39]
     year  = int(timeStr[0:4])
     month = int(timeStr[5:7])
     day   = int(timeStr[8:10])
@@ -36,10 +39,13 @@ def time_str_to_datetime(timeStr):
 
 def calculate_time(creation_time, add_time):
     """output the new creation fime by adding add_time to creation_time"""
-    #format of creation_time: [2015-04-29 07:55:39]
+    #creation_time {datetime}
+    #add_time {int} in second
+    #return {datetime}
     #the unit of add_time is second
-    original_time = time_str_to_datetime(creation_time)
-    new_time = original_time + datetime.timedelta(0,add_time)
+    
+    creation_time = time_str_to_datetime(creation_time)
+    new_time = creation_time + datetime.timedelta(0, add_time)
     return new_time
 
 
@@ -78,7 +84,8 @@ def VideoSplit(directory, filename, split_length, creation_time, gpsData):
     
     for n in range(0, split_count):
         new_creation_time = calculate_time(creation_time, split_length*n)
-        (latitude, longitude, elevation) = mapGPS(gpsData, new_creation_time)
+        end_time = calculate_time(str(new_creation_time), split_length)
+        #(latitude, longitude, elevation) = mapGPS(gpsData, new_creation_time, end_time)
 
         split_cmd = "ffmpeg -i '"+directory+filename+"'" + ' -metadata creation_time="' + str(new_creation_time) + '"' + " -vcodec copy "
         
@@ -88,8 +95,11 @@ def VideoSplit(directory, filename, split_length, creation_time, gpsData):
         else:
             split_start = split_length * n
         
+        timestr = str(new_creation_time)
+        file_time = timestr[0:10] + "_" + timestr[11:13] + "-" + timestr[14:16] + "-" + timestr[17:]
+
         split_str += " -ss "+str(split_start)+" -t "+str(split_length) + \
-                    " '"+VOutDirect + filename[:-4] + "-" + str(n) + "." + filename[-3:] + \
+                    " '"+VOutDirect + filename[:-4] + "(" +file_time+ ")." + filename[-3:] + \
                     "'"
         print "About to run: "+split_cmd+split_str
         output = subprocess.Popen(split_cmd+split_str, shell = True, stdout =

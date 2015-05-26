@@ -4,7 +4,11 @@ import GPXdata
 import FileUtil
 import VideoUtil
 import parameter
+import datetime
 from collections import defaultdict
+
+from GPXdata import mapGPS
+
 
 
 
@@ -22,13 +26,14 @@ def main():
     for GPX in GPXs:
         gpsData += GPXdata.parseGPX(parameter.Gdirectory + GPX)
     gpsData = sorted(gpsData)
+    for x in gpsData:
+        print x
 
 
     """split videos into shorted ones"""
     for video in videos:
-    	print type(VideoUtil.calculate_time("2015-04-29 07:55:39", 120))
-    	break	
     	creation_time = VideoUtil.creation_time(parameter.Vdirectory+video)
+    	break	
     	VideoUtil.VideoSplit(parameter.Vdirectory, video, parameter.videolenth, creation_time, gpsData)
     #print VideoUtil.creation_time(parameter.Vdirectory + "GOPR0012.MP4")
     #print VideoUtil.creation_time("media/out/GOPR0012-0.MP4")
@@ -37,6 +42,11 @@ def main():
     	
     """mapping GPS data into videos"""
     #print GPXdata.mapGPS(gpsData, "2015-04-29 07:55:39")
+    #print creation_time
+    #start = datetime.datetime(2015,5,18,18,55,15)
+
+    #print GPXdata.searchGPS(gpsData, start)
+
 
 
 
