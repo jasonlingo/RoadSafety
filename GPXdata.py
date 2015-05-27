@@ -2,14 +2,49 @@ import gpxpy
 import gpxpy.gpx
 import datetime
 import parameter
+from math import radians, cos, sin, asin, sqrt
+
+
+def haversine(lat1, lon1, lat2, lon2):
+    """
+    Calculate the great circle distance between two points 
+    on the earth (specified in decimal degrees)
+    """
+    # return {kilometer}
+    # convert decimal degrees to radians 
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    r = 6371 # Radius of earth in kilometers. Use 3956 for miles, 6371 for kilometers
+    return c * r
+
+
+def FindPathDist(gpsData, startIdx, distance):
+    """Find the path according to a given starting point (index of GPS data set) and distance"""
+    # parameter {kilometer} distance
+    pathDist = 0
+    preGPS = gpsData[startIdx]
+    index = startIdx
+    for gps in gpsData[startIdx+1:]:
+        tempDist = haversine(preGPS[1][0], preGPS[1][1], gps[1][0], gps[1][1])
+        pathDist += tempDist
+        preGPS = gps
+        index += 1
+        if pathDist >= distance:
+            break
+    print pathDist
+    print gpsData[index]
+    return index, pathDist
 
 
 def TimeZoneCalibrate(original_time):
     """output the new creation fime by adding add_time to creation_time"""
     #creation_time {datetime}
     #return {datetime}
-    z = datetime.timedelta(0, 0, 0, 0, 0, parameter.GPSTimeZone) 
-    print z
     return original_time + datetime.timedelta(0, 0, 0, 0, 0, parameter.GPSTimeZone+1) #(days[, seconds[, microseconds[, milliseconds[, minutes[, hours[, weeks]]]]]]])
 
 

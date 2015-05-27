@@ -7,7 +7,7 @@ import parameter
 import datetime
 from collections import defaultdict
 
-from GPXdata import mapGPS
+
 
 
 
@@ -46,6 +46,7 @@ def main():
     #start = datetime.datetime(2015,5,18,18,55,15)
 
     #print GPXdata.searchGPS(gpsData, start)
+
 
 
 
