@@ -4,6 +4,9 @@ from optparse import OptionParser
 from parameter import VOutDirect
 from subprocess import call
 from GPXdata import mapGPS
+import numpy as np
+import cv2
+
 
 
 def creation_time(filename):

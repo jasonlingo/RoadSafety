@@ -16,6 +16,9 @@ Gdirectory = "GPS/"
 """directory for splitted videos"""
 VOutDirect = Vdirectory + "out/"
 
+"""directory for video frames"""
+VFrameDirect = "VideoFrame/"
+
 """timezone for GPS"""
 #the GPS recorder is based on UTC/GMT+0 time, so it needs to be calibrated.
 GPSTimeZone = -5
