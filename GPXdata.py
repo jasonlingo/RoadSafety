@@ -25,7 +25,10 @@ def haversine(lat1, lon1, lat2, lon2):
 
 def FindPathDist(gpsData, startIdx, distance):
     """Find the path according to a given starting point (index of GPS data set) and distance"""
-    # parameter {kilometer} distance
+    #@parameter {list} gpsData: GPS data list
+    #@parameter {int} startIdx: the starting index for searching the gpsData list
+    #@parameter {float} distance: in kilometer
+    #@return (index, time)
     pathDist = 0
     preGPS = gpsData[startIdx]
     index = startIdx
@@ -36,9 +39,7 @@ def FindPathDist(gpsData, startIdx, distance):
         index += 1
         if pathDist >= distance:
             break
-    print pathDist
-    print gpsData[index]
-    return index, pathDist
+    return index, gpsData[index][0]
 
 
 def TimeZoneCalibrate(original_time):
@@ -52,26 +53,24 @@ def parseGPX(GPXfile):
     """parse gpx file and return a list of GPS data"""
     f = open(GPXfile,'r')
     gpx = gpxpy.parse(f)
-    #print gpx
     gpsData = []
-
     for track in gpx.tracks:
-        #print "------"
         for segment in track.segments:
             for point in segment.points:
-
                 gpsData.append([TimeZoneCalibrate(point.time), (point.latitude, point.longitude, point.elevation)])
-                #print point
                 #print 'Point at ({0},{1}) -> {2}, time={3}'.format(point.latitude, point.longitude, point.elevation, point.time)
     return gpsData
 
 
 def searchGPS(gpsData, time):
     """find the index of the nearest GPS time"""
+    #@parameter {list} gpsData: GPS data list
+    #@parameter {datetime} time: the time of the GPS data that we want to find
+    #@return {int} return the index of the found GPS data in the list
     start = 0
     end = len(gpsData)
 
-    diff = datetime.timedelta(0,5)
+    diff = datetime.timedelta(0,5) # 5 seconds
     mid = (start+end)/2
     while abs(gpsData[mid][0] - time) > diff:
         if time > gpsData[mid][0]:
@@ -79,8 +78,14 @@ def searchGPS(gpsData, time):
         else:
             end = mid
         mid = (start+end)/2
-    return mid
-
+    if mid == len(gpsData) - 1:
+        return mid
+    else:
+        #find the nearest time, check which of gpsData[mid][0] and gpsData[mid+1][0] is nearer to the target time
+        if abs(gpsData[mid][0] - time) < abs(gpsData[mid+1][0] - time):
+            return mid
+        else:
+            return mid + 1
 
 
 def mapGPS(gpsData, start, end):

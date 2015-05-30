@@ -1,57 +1,38 @@
 #!/usr/bin/env python
 import sys
-import GPXdata
-import FileUtil
-import VideoUtil
-import parameter
 import datetime
-from collections import defaultdict
-
-
-
-
+import parameter
+from Image import getVideoFrame
+from GPXdata import parseGPX
+from FileUtil import getFilename
 
 
 def main():
     """Splitting videos into shorter videos and mapping GPS data to each shorter videos."""
     
-
+    
     """get the video file name list in a given directory"""
-    videos = FileUtil.getFilename(parameter.Vdirectory, parameter.VideoType)
-
+    videos = getFilename(parameter.Vdirectory, parameter.VideoType)
 
     """load GPX data in a given directory"""
-    GPXs = FileUtil.getFilename(parameter.Gdirectory, parameter.GPSType)
+    GPXs = getFilename(parameter.Gdirectory, parameter.GPSType)
     gpsData = []
     for GPX in GPXs:
-        gpsData += GPXdata.parseGPX(parameter.Gdirectory + GPX)
+        gpsData += parseGPX(parameter.Gdirectory + GPX)
     gpsData = sorted(gpsData)
     for x in gpsData:
         print x
 
+    """check whether or not resize image"""
+    if parameter.resizeX == 1920:
+        resize = False
+    else:
+        resize = True
 
-    """split videos into shorted ones"""
+    """get video frames according to the GPS distance"""
     for video in videos:
-    	creation_time = VideoUtil.creation_time(parameter.Vdirectory+video)
-    	break	
-    	VideoUtil.VideoSplit(parameter.Vdirectory, video, parameter.videolenth, creation_time, gpsData)
-    #print VideoUtil.creation_time(parameter.Vdirectory + "GOPR0012.MP4")
-    #print VideoUtil.creation_time("media/out/GOPR0012-0.MP4")
-    #print VideoUtil.creation_time("media/out/GOPR0012-9.MP4")
-    
-    	
-    """mapping GPS data into videos"""
-    #print GPXdata.mapGPS(gpsData, "2015-04-29 07:55:39")
-    #print creation_time
-    #start = datetime.datetime(2015,5,18,18,55,15)
-
-    #print GPXdata.searchGPS(gpsData, start)
-
-
-
-
-
-
+        getVideoFrame(gpsData, parameter.Vdirectory + video, parameter.flipImage, resize)
+        break
 
 
 
