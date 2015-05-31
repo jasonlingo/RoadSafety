@@ -39,6 +39,7 @@ def FindPathDist(gpsData, startIdx, distance):
         index += 1
         if pathDist >= distance:
             break
+    print "Dist: " + str(pathDist)
     return index, gpsData[index][0]
 
 

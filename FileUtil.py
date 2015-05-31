@@ -1,4 +1,5 @@
 from os import walk
+import csv
 
 
 def getFilename(directory, filetype):
@@ -12,3 +13,11 @@ def getFilename(directory, filetype):
         break
     return filenameList
 
+
+def outputCSV(dataSet, filename):
+    """output dataSet to a csv file"""
+    print dataSet
+    with open(filename, 'w') as csvfile:
+        csvW = csv.writer(csvfile)
+        csvW.writerows(dataSet)
+    csvfile.close()

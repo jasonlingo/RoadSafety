@@ -6,6 +6,9 @@ from Image import getVideoFrame
 from GPXdata import parseGPX
 from FileUtil import getFilename
 
+import pygmaps 
+import webbrowser
+
 
 def main():
     """Splitting videos into shorter videos and mapping GPS data to each shorter videos."""
@@ -20,8 +23,10 @@ def main():
     for GPX in GPXs:
         gpsData += parseGPX(parameter.Gdirectory + GPX)
     gpsData = sorted(gpsData)
-    for x in gpsData:
-        print x
+
+    #for gps in gpsData:
+    #    print gps
+
 
     """check whether or not resize image"""
     if parameter.resizeX == 1920:
@@ -34,6 +39,9 @@ def main():
         getVideoFrame(gpsData, parameter.Vdirectory + video, parameter.flipImage, resize)
         break
 
+    for video in videos:
+        #getIntersectionFrame()
+        break
 
 
 if __name__ == '__main__':

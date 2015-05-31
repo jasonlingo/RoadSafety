@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 import os, sys, subprocess, shlex, re, math, datetime
 from optparse import OptionParser
-from parameter import VOutDirect
+from parameter import VOutDirect, GoPro_CaliTime
 from subprocess import call
 from GPXdata import mapGPS
 import numpy as np
 import cv2
+import datetime
 
 
 
@@ -25,6 +26,8 @@ def creation_time(filename):
         print err
     t = out.splitlines()
     time = str(t[14][18:37])
+    delta = datetime.timedelta(0, GoPro_CaliTime)
+    time = time_str_to_datetime(time) + delta
     return time
 
 

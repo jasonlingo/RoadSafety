@@ -19,10 +19,20 @@ imageQual = 100
 flipImage = True
 
 
+"""csv filename"""
+csvFilename = "file.csv"
+
+
 """output image frame size"""
 #the length of the longest side of a frame image
 #the original length is 1920
 resizeX = 1200
+
+
+"""GoPro time calibration"""
+#there is a difference between the real time and the recorded time in the video file
+#real creation time = recorded time + GoPro_CaliTime
+GoPro_CaliTime = -18
 
 
 """the GPS distance between every video frame"""
