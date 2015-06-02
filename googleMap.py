@@ -2,6 +2,7 @@ import os
 import pygmaps 
 import webbrowser
 import googlemaps
+from parameter import output_directory
 from datetime import datetime, date, time
 
 """
@@ -29,9 +30,14 @@ def showPath(path, framePoint):
     #@parameter {list} framePoint: a list of GPS data of extracted video frames
     mymap = pygmaps.maps(path[0][0], path[0][1], 14)    
     mymap.addpath(path, "#FF0000")
+    firstPoint = True
     for point in framePoint:
-        mymap.addpoint(point[0], point[1], "#0000FF")
-    mapFilename = "map.html"
+        if firstPoint:
+            mymap.addpoint(point[0], point[1], "#00FF00")
+            firstPoint = False
+        else:
+            mymap.addpoint(point[0], point[1], "#0000FF")
+    mapFilename = output_directory + "map.html"
     mymap.draw('./'+mapFilename)
     #sample: "file:///Users/Jason/GitHub/RoadSeftey/RoadSafety/map.html"
     url = "file://" + os.getcwd() + "/" + mapFilename

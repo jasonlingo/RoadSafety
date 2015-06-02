@@ -16,8 +16,9 @@ def getFilename(directory, filetype):
 
 def outputCSV(dataSet, filename):
     """output dataSet to a csv file"""
-    print dataSet
-    with open(filename, 'w') as csvfile:
-        csvW = csv.writer(csvfile)
-        csvW.writerows(dataSet)
-    csvfile.close()
+
+    with open(filename, 'w') as output:
+        writer = csv.writer(output, lineterminator='\n')
+        for val in dataSet:
+            writer.writerow(val)   
+    output.close()

@@ -1,0 +1,2017 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx
+  version="1.0"
+  creator="GPSBabel - http://www.gpsbabel.org"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.topografix.com/GPX/1/0"
+  xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
+<time>2015-05-25T16:56:26Z</time>
+<bounds minlat="39.298849688" minlon="-76.624628059" maxlat="39.337373736" maxlon="-76.589333972"/>
+<trk>
+  <name>track-1</name>
+  <desc>Log every 5 sec, 0 m</desc>
+<trkseg>
+<trkpt lat="39.299090153" lon="-76.589622609">
+  <ele>47.460548</ele>
+  <time>2015-05-25T14:33:22Z</time>
+  <speed>0.258908</speed>
+  <name>TP000001</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298980670" lon="-76.589568314">
+  <ele>46.836929</ele>
+  <time>2015-05-25T14:33:27Z</time>
+  <speed>0.033923</speed>
+  <name>TP000002</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298960630" lon="-76.589510570">
+  <ele>47.258404</ele>
+  <time>2015-05-25T14:33:32Z</time>
+  <speed>0.133631</speed>
+  <name>TP000003</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298946641" lon="-76.589431710">
+  <ele>47.452171</ele>
+  <time>2015-05-25T14:33:37Z</time>
+  <speed>0.189792</speed>
+  <name>TP000004</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298933437" lon="-76.589357853">
+  <ele>47.265141</ele>
+  <time>2015-05-25T14:33:42Z</time>
+  <speed>0.126550</speed>
+  <name>TP000005</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298925119" lon="-76.589333972">
+  <ele>48.071938</ele>
+  <time>2015-05-25T14:33:47Z</time>
+  <speed>0.267940</speed>
+  <name>TP000006</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298945239" lon="-76.589364651">
+  <ele>46.862869</ele>
+  <time>2015-05-25T14:33:52Z</time>
+  <speed>0.015849</speed>
+  <name>TP000007</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298956299" lon="-76.589387994">
+  <ele>46.204777</ele>
+  <time>2015-05-25T14:33:57Z</time>
+  <speed>0.131010</speed>
+  <name>TP000008</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298953329" lon="-76.589384075">
+  <ele>46.207130</ele>
+  <time>2015-05-25T14:34:02Z</time>
+  <speed>0.172035</speed>
+  <name>TP000009</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298954840" lon="-76.589383412">
+  <ele>46.210434</ele>
+  <time>2015-05-25T14:34:07Z</time>
+  <speed>0.141016</speed>
+  <name>TP000010</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298960163" lon="-76.589391053">
+  <ele>46.197239</ele>
+  <time>2015-05-25T14:34:12Z</time>
+  <speed>0.108189</speed>
+  <name>TP000011</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298963047" lon="-76.589394074">
+  <ele>46.189484</ele>
+  <time>2015-05-25T14:34:17Z</time>
+  <speed>0.157577</speed>
+  <name>TP000012</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298962749" lon="-76.589401440">
+  <ele>46.186726</ele>
+  <time>2015-05-25T14:34:22Z</time>
+  <speed>0.190954</speed>
+  <name>TP000013</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.298966838" lon="-76.589411747">
+  <ele>46.148537</ele>
+  <time>2015-05-25T14:34:27Z</time>
+  <speed>0.356428</speed>
+  <name>TP000014</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299002864" lon="-76.589445448">
+  <ele>45.735878</ele>
+  <time>2015-05-25T14:34:32Z</time>
+  <speed>0.207989</speed>
+  <name>TP000015</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299011247" lon="-76.589456135">
+  <ele>45.691078</ele>
+  <time>2015-05-25T14:34:37Z</time>
+  <speed>0.311892</speed>
+  <name>TP000016</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299050379" lon="-76.589528115">
+  <ele>45.092384</ele>
+  <time>2015-05-25T14:34:42Z</time>
+  <speed>0.454384</speed>
+  <name>TP000017</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299061532" lon="-76.589554204">
+  <ele>44.463398</ele>
+  <time>2015-05-25T14:34:47Z</time>
+  <speed>0.351053</speed>
+  <name>TP000018</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299040822" lon="-76.589543322">
+  <ele>44.273106</ele>
+  <time>2015-05-25T14:34:52Z</time>
+  <speed>0.091662</speed>
+  <name>TP000019</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299041814" lon="-76.589548611">
+  <ele>44.246502</ele>
+  <time>2015-05-25T14:34:57Z</time>
+  <speed>0.120229</speed>
+  <name>TP000020</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299044511" lon="-76.589554040">
+  <ele>44.198845</ele>
+  <time>2015-05-25T14:35:02Z</time>
+  <speed>0.213882</speed>
+  <name>TP000021</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299045853" lon="-76.589561774">
+  <ele>44.225243</ele>
+  <time>2015-05-25T14:35:07Z</time>
+  <speed>0.135144</speed>
+  <name>TP000022</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299050112" lon="-76.589560270">
+  <ele>43.736092</ele>
+  <time>2015-05-25T14:35:12Z</time>
+  <speed>0.221800</speed>
+  <name>TP000023</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299066143" lon="-76.589563458">
+  <ele>43.032177</ele>
+  <time>2015-05-25T14:35:17Z</time>
+  <speed>0.305031</speed>
+  <name>TP000024</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299067230" lon="-76.589549135">
+  <ele>42.856216</ele>
+  <time>2015-05-25T14:35:22Z</time>
+  <speed>0.385373</speed>
+  <name>TP000025</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299081347" lon="-76.589576110">
+  <ele>42.235378</ele>
+  <time>2015-05-25T14:35:27Z</time>
+  <speed>0.046549</speed>
+  <name>TP000026</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299080521" lon="-76.589574146">
+  <ele>42.067806</ele>
+  <time>2015-05-25T14:35:32Z</time>
+  <speed>0.025870</speed>
+  <name>TP000027</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299080434" lon="-76.589571675">
+  <ele>41.838821</ele>
+  <time>2015-05-25T14:35:37Z</time>
+  <speed>0.169534</speed>
+  <name>TP000028</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299082523" lon="-76.589570718">
+  <ele>41.756577</ele>
+  <time>2015-05-25T14:35:42Z</time>
+  <speed>0.060177</speed>
+  <name>TP000029</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299082520" lon="-76.589572225">
+  <ele>41.732895</ele>
+  <time>2015-05-25T14:35:47Z</time>
+  <speed>0.054710</speed>
+  <name>TP000030</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299114099" lon="-76.589585565">
+  <ele>41.023983</ele>
+  <time>2015-05-25T14:35:52Z</time>
+  <speed>0.376942</speed>
+  <name>TP000031</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299122463" lon="-76.589581493">
+  <ele>41.220730</ele>
+  <time>2015-05-25T14:35:57Z</time>
+  <speed>0.052462</speed>
+  <name>TP000032</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299118229" lon="-76.589582920">
+  <ele>41.344601</ele>
+  <time>2015-05-25T14:36:02Z</time>
+  <speed>0.202340</speed>
+  <name>TP000033</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299115068" lon="-76.589595658">
+  <ele>41.233883</ele>
+  <time>2015-05-25T14:36:07Z</time>
+  <speed>0.255768</speed>
+  <name>TP000034</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299092685" lon="-76.589588854">
+  <ele>40.773468</ele>
+  <time>2015-05-25T14:36:12Z</time>
+  <speed>0.192379</speed>
+  <name>TP000035</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299089000" lon="-76.589582267">
+  <ele>40.697861</ele>
+  <time>2015-05-25T14:36:17Z</time>
+  <speed>0.262658</speed>
+  <name>TP000036</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299086754" lon="-76.589579630">
+  <ele>40.447281</ele>
+  <time>2015-05-25T14:36:22Z</time>
+  <speed>0.191318</speed>
+  <name>TP000037</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299092298" lon="-76.589588388">
+  <ele>40.339092</ele>
+  <time>2015-05-25T14:36:27Z</time>
+  <speed>0.319031</speed>
+  <name>TP000038</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299195838" lon="-76.589576042">
+  <ele>40.473217</ele>
+  <time>2015-05-25T14:36:32Z</time>
+  <speed>3.521044</speed>
+  <name>TP000039</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299302588" lon="-76.589616359">
+  <ele>39.502171</ele>
+  <time>2015-05-25T14:36:37Z</time>
+  <speed>0.876821</speed>
+  <name>TP000040</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299287148" lon="-76.589640993">
+  <ele>38.973553</ele>
+  <time>2015-05-25T14:36:42Z</time>
+  <speed>0.585784</speed>
+  <name>TP000041</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299262409" lon="-76.589774677">
+  <ele>39.356174</ele>
+  <time>2015-05-25T14:36:47Z</time>
+  <speed>0.709442</speed>
+  <name>TP000042</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299236297" lon="-76.589878051">
+  <ele>39.169460</ele>
+  <time>2015-05-25T14:36:52Z</time>
+  <speed>0.528874</speed>
+  <name>TP000043</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299233765" lon="-76.589921001">
+  <ele>38.431328</ele>
+  <time>2015-05-25T14:36:57Z</time>
+  <speed>1.033556</speed>
+  <name>TP000044</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299377107" lon="-76.589885511">
+  <ele>37.064655</ele>
+  <time>2015-05-25T14:37:02Z</time>
+  <speed>2.632155</speed>
+  <name>TP000045</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299560499" lon="-76.590062392">
+  <ele>34.164345</ele>
+  <time>2015-05-25T14:37:07Z</time>
+  <speed>5.618936</speed>
+  <name>TP000046</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299593872" lon="-76.590208628">
+  <ele>29.213888</ele>
+  <time>2015-05-25T14:37:12Z</time>
+  <speed>4.640810</speed>
+  <name>TP000047</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299593571" lon="-76.590541624">
+  <ele>23.516493</ele>
+  <time>2015-05-25T14:37:17Z</time>
+  <speed>3.511681</speed>
+  <name>TP000048</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299649325" lon="-76.590756027">
+  <ele>20.642218</ele>
+  <time>2015-05-25T14:37:22Z</time>
+  <speed>0.929121</speed>
+  <name>TP000049</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299620016" lon="-76.590738140">
+  <ele>17.731575</ele>
+  <time>2015-05-25T14:37:27Z</time>
+  <speed>0.265328</speed>
+  <name>TP000050</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299621301" lon="-76.590728684">
+  <ele>17.416855</ele>
+  <time>2015-05-25T14:37:32Z</time>
+  <speed>0.122014</speed>
+  <name>TP000051</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299622395" lon="-76.590723080">
+  <ele>17.452383</ele>
+  <time>2015-05-25T14:37:37Z</time>
+  <speed>0.012319</speed>
+  <name>TP000052</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299622688" lon="-76.590720856">
+  <ele>17.475769</ele>
+  <time>2015-05-25T14:37:42Z</time>
+  <speed>0.015727</speed>
+  <name>TP000053</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299623488" lon="-76.590716864">
+  <ele>17.458260</ele>
+  <time>2015-05-25T14:37:47Z</time>
+  <speed>0.097197</speed>
+  <name>TP000054</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299624534" lon="-76.590715399">
+  <ele>17.379818</ele>
+  <time>2015-05-25T14:37:52Z</time>
+  <speed>0.063334</speed>
+  <name>TP000055</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299619834" lon="-76.590739571">
+  <ele>17.573116</ele>
+  <time>2015-05-25T14:37:57Z</time>
+  <speed>2.993704</speed>
+  <name>TP000056</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299607572" lon="-76.591173910">
+  <ele>16.696198</ele>
+  <time>2015-05-25T14:38:02Z</time>
+  <speed>8.099625</speed>
+  <name>TP000057</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299577039" lon="-76.591795357">
+  <ele>17.151775</ele>
+  <time>2015-05-25T14:38:07Z</time>
+  <speed>10.780391</speed>
+  <name>TP000058</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299534981" lon="-76.592468656">
+  <ele>17.057894</ele>
+  <time>2015-05-25T14:38:12Z</time>
+  <speed>11.030573</speed>
+  <name>TP000059</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299503123" lon="-76.593105380">
+  <ele>17.271788</ele>
+  <time>2015-05-25T14:38:17Z</time>
+  <speed>10.832380</speed>
+  <name>TP000060</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299466119" lon="-76.593694019">
+  <ele>17.572798</ele>
+  <time>2015-05-25T14:38:22Z</time>
+  <speed>8.978279</speed>
+  <name>TP000061</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299448380" lon="-76.594063068">
+  <ele>17.463482</ele>
+  <time>2015-05-25T14:38:27Z</time>
+  <speed>3.873499</speed>
+  <name>TP000062</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299463736" lon="-76.594123782">
+  <ele>16.316715</ele>
+  <time>2015-05-25T14:38:32Z</time>
+  <speed>0.044755</speed>
+  <name>TP000063</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299463765" lon="-76.594129635">
+  <ele>16.088972</ele>
+  <time>2015-05-25T14:38:37Z</time>
+  <speed>1.078485</speed>
+  <name>TP000064</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299445152" lon="-76.594351187">
+  <ele>12.884487</ele>
+  <time>2015-05-25T14:38:42Z</time>
+  <speed>5.521999</speed>
+  <name>TP000065</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299447773" lon="-76.594804348">
+  <ele>11.614100</ele>
+  <time>2015-05-25T14:38:47Z</time>
+  <speed>10.411071</speed>
+  <name>TP000066</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299416811" lon="-76.595499421">
+  <ele>7.533193</ele>
+  <time>2015-05-25T14:38:52Z</time>
+  <speed>12.925813</speed>
+  <name>TP000067</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299384290" lon="-76.596257357">
+  <ele>3.879261</ele>
+  <time>2015-05-25T14:38:57Z</time>
+  <speed>13.522546</speed>
+  <name>TP000068</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299352434" lon="-76.596989973">
+  <ele>0.825137</ele>
+  <time>2015-05-25T14:39:02Z</time>
+  <speed>10.776302</speed>
+  <name>TP000069</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299332622" lon="-76.597457946">
+  <ele>-3.006159</ele>
+  <time>2015-05-25T14:39:07Z</time>
+  <speed>4.857846</speed>
+  <name>TP000070</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299333853" lon="-76.597514475">
+  <ele>-4.408168</ele>
+  <time>2015-05-25T14:39:12Z</time>
+  <speed>0.099557</speed>
+  <name>TP000071</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299335300" lon="-76.597513245">
+  <ele>-4.895435</ele>
+  <time>2015-05-25T14:39:17Z</time>
+  <speed>0.108958</speed>
+  <name>TP000072</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299333168" lon="-76.597509694">
+  <ele>-5.105320</ele>
+  <time>2015-05-25T14:39:22Z</time>
+  <speed>0.047903</speed>
+  <name>TP000073</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299335208" lon="-76.597512131">
+  <ele>-5.087744</ele>
+  <time>2015-05-25T14:39:27Z</time>
+  <speed>0.020141</speed>
+  <name>TP000074</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.299336513" lon="-76.597510784">
+  <ele>-5.156639</ele>
+  <time>2015-05-25T14:39:32Z</time>
+  <speed>0.072933</speed>
+  <name>TP000075</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299342107" lon="-76.597502297">
+  <ele>-6.052368</ele>
+  <time>2015-05-25T14:39:37Z</time>
+  <speed>0.120817</speed>
+  <name>TP000076</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299347742" lon="-76.597517112">
+  <ele>-7.927319</ele>
+  <time>2015-05-25T14:39:42Z</time>
+  <speed>2.126112</speed>
+  <name>TP000077</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299337163" lon="-76.597841394">
+  <ele>-10.552811</ele>
+  <time>2015-05-25T14:39:47Z</time>
+  <speed>8.778732</speed>
+  <name>TP000078</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299311618" lon="-76.598461030">
+  <ele>-11.683119</ele>
+  <time>2015-05-25T14:39:52Z</time>
+  <speed>10.918103</speed>
+  <name>TP000079</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299285037" lon="-76.599098904">
+  <ele>-12.985015</ele>
+  <time>2015-05-25T14:39:57Z</time>
+  <speed>10.513527</speed>
+  <name>TP000080</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299276798" lon="-76.599671937">
+  <ele>-15.325038</ele>
+  <time>2015-05-25T14:40:02Z</time>
+  <speed>8.243854</speed>
+  <name>TP000081</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299263983" lon="-76.600041340">
+  <ele>-17.745665</ele>
+  <time>2015-05-25T14:40:07Z</time>
+  <speed>5.554009</speed>
+  <name>TP000082</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299233364" lon="-76.600442896">
+  <ele>-19.810680</ele>
+  <time>2015-05-25T14:40:12Z</time>
+  <speed>9.106933</speed>
+  <name>TP000083</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299184465" lon="-76.601106649">
+  <ele>-20.198795</ele>
+  <time>2015-05-25T14:40:17Z</time>
+  <speed>12.237076</speed>
+  <name>TP000084</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299173031" lon="-76.601853185">
+  <ele>-20.013102</ele>
+  <time>2015-05-25T14:40:22Z</time>
+  <speed>12.074410</speed>
+  <name>TP000085</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299145265" lon="-76.602480466">
+  <ele>-20.519760</ele>
+  <time>2015-05-25T14:40:27Z</time>
+  <speed>9.771310</speed>
+  <name>TP000086</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299137845" lon="-76.603030847">
+  <ele>-21.488956</ele>
+  <time>2015-05-25T14:40:32Z</time>
+  <speed>9.174673</speed>
+  <name>TP000087</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299115613" lon="-76.603444714">
+  <ele>-23.473106</ele>
+  <time>2015-05-25T14:40:37Z</time>
+  <speed>3.888377</speed>
+  <name>TP000088</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299118618" lon="-76.603527305">
+  <ele>-23.426506</ele>
+  <time>2015-05-25T14:40:42Z</time>
+  <speed>0.108759</speed>
+  <name>TP000089</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299129390" lon="-76.603531172">
+  <ele>-22.658140</ele>
+  <time>2015-05-25T14:40:47Z</time>
+  <speed>0.180404</speed>
+  <name>TP000090</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299132699" lon="-76.603616968">
+  <ele>-22.353008</ele>
+  <time>2015-05-25T14:40:52Z</time>
+  <speed>4.096394</speed>
+  <name>TP000091</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299117258" lon="-76.603986656">
+  <ele>-25.019634</ele>
+  <time>2015-05-25T14:40:57Z</time>
+  <speed>8.493601</speed>
+  <name>TP000092</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299092549" lon="-76.604549475">
+  <ele>-24.889435</ele>
+  <time>2015-05-25T14:41:02Z</time>
+  <speed>10.064059</speed>
+  <name>TP000093</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299072572" lon="-76.605174315">
+  <ele>-24.908926</ele>
+  <time>2015-05-25T14:41:07Z</time>
+  <speed>11.427319</speed>
+  <name>TP000094</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299053817" lon="-76.605860134">
+  <ele>-26.202446</ele>
+  <time>2015-05-25T14:41:12Z</time>
+  <speed>11.688404</speed>
+  <name>TP000095</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299022774" lon="-76.606545175">
+  <ele>-26.713013</ele>
+  <time>2015-05-25T14:41:17Z</time>
+  <speed>11.745273</speed>
+  <name>TP000096</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.298988647" lon="-76.607258631">
+  <ele>-27.573832</ele>
+  <time>2015-05-25T14:41:22Z</time>
+  <speed>12.198964</speed>
+  <name>TP000097</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.298943803" lon="-76.607979119">
+  <ele>-28.588762</ele>
+  <time>2015-05-25T14:41:27Z</time>
+  <speed>12.583898</speed>
+  <name>TP000098</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.298893796" lon="-76.608697435">
+  <ele>-30.442636</ele>
+  <time>2015-05-25T14:41:32Z</time>
+  <speed>12.509328</speed>
+  <name>TP000099</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.298866472" lon="-76.609454881">
+  <ele>-31.878614</ele>
+  <time>2015-05-25T14:41:37Z</time>
+  <speed>12.809284</speed>
+  <name>TP000100</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.298859070" lon="-76.610148818">
+  <ele>-34.639557</ele>
+  <time>2015-05-25T14:41:42Z</time>
+  <speed>10.846427</speed>
+  <name>TP000101</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.298849688" lon="-76.610635439">
+  <ele>-35.820999</ele>
+  <time>2015-05-25T14:41:47Z</time>
+  <speed>7.220544</speed>
+  <name>TP000102</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299003878" lon="-76.610737340">
+  <ele>-33.707531</ele>
+  <time>2015-05-25T14:41:52Z</time>
+  <speed>7.758587</speed>
+  <name>TP000103</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.299468574" lon="-76.610708500">
+  <ele>-30.803110</ele>
+  <time>2015-05-25T14:41:57Z</time>
+  <speed>12.326132</speed>
+  <name>TP000104</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.300079174" lon="-76.610717371">
+  <ele>-29.076853</ele>
+  <time>2015-05-25T14:42:02Z</time>
+  <speed>13.959724</speed>
+  <name>TP000105</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.300747466" lon="-76.610707064">
+  <ele>-27.911673</ele>
+  <time>2015-05-25T14:42:07Z</time>
+  <speed>15.057364</speed>
+  <name>TP000106</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.301424898" lon="-76.610759375">
+  <ele>-24.763573</ele>
+  <time>2015-05-25T14:42:12Z</time>
+  <speed>14.910761</speed>
+  <name>TP000107</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.302052360" lon="-76.610809077">
+  <ele>-17.230459</ele>
+  <time>2015-05-25T14:42:17Z</time>
+  <speed>12.128619</speed>
+  <name>TP000108</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.302583151" lon="-76.610868140">
+  <ele>-12.872406</ele>
+  <time>2015-05-25T14:42:22Z</time>
+  <speed>11.031477</speed>
+  <name>TP000109</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.303026945" lon="-76.611170125">
+  <ele>-11.482690</ele>
+  <time>2015-05-25T14:42:27Z</time>
+  <speed>11.841819</speed>
+  <name>TP000110</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.303408696" lon="-76.611607651">
+  <ele>-8.905860</ele>
+  <time>2015-05-25T14:42:32Z</time>
+  <speed>10.764304</speed>
+  <name>TP000111</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.303877827" lon="-76.611749446">
+  <ele>-7.045696</ele>
+  <time>2015-05-25T14:42:37Z</time>
+  <speed>10.352422</speed>
+  <name>TP000112</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.304271050" lon="-76.611764923">
+  <ele>-4.526811</ele>
+  <time>2015-05-25T14:42:42Z</time>
+  <speed>7.243882</speed>
+  <name>TP000113</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.304516449" lon="-76.611792368">
+  <ele>-2.795400</ele>
+  <time>2015-05-25T14:42:47Z</time>
+  <speed>3.170310</speed>
+  <name>TP000114</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.304578298" lon="-76.611797681">
+  <ele>-0.224841</ele>
+  <time>2015-05-25T14:42:52Z</time>
+  <speed>0.090022</speed>
+  <name>TP000115</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.304576005" lon="-76.611804229">
+  <ele>2.695145</ele>
+  <time>2015-05-25T14:42:57Z</time>
+  <speed>0.025847</speed>
+  <name>TP000116</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.304577699" lon="-76.611806660">
+  <ele>3.118973</ele>
+  <time>2015-05-25T14:43:02Z</time>
+  <speed>0.195020</speed>
+  <name>TP000117</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.304660447" lon="-76.611827052">
+  <ele>3.916829</ele>
+  <time>2015-05-25T14:43:07Z</time>
+  <speed>3.920069</speed>
+  <name>TP000118</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.304910331" lon="-76.611852026">
+  <ele>5.400711</ele>
+  <time>2015-05-25T14:43:12Z</time>
+  <speed>5.304342</speed>
+  <name>TP000119</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.305096260" lon="-76.611874410">
+  <ele>4.909175</ele>
+  <time>2015-05-25T14:43:17Z</time>
+  <speed>3.708612</speed>
+  <name>TP000120</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.305332780" lon="-76.611966606">
+  <ele>4.107912</ele>
+  <time>2015-05-25T14:43:22Z</time>
+  <speed>6.233360</speed>
+  <name>TP000121</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.305638342" lon="-76.612023056">
+  <ele>1.938286</ele>
+  <time>2015-05-25T14:43:27Z</time>
+  <speed>8.210740</speed>
+  <name>TP000122</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.306048710" lon="-76.612026412">
+  <ele>3.205186</ele>
+  <time>2015-05-25T14:43:32Z</time>
+  <speed>10.344686</speed>
+  <name>TP000123</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.306551124" lon="-76.612061911">
+  <ele>3.509719</ele>
+  <time>2015-05-25T14:43:37Z</time>
+  <speed>11.385708</speed>
+  <name>TP000124</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.307078595" lon="-76.612137269">
+  <ele>1.284496</ele>
+  <time>2015-05-25T14:43:42Z</time>
+  <speed>10.571136</speed>
+  <name>TP000125</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.307505099" lon="-76.612121880">
+  <ele>1.346335</ele>
+  <time>2015-05-25T14:43:47Z</time>
+  <speed>9.411173</speed>
+  <name>TP000126</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.307974792" lon="-76.612127913">
+  <ele>2.854860</ele>
+  <time>2015-05-25T14:43:52Z</time>
+  <speed>10.762333</speed>
+  <name>TP000127</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.308454882" lon="-76.612184513">
+  <ele>5.151154</ele>
+  <time>2015-05-25T14:43:57Z</time>
+  <speed>9.450456</speed>
+  <name>TP000128</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.308765800" lon="-76.612220625">
+  <ele>10.459524</ele>
+  <time>2015-05-25T14:44:02Z</time>
+  <speed>4.147724</speed>
+  <name>TP000129</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.308820521" lon="-76.612238166">
+  <ele>17.484306</ele>
+  <time>2015-05-25T14:44:07Z</time>
+  <speed>0.449229</speed>
+  <name>TP000130</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.308953426" lon="-76.612225839">
+  <ele>18.400625</ele>
+  <time>2015-05-25T14:44:12Z</time>
+  <speed>6.001452</speed>
+  <name>TP000131</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.309295147" lon="-76.612221722">
+  <ele>21.044207</ele>
+  <time>2015-05-25T14:44:17Z</time>
+  <speed>8.018794</speed>
+  <name>TP000132</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.309637003" lon="-76.612228505">
+  <ele>24.402639</ele>
+  <time>2015-05-25T14:44:22Z</time>
+  <speed>6.289214</speed>
+  <name>TP000133</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.309816271" lon="-76.612251954">
+  <ele>26.900282</ele>
+  <time>2015-05-25T14:44:27Z</time>
+  <speed>1.092137</speed>
+  <name>TP000134</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.309848799" lon="-76.612275730">
+  <ele>26.952538</ele>
+  <time>2015-05-25T14:44:32Z</time>
+  <speed>0.403941</speed>
+  <name>TP000135</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.309864272" lon="-76.612294401">
+  <ele>28.090172</ele>
+  <time>2015-05-25T14:44:37Z</time>
+  <speed>0.489181</speed>
+  <name>TP000136</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.309874396" lon="-76.612311202">
+  <ele>29.200188</ele>
+  <time>2015-05-25T14:44:42Z</time>
+  <speed>0.343640</speed>
+  <name>TP000137</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.309885083" lon="-76.612325989">
+  <ele>30.142101</ele>
+  <time>2015-05-25T14:44:47Z</time>
+  <speed>1.588482</speed>
+  <name>TP000138</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.309985341" lon="-76.612468704">
+  <ele>26.942059</ele>
+  <time>2015-05-25T14:44:52Z</time>
+  <speed>5.107320</speed>
+  <name>TP000139</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.310021042" lon="-76.612885625">
+  <ele>22.233215</ele>
+  <time>2015-05-25T14:44:57Z</time>
+  <speed>7.219576</speed>
+  <name>TP000140</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.309995775" lon="-76.613283762">
+  <ele>19.257370</ele>
+  <time>2015-05-25T14:45:02Z</time>
+  <speed>6.235580</speed>
+  <name>TP000141</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.309987099" lon="-76.613487670">
+  <ele>15.728802</ele>
+  <time>2015-05-25T14:45:07Z</time>
+  <speed>2.172224</speed>
+  <name>TP000142</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.309994980" lon="-76.613616798">
+  <ele>13.346405</ele>
+  <time>2015-05-25T14:45:12Z</time>
+  <speed>1.879504</speed>
+  <name>TP000143</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.310140808" lon="-76.613621642">
+  <ele>11.823477</ele>
+  <time>2015-05-25T14:45:17Z</time>
+  <speed>6.111981</speed>
+  <name>TP000144</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.310467797" lon="-76.613644011">
+  <ele>13.520718</ele>
+  <time>2015-05-25T14:45:22Z</time>
+  <speed>8.045382</speed>
+  <name>TP000145</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.310830883" lon="-76.613753480">
+  <ele>16.475800</ele>
+  <time>2015-05-25T14:45:27Z</time>
+  <speed>7.044862</speed>
+  <name>TP000146</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.311173867" lon="-76.613803759">
+  <ele>18.010532</ele>
+  <time>2015-05-25T14:45:32Z</time>
+  <speed>8.776566</speed>
+  <name>TP000147</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.311620337" lon="-76.613828921">
+  <ele>21.748873</ele>
+  <time>2015-05-25T14:45:37Z</time>
+  <speed>10.858682</speed>
+  <name>TP000148</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.312120893" lon="-76.613853264">
+  <ele>25.387007</ele>
+  <time>2015-05-25T14:45:42Z</time>
+  <speed>11.075955</speed>
+  <name>TP000149</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.312571350" lon="-76.613892931">
+  <ele>25.270773</ele>
+  <time>2015-05-25T14:45:47Z</time>
+  <speed>9.263541</speed>
+  <name>TP000150</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.312958958" lon="-76.613893076">
+  <ele>27.129753</ele>
+  <time>2015-05-25T14:45:52Z</time>
+  <speed>7.417546</speed>
+  <name>TP000151</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.313190239" lon="-76.613920737">
+  <ele>29.682482</ele>
+  <time>2015-05-25T14:45:57Z</time>
+  <speed>1.313652</speed>
+  <name>TP000152</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.313221778" lon="-76.613929729">
+  <ele>23.388771</ele>
+  <time>2015-05-25T14:46:02Z</time>
+  <speed>0.102317</speed>
+  <name>TP000153</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.313225006" lon="-76.613937451">
+  <ele>23.265076</ele>
+  <time>2015-05-25T14:46:07Z</time>
+  <speed>0.212009</speed>
+  <name>TP000154</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.313225922" lon="-76.613943952">
+  <ele>23.149988</ele>
+  <time>2015-05-25T14:46:12Z</time>
+  <speed>0.128260</speed>
+  <name>TP000155</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.313229180" lon="-76.613944092">
+  <ele>23.045168</ele>
+  <time>2015-05-25T14:46:17Z</time>
+  <speed>0.147106</speed>
+  <name>TP000156</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.313232894" lon="-76.613944390">
+  <ele>22.967876</ele>
+  <time>2015-05-25T14:46:22Z</time>
+  <speed>0.264758</speed>
+  <name>TP000157</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.313241785" lon="-76.613944866">
+  <ele>22.949108</ele>
+  <time>2015-05-25T14:46:27Z</time>
+  <speed>1.367591</speed>
+  <name>TP000158</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.313488538" lon="-76.613939684">
+  <ele>21.560282</ele>
+  <time>2015-05-25T14:46:32Z</time>
+  <speed>7.560619</speed>
+  <name>TP000159</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.313885374" lon="-76.613958708">
+  <ele>21.816422</ele>
+  <time>2015-05-25T14:46:37Z</time>
+  <speed>8.816522</speed>
+  <name>TP000160</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.314300864" lon="-76.613974050">
+  <ele>21.197771</ele>
+  <time>2015-05-25T14:46:42Z</time>
+  <speed>9.408538</speed>
+  <name>TP000161</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.314746941" lon="-76.614014212">
+  <ele>21.421841</ele>
+  <time>2015-05-25T14:46:47Z</time>
+  <speed>10.229389</speed>
+  <name>TP000162</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.315200096" lon="-76.614045483">
+  <ele>22.915510</ele>
+  <time>2015-05-25T14:46:52Z</time>
+  <speed>10.263187</speed>
+  <name>TP000163</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.315639037" lon="-76.614014560">
+  <ele>26.275263</ele>
+  <time>2015-05-25T14:46:57Z</time>
+  <speed>9.433998</speed>
+  <name>TP000164</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.316088760" lon="-76.614092776">
+  <ele>24.335411</ele>
+  <time>2015-05-25T14:47:02Z</time>
+  <speed>9.351977</speed>
+  <name>TP000165</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.316494792" lon="-76.614138439">
+  <ele>32.063393</ele>
+  <time>2015-05-25T14:47:07Z</time>
+  <speed>9.530870</speed>
+  <name>TP000166</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.316944422" lon="-76.614151554">
+  <ele>31.877075</ele>
+  <time>2015-05-25T14:47:12Z</time>
+  <speed>9.995649</speed>
+  <name>TP000167</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.317390161" lon="-76.614159416">
+  <ele>35.333637</ele>
+  <time>2015-05-25T14:47:17Z</time>
+  <speed>10.433072</speed>
+  <name>TP000168</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.317917017" lon="-76.614183348">
+  <ele>38.991943</ele>
+  <time>2015-05-25T14:47:22Z</time>
+  <speed>10.942869</speed>
+  <name>TP000169</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.318453836" lon="-76.614230097">
+  <ele>40.050205</ele>
+  <time>2015-05-25T14:47:27Z</time>
+  <speed>11.545885</speed>
+  <name>TP000170</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.318943908" lon="-76.614233279">
+  <ele>40.950405</ele>
+  <time>2015-05-25T14:47:32Z</time>
+  <speed>10.299093</speed>
+  <name>TP000171</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.319444819" lon="-76.614325042">
+  <ele>39.640862</ele>
+  <time>2015-05-25T14:47:37Z</time>
+  <speed>10.172866</speed>
+  <name>TP000172</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.319944873" lon="-76.614375716">
+  <ele>44.166607</ele>
+  <time>2015-05-25T14:47:42Z</time>
+  <speed>10.931375</speed>
+  <name>TP000173</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.320473007" lon="-76.614413288">
+  <ele>49.434101</ele>
+  <time>2015-05-25T14:47:47Z</time>
+  <speed>11.653027</speed>
+  <name>TP000174</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.320980005" lon="-76.614452539">
+  <ele>54.770958</ele>
+  <time>2015-05-25T14:47:52Z</time>
+  <speed>11.199953</speed>
+  <name>TP000175</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.321507258" lon="-76.614499735">
+  <ele>57.478394</ele>
+  <time>2015-05-25T14:47:57Z</time>
+  <speed>11.402752</speed>
+  <name>TP000176</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.322060225" lon="-76.614552058">
+  <ele>59.772438</ele>
+  <time>2015-05-25T14:48:02Z</time>
+  <speed>11.150780</speed>
+  <name>TP000177</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.322544111" lon="-76.614596426">
+  <ele>65.212639</ele>
+  <time>2015-05-25T14:48:07Z</time>
+  <speed>10.279433</speed>
+  <name>TP000178</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.322995322" lon="-76.614636124">
+  <ele>73.156624</ele>
+  <time>2015-05-25T14:48:12Z</time>
+  <speed>9.489691</speed>
+  <name>TP000179</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.323404027" lon="-76.614683065">
+  <ele>79.401482</ele>
+  <time>2015-05-25T14:48:17Z</time>
+  <speed>8.140392</speed>
+  <name>TP000180</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.323793105" lon="-76.614734938">
+  <ele>83.103287</ele>
+  <time>2015-05-25T14:48:22Z</time>
+  <speed>8.681849</speed>
+  <name>TP000181</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.324233409" lon="-76.614768269">
+  <ele>85.952240</ele>
+  <time>2015-05-25T14:48:27Z</time>
+  <speed>10.030793</speed>
+  <name>TP000182</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.324740269" lon="-76.614805338">
+  <ele>82.332794</ele>
+  <time>2015-05-25T14:48:32Z</time>
+  <speed>10.891199</speed>
+  <name>TP000183</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.325257991" lon="-76.614813326">
+  <ele>79.971962</ele>
+  <time>2015-05-25T14:48:37Z</time>
+  <speed>10.933151</speed>
+  <name>TP000184</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.325768690" lon="-76.614847172">
+  <ele>77.025612</ele>
+  <time>2015-05-25T14:48:42Z</time>
+  <speed>11.644060</speed>
+  <name>TP000185</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.326258193" lon="-76.614862577">
+  <ele>72.413254</ele>
+  <time>2015-05-25T14:48:47Z</time>
+  <speed>9.666847</speed>
+  <name>TP000186</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.326689680" lon="-76.614863851">
+  <ele>66.265511</ele>
+  <time>2015-05-25T14:48:52Z</time>
+  <speed>7.893646</speed>
+  <name>TP000187</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.327029450" lon="-76.614877717">
+  <ele>63.909000</ele>
+  <time>2015-05-25T14:48:57Z</time>
+  <speed>7.905066</speed>
+  <name>TP000188</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.327406160" lon="-76.614906972">
+  <ele>62.130737</ele>
+  <time>2015-05-25T14:49:02Z</time>
+  <speed>6.855617</speed>
+  <name>TP000189</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.327703350" lon="-76.614924539">
+  <ele>60.658257</ele>
+  <time>2015-05-25T14:49:07Z</time>
+  <speed>5.882334</speed>
+  <name>TP000190</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.327924284" lon="-76.614916986">
+  <ele>60.155117</ele>
+  <time>2015-05-25T14:49:12Z</time>
+  <speed>1.847042</speed>
+  <name>TP000191</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.327965431" lon="-76.614924503">
+  <ele>58.793530</ele>
+  <time>2015-05-25T14:49:17Z</time>
+  <speed>0.117907</speed>
+  <name>TP000192</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.327969841" lon="-76.614925324">
+  <ele>58.845688</ele>
+  <time>2015-05-25T14:49:22Z</time>
+  <speed>0.294625</speed>
+  <name>TP000193</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.327981059" lon="-76.614927377">
+  <ele>58.739643</ele>
+  <time>2015-05-25T14:49:27Z</time>
+  <speed>0.206186</speed>
+  <name>TP000194</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.327995520" lon="-76.614933108">
+  <ele>58.565842</ele>
+  <time>2015-05-25T14:49:32Z</time>
+  <speed>0.310251</speed>
+  <name>TP000195</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328008887" lon="-76.614938568">
+  <ele>58.371040</ele>
+  <time>2015-05-25T14:49:37Z</time>
+  <speed>0.426022</speed>
+  <name>TP000196</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328023995" lon="-76.614940390">
+  <ele>58.267426</ele>
+  <time>2015-05-25T14:49:42Z</time>
+  <speed>0.305827</speed>
+  <name>TP000197</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328037164" lon="-76.614941991">
+  <ele>58.132835</ele>
+  <time>2015-05-25T14:49:47Z</time>
+  <speed>0.217135</speed>
+  <name>TP000198</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328041920" lon="-76.614942367">
+  <ele>58.001835</ele>
+  <time>2015-05-25T14:49:52Z</time>
+  <speed>0.165181</speed>
+  <name>TP000199</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328150763" lon="-76.614945609">
+  <ele>57.941006</ele>
+  <time>2015-05-25T14:49:57Z</time>
+  <speed>4.853164</speed>
+  <name>TP000200</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328282143" lon="-76.615151091">
+  <ele>50.425186</ele>
+  <time>2015-05-25T14:50:02Z</time>
+  <speed>6.991663</speed>
+  <name>TP000201</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328272414" lon="-76.615578657">
+  <ele>43.680847</ele>
+  <time>2015-05-25T14:50:07Z</time>
+  <speed>6.924224</speed>
+  <name>TP000202</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328259182" lon="-76.615818942">
+  <ele>39.081009</ele>
+  <time>2015-05-25T14:50:12Z</time>
+  <speed>0.423254</speed>
+  <name>TP000203</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328250668" lon="-76.615835206">
+  <ele>39.518959</ele>
+  <time>2015-05-25T14:50:17Z</time>
+  <speed>0.018651</speed>
+  <name>TP000204</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328250604" lon="-76.615835193">
+  <ele>39.328156</ele>
+  <time>2015-05-25T14:50:22Z</time>
+  <speed>0.096636</speed>
+  <name>TP000205</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328250253" lon="-76.615832555">
+  <ele>39.334717</ele>
+  <time>2015-05-25T14:50:27Z</time>
+  <speed>0.077108</speed>
+  <name>TP000206</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328253903" lon="-76.615836694">
+  <ele>39.562660</ele>
+  <time>2015-05-25T14:50:32Z</time>
+  <speed>0.203428</speed>
+  <name>TP000207</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328252894" lon="-76.615840100">
+  <ele>39.836937</ele>
+  <time>2015-05-25T14:50:37Z</time>
+  <speed>0.190839</speed>
+  <name>TP000208</name>
+  <fix>3d</fix>
+</trkpt>
+<trkpt lat="39.328217746" lon="-76.615875068">
+  <ele>40.488739</ele>
+  <time>2015-05-25T14:50:42Z</time>
+  <speed>0.060701</speed>
+  <name>TP000209</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328158187" lon="-76.615941461">
+  <ele>40.772903</ele>
+  <time>2015-05-25T14:50:47Z</time>
+  <speed>0.392589</speed>
+  <name>TP000210</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328121542" lon="-76.616064060">
+  <ele>42.066853</ele>
+  <time>2015-05-25T14:50:52Z</time>
+  <speed>6.035411</speed>
+  <name>TP000211</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328094302" lon="-76.616571143">
+  <ele>42.191921</ele>
+  <time>2015-05-25T14:50:57Z</time>
+  <speed>9.131786</speed>
+  <name>TP000212</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328142953" lon="-76.617098708">
+  <ele>42.849590</ele>
+  <time>2015-05-25T14:51:02Z</time>
+  <speed>6.344336</speed>
+  <name>TP000213</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328157165" lon="-76.617388481">
+  <ele>41.839970</ele>
+  <time>2015-05-25T14:51:07Z</time>
+  <speed>0.848789</speed>
+  <name>TP000214</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328136985" lon="-76.617437412">
+  <ele>40.900631</ele>
+  <time>2015-05-25T14:51:12Z</time>
+  <speed>0.059622</speed>
+  <name>TP000215</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328126619" lon="-76.617455614">
+  <ele>40.348705</ele>
+  <time>2015-05-25T14:51:17Z</time>
+  <speed>0.039404</speed>
+  <name>TP000216</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328108078" lon="-76.617476626">
+  <ele>40.015472</ele>
+  <time>2015-05-25T14:51:22Z</time>
+  <speed>0.311491</speed>
+  <name>TP000217</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328093801" lon="-76.617485883">
+  <ele>40.024597</ele>
+  <time>2015-05-25T14:51:27Z</time>
+  <speed>0.044065</speed>
+  <name>TP000218</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328092981" lon="-76.617487409">
+  <ele>40.042480</ele>
+  <time>2015-05-25T14:51:32Z</time>
+  <speed>0.085088</speed>
+  <name>TP000219</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328087859" lon="-76.617491864">
+  <ele>40.056374</ele>
+  <time>2015-05-25T14:51:37Z</time>
+  <speed>0.051956</speed>
+  <name>TP000220</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328084215" lon="-76.617494717">
+  <ele>40.045330</ele>
+  <time>2015-05-25T14:51:42Z</time>
+  <speed>0.118624</speed>
+  <name>TP000221</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328079790" lon="-76.617538033">
+  <ele>40.198414</ele>
+  <time>2015-05-25T14:51:47Z</time>
+  <speed>2.349113</speed>
+  <name>TP000222</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328177092" lon="-76.617680261">
+  <ele>39.224579</ele>
+  <time>2015-05-25T14:51:52Z</time>
+  <speed>3.732788</speed>
+  <name>TP000223</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328463317" lon="-76.617684977">
+  <ele>39.355293</ele>
+  <time>2015-05-25T14:51:57Z</time>
+  <speed>7.261959</speed>
+  <name>TP000224</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.328862301" lon="-76.617695444">
+  <ele>41.022549</ele>
+  <time>2015-05-25T14:52:02Z</time>
+  <speed>9.503244</speed>
+  <name>TP000225</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.329348315" lon="-76.617740734">
+  <ele>44.597958</ele>
+  <time>2015-05-25T14:52:07Z</time>
+  <speed>10.796825</speed>
+  <name>TP000226</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.329869745" lon="-76.617778112">
+  <ele>46.751141</ele>
+  <time>2015-05-25T14:52:12Z</time>
+  <speed>11.700669</speed>
+  <name>TP000227</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.330414573" lon="-76.617814420">
+  <ele>50.945076</ele>
+  <time>2015-05-25T14:52:17Z</time>
+  <speed>11.645674</speed>
+  <name>TP000228</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.330978832" lon="-76.617852916">
+  <ele>53.688347</ele>
+  <time>2015-05-25T14:52:22Z</time>
+  <speed>11.905318</speed>
+  <name>TP000229</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.331517870" lon="-76.617893380">
+  <ele>56.787846</ele>
+  <time>2015-05-25T14:52:27Z</time>
+  <speed>11.458870</speed>
+  <name>TP000230</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.331993814" lon="-76.617913716">
+  <ele>56.972744</ele>
+  <time>2015-05-25T14:52:32Z</time>
+  <speed>8.501982</speed>
+  <name>TP000231</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.332270917" lon="-76.617956168">
+  <ele>56.585239</ele>
+  <time>2015-05-25T14:52:37Z</time>
+  <speed>4.796006</speed>
+  <name>TP000232</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.332481465" lon="-76.617968900">
+  <ele>56.797310</ele>
+  <time>2015-05-25T14:52:42Z</time>
+  <speed>4.728616</speed>
+  <name>TP000233</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.332692607" lon="-76.618021601">
+  <ele>54.721310</ele>
+  <time>2015-05-25T14:52:47Z</time>
+  <speed>6.731678</speed>
+  <name>TP000234</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.333012798" lon="-76.618511480">
+  <ele>54.739597</ele>
+  <time>2015-05-25T14:52:52Z</time>
+  <speed>13.837176</speed>
+  <name>TP000235</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.333462462" lon="-76.619185755">
+  <ele>54.989212</ele>
+  <time>2015-05-25T14:52:57Z</time>
+  <speed>16.274374</speed>
+  <name>TP000236</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.333896084" lon="-76.619839864">
+  <ele>53.805630</ele>
+  <time>2015-05-25T14:53:02Z</time>
+  <speed>11.762083</speed>
+  <name>TP000237</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.334122034" lon="-76.620187388">
+  <ele>53.851223</ele>
+  <time>2015-05-25T14:53:07Z</time>
+  <speed>4.909459</speed>
+  <name>TP000238</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.334249728" lon="-76.620373516">
+  <ele>52.732292</ele>
+  <time>2015-05-25T14:53:12Z</time>
+  <speed>7.071463</speed>
+  <name>TP000239</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.334564710" lon="-76.620833919">
+  <ele>52.238422</ele>
+  <time>2015-05-25T14:53:17Z</time>
+  <speed>13.107527</speed>
+  <name>TP000240</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.334973371" lon="-76.621443114">
+  <ele>51.175087</ele>
+  <time>2015-05-25T14:53:22Z</time>
+  <speed>13.823461</speed>
+  <name>TP000241</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.335360367" lon="-76.622057557">
+  <ele>45.826366</ele>
+  <time>2015-05-25T14:53:27Z</time>
+  <speed>13.149249</speed>
+  <name>TP000242</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.335756723" lon="-76.622659398">
+  <ele>40.073421</ele>
+  <time>2015-05-25T14:53:32Z</time>
+  <speed>14.575442</speed>
+  <name>TP000243</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.336174062" lon="-76.623330717">
+  <ele>37.840588</ele>
+  <time>2015-05-25T14:53:37Z</time>
+  <speed>14.445426</speed>
+  <name>TP000244</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.336557302" lon="-76.623939066">
+  <ele>37.081707</ele>
+  <time>2015-05-25T14:53:42Z</time>
+  <speed>12.694718</speed>
+  <name>TP000245</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.336823763" lon="-76.624311362">
+  <ele>36.229439</ele>
+  <time>2015-05-25T14:53:47Z</time>
+  <speed>5.340525</speed>
+  <name>TP000246</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.336913523" lon="-76.624436532">
+  <ele>35.004879</ele>
+  <time>2015-05-25T14:53:52Z</time>
+  <speed>0.840207</speed>
+  <name>TP000247</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.336977729" lon="-76.624496819">
+  <ele>34.617455</ele>
+  <time>2015-05-25T14:53:57Z</time>
+  <speed>2.150779</speed>
+  <name>TP000248</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337028699" lon="-76.624493713">
+  <ele>34.443142</ele>
+  <time>2015-05-25T14:54:02Z</time>
+  <speed>0.157636</speed>
+  <name>TP000249</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337031400" lon="-76.624489171">
+  <ele>34.429760</ele>
+  <time>2015-05-25T14:54:07Z</time>
+  <speed>0.057892</speed>
+  <name>TP000250</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337034340" lon="-76.624488315">
+  <ele>34.433174</ele>
+  <time>2015-05-25T14:54:12Z</time>
+  <speed>0.168333</speed>
+  <name>TP000251</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337041927" lon="-76.624491383">
+  <ele>34.438591</ele>
+  <time>2015-05-25T14:54:17Z</time>
+  <speed>0.230624</speed>
+  <name>TP000252</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337045988" lon="-76.624499386">
+  <ele>34.449200</ele>
+  <time>2015-05-25T14:54:22Z</time>
+  <speed>0.214030</speed>
+  <name>TP000253</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337051972" lon="-76.624497200">
+  <ele>34.434772</ele>
+  <time>2015-05-25T14:54:27Z</time>
+  <speed>0.155145</speed>
+  <name>TP000254</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337054437" lon="-76.624490397">
+  <ele>34.398323</ele>
+  <time>2015-05-25T14:54:32Z</time>
+  <speed>0.247497</speed>
+  <name>TP000255</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337053435" lon="-76.624478034">
+  <ele>34.359383</ele>
+  <time>2015-05-25T14:54:37Z</time>
+  <speed>0.166370</speed>
+  <name>TP000256</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337054084" lon="-76.624463164">
+  <ele>34.335007</ele>
+  <time>2015-05-25T14:54:42Z</time>
+  <speed>0.108530</speed>
+  <name>TP000257</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337054857" lon="-76.624480853">
+  <ele>34.338158</ele>
+  <time>2015-05-25T14:54:47Z</time>
+  <speed>0.382327</speed>
+  <name>TP000258</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337059880" lon="-76.624499091">
+  <ele>34.321560</ele>
+  <time>2015-05-25T14:54:52Z</time>
+  <speed>0.368929</speed>
+  <name>TP000259</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337069057" lon="-76.624512894">
+  <ele>34.295467</ele>
+  <time>2015-05-25T14:54:57Z</time>
+  <speed>0.348397</speed>
+  <name>TP000260</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337079091" lon="-76.624522193">
+  <ele>34.267612</ele>
+  <time>2015-05-25T14:55:02Z</time>
+  <speed>0.226808</speed>
+  <name>TP000261</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337091830" lon="-76.624512489">
+  <ele>34.229637</ele>
+  <time>2015-05-25T14:55:07Z</time>
+  <speed>0.422206</speed>
+  <name>TP000262</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337097535" lon="-76.624494536">
+  <ele>34.176895</ele>
+  <time>2015-05-25T14:55:12Z</time>
+  <speed>0.360383</speed>
+  <name>TP000263</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337094112" lon="-76.624475961">
+  <ele>34.115494</ele>
+  <time>2015-05-25T14:55:17Z</time>
+  <speed>0.316117</speed>
+  <name>TP000264</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337090413" lon="-76.624460340">
+  <ele>34.060150</ele>
+  <time>2015-05-25T14:55:22Z</time>
+  <speed>0.320378</speed>
+  <name>TP000265</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337092246" lon="-76.624441792">
+  <ele>33.997883</ele>
+  <time>2015-05-25T14:55:27Z</time>
+  <speed>0.362254</speed>
+  <name>TP000266</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337103908" lon="-76.624426958">
+  <ele>33.906372</ele>
+  <time>2015-05-25T14:55:32Z</time>
+  <speed>0.415878</speed>
+  <name>TP000267</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337119351" lon="-76.624414971">
+  <ele>33.777298</ele>
+  <time>2015-05-25T14:55:37Z</time>
+  <speed>0.392706</speed>
+  <name>TP000268</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337131418" lon="-76.624407176">
+  <ele>33.625900</ele>
+  <time>2015-05-25T14:55:42Z</time>
+  <speed>0.217230</speed>
+  <name>TP000269</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337140495" lon="-76.624405294">
+  <ele>33.521118</ele>
+  <time>2015-05-25T14:55:47Z</time>
+  <speed>0.135446</speed>
+  <name>TP000270</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337145554" lon="-76.624399321">
+  <ele>33.439228</ele>
+  <time>2015-05-25T14:55:52Z</time>
+  <speed>0.109423</speed>
+  <name>TP000271</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337145984" lon="-76.624393355">
+  <ele>33.395481</ele>
+  <time>2015-05-25T14:55:57Z</time>
+  <speed>0.177012</speed>
+  <name>TP000272</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337160013" lon="-76.624391591">
+  <ele>33.210445</ele>
+  <time>2015-05-25T14:56:02Z</time>
+  <speed>0.332590</speed>
+  <name>TP000273</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337158487" lon="-76.624416855">
+  <ele>32.973656</ele>
+  <time>2015-05-25T14:56:07Z</time>
+  <speed>0.620992</speed>
+  <name>TP000274</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337154328" lon="-76.624459987">
+  <ele>32.746704</ele>
+  <time>2015-05-25T14:56:12Z</time>
+  <speed>0.930243</speed>
+  <name>TP000275</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337150823" lon="-76.624533923">
+  <ele>32.593147</ele>
+  <time>2015-05-25T14:56:17Z</time>
+  <speed>1.098098</speed>
+  <name>TP000276</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337156555" lon="-76.624580757">
+  <ele>32.383183</ele>
+  <time>2015-05-25T14:56:22Z</time>
+  <speed>0.869723</speed>
+  <name>TP000277</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337140663" lon="-76.624596002">
+  <ele>32.334408</ele>
+  <time>2015-05-25T14:56:27Z</time>
+  <speed>0.686677</speed>
+  <name>TP000278</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337147473" lon="-76.624628059">
+  <ele>32.748489</ele>
+  <time>2015-05-25T14:56:32Z</time>
+  <speed>0.553040</speed>
+  <name>TP000279</name>
+  <fix>dgps</fix>
+</trkpt>
+</trkseg>
+</trk>
+<trk>
+  <name>track-2</name>
+  <desc>Log every 5 sec, 0 m</desc>
+<trkseg>
+<trkpt lat="39.337373736" lon="-76.623990570">
+  <ele>62.537476</ele>
+  <time>2015-05-25T14:57:56Z</time>
+  <speed>0.231507</speed>
+  <name>TP000281</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337078545" lon="-76.624459428">
+  <ele>39.868221</ele>
+  <time>2015-05-25T14:58:01Z</time>
+  <speed>0.516192</speed>
+  <name>TP000282</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337094238" lon="-76.624562994">
+  <ele>37.324097</ele>
+  <time>2015-05-25T14:58:06Z</time>
+  <speed>0.160356</speed>
+  <name>TP000283</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337106636" lon="-76.624559921">
+  <ele>36.659836</ele>
+  <time>2015-05-25T14:58:11Z</time>
+  <speed>0.098799</speed>
+  <name>TP000284</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337115362" lon="-76.624542082">
+  <ele>36.502762</ele>
+  <time>2015-05-25T14:58:16Z</time>
+  <speed>0.329891</speed>
+  <name>TP000285</name>
+  <fix>dgps</fix>
+</trkpt>
+<trkpt lat="39.337197240" lon="-76.624434836">
+  <ele>36.055305</ele>
+  <time>2015-05-25T14:58:21Z</time>
+  <speed>0.833465</speed>
+  <name>TP000286</name>
+  <fix>dgps</fix>
+</trkpt>
+</trkseg>
+</trk>
+</gpx>

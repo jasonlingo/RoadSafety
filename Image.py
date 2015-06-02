@@ -2,10 +2,11 @@ import sys
 import cv, cv2
 from PIL import Image
 from VideoUtil import creation_time, time_str_to_datetime
-from parameter import VFrameDirect, imageQual, resizeX, GPSDistance, csvFilename
+from parameter import VFrameDirect, imageQual, resizeX, GPSDistance, csvFilename, FOLDER_NAME, output_directory
 from GPXdata import FindPathDist, searchGPS
 from FileUtil import outputCSV
 from googleMap import showPath
+from GDrive import GDriveUpload
 
 
 def processImage(filename, flip, resize):
@@ -58,14 +59,15 @@ def getVideoFrame(gpsData, filename, flip, resize):
     
     #video frame rate per second
     fps = vc.get(cv.CV_CAP_PROP_FPS)
-    csvDataset = ["Frame Name"] #dataset that is going to be written to a csv file
+    #csvDataset = ["Frame Name"] #dataset that is going to be written to a csv file
+    csvDataset = []
 
     framePoint = [] #for showing points on a map
     imageNum = 1
     nextFrame = 1
     while success:
         """write time to the filename"""
-        print "output frame: " + str(nextFrame)
+        print "output image number: " + str(imageNum)
         imName = VFrameDirect + name + "-" + str(imageNum) + '.jpg'
         cv2.imwrite(imName,frame)
         csvDataset.append(imName)
@@ -85,8 +87,14 @@ def getVideoFrame(gpsData, filename, flip, resize):
     
     vc.release()
 
+    #upload photos to Google Drive
+    linkList = GDriveUpload(csvDataset, FOLDER_NAME)
+
     #output data to csv file
-    outputCSV(csvDataset, csvFilename)
+    csvDataset = []
+    for link in linkList:
+        csvDataset.append([link, linkList[link]])
+    outputCSV(csvDataset, output_directory + csvFilename)
 
     #draw GPS path and frame points on a map
     path = []   
