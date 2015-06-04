@@ -3,6 +3,7 @@
 import httplib2
 import pprint
 import webbrowser
+import operator
 
 from apiclient import errors
 from apiclient.discovery import build
@@ -12,6 +13,15 @@ from parameter import CLIENT_ID, CLIENT_SECRET
 
 
 def create_public_folder(service, folder_name):
+  """create a public folder on Google Drive
+
+  Args:
+    service: the Google drive service 
+    folder_name: the name of the folder that is going to be created
+  Returns:
+    information of the created folder
+  """
+
   body = {
     'title': folder_name,
     'mimeType': 'application/vnd.google-apps.folder'
@@ -43,6 +53,7 @@ def insert_file(service, title, description, parent_id, mime_type, filename):
   Returns:
     Inserted file metadata if successful, None otherwise.
   """
+
   media_body = MediaFileUpload(filename, mimetype=mime_type, resumable=True)
   body = {
     'title': title,
@@ -107,18 +118,12 @@ def GDriveUpload(photoList, folder_name):
     
     # Insert files
     linkList = {}
-    for photo in photoList:
-        """
-        media_body = MediaFileUpload(FILENAME, mimetype='image/jpeg', resumable=True)
-        body = {
-          'title': FILENAME,
-          'description': 'video frame of road',
-          'mimeType': 'image/jpeg'
-        }
-        """        	
+    for photo in photoList:    	
         file = insert_file(drive_service, photo.split("/")[2], "video frame of road", folder_id, 'image/jpeg', photo)
-        linkList[photo] = file['alternateLink']
-
+        print photo + " uploaded!"
+        #linkList[photo] = file['alternateLink']
+        templink = file['thumbnailLink'].strip().split("=")[0]
+        linkList[photo] = templink
     return linkList
     #webbrowser.open_new(linkToPic)
     #file = drive_service.files().insert(body=body, media_body=media_body).execute()

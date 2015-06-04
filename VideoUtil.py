@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os, sys, subprocess, shlex, re, math, datetime
 from optparse import OptionParser
-from parameter import VOutDirect, GoPro_CaliTime
+from parameter import VIDEO_OUTPUT_DIRECTORY, GOPRO_CALI_TIME
 from subprocess import call
 from GPXdata import mapGPS
 import numpy as np
@@ -26,7 +26,7 @@ def creation_time(filename):
         print err
     t = out.splitlines()
     time = str(t[14][18:37])
-    delta = datetime.timedelta(0, GoPro_CaliTime)
+    delta = datetime.timedelta(0, GOPRO_CALI_TIME)
     time = time_str_to_datetime(time) + delta
     return time
 
@@ -105,7 +105,7 @@ def VideoSplit(directory, filename, split_length, creation_time, gpsData):
         file_time = timestr[0:10] + "_" + timestr[11:13] + "-" + timestr[14:16] + "-" + timestr[17:]
 
         split_str += " -ss "+str(split_start)+" -t "+str(split_length) + \
-                    " '"+VOutDirect + filename[:-4] + "(" +file_time+ ")." + filename[-3:] + \
+                    " '"+ VIDEO_OUTPUT_DIRECTORY + filename[:-4] + "(" +file_time+ ")." + filename[-3:] + \
                     "'"
         print "About to run: "+split_cmd+split_str
         output = subprocess.Popen(split_cmd+split_str, shell = True, stdout =

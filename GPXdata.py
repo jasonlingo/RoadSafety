@@ -47,7 +47,7 @@ def TimeZoneCalibrate(original_time):
     """output the new creation fime by adding add_time to creation_time"""
     #creation_time {datetime}
     #return {datetime}
-    return original_time + datetime.timedelta(0, 0, 0, 0, 0, parameter.GPSTimeZone+1) #(days[, seconds[, microseconds[, milliseconds[, minutes[, hours[, weeks]]]]]]])
+    return original_time + datetime.timedelta(0, 0, 0, 0, 0, parameter.GPS_TIME_ZONE+1) #(days[, seconds[, microseconds[, milliseconds[, minutes[, hours[, weeks]]]]]]])
 
 
 def parseGPX(GPXfile):

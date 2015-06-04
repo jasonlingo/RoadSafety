@@ -15,13 +15,13 @@ def main():
     
     
     """get the video file name list in a given directory"""
-    videos = getFilename(parameter.Vdirectory, parameter.VideoType)
+    videos = getFilename(parameter.VIDEO_DIRECTORY, parameter.VIDEO_TYPE)
 
     """load GPX data in a given directory"""
-    GPXs = getFilename(parameter.Gdirectory, parameter.GPSType)
+    GPXs = getFilename(parameter.GPS_DIRECTORY, parameter.GPS_TYPE)
     gpsData = []
     for GPX in GPXs:
-        gpsData += parseGPX(parameter.Gdirectory + GPX)
+        gpsData += parseGPX(parameter.GPS_DIRECTORY + GPX)
     gpsData = sorted(gpsData)
 
     #for gps in gpsData:
@@ -29,14 +29,14 @@ def main():
 
 
     """check whether or not resize image"""
-    if parameter.resizeX == 1920:
+    if parameter.RESIZE_X == 1920:
         resize = False
     else:
         resize = True
 
     """get video frames according to the GPS distance"""
     for video in videos:
-        getVideoFrame(gpsData, parameter.Vdirectory + video, parameter.flipImage, resize)
+        getVideoFrame(gpsData, parameter.VIDEO_DIRECTORY + video, parameter.FLIP_IMAGE, resize)
         break
 
     for video in videos:

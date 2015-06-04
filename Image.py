@@ -1,8 +1,9 @@
 import sys
 import cv, cv2
+import webbrowser
 from PIL import Image
 from VideoUtil import creation_time, time_str_to_datetime
-from parameter import VFrameDirect, imageQual, resizeX, GPSDistance, csvFilename, FOLDER_NAME, output_directory
+from parameter import VIDEO_FRAME_DIRECTORY, IMAGE_QUALITY, RESIZE_X, GPS_DISTANCE, CSV_FILENAME, FOLDER_NAME, OUTPUT_DIRECTORY
 from GPXdata import FindPathDist, searchGPS
 from FileUtil import outputCSV
 from googleMap import showPath
@@ -18,9 +19,9 @@ def processImage(filename, flip, resize):
         im = im.transpose(Image.FLIP_LEFT_RIGHT)
     #resize image (16:9)
     if resize:
-        im = im.resize((resizeX, resizeX*9/16), Image.ANTIALIAS)
-    #output file with adjusted image quality (imageQual)
-    im.save(filename, 'JPEG', quality=imageQual)
+        im = im.resize((RESIZE_X, RESIZE_X*9/16), Image.ANTIALIAS)
+    #output file with adjusted image quality (IMAGE_QUALITY)
+    im.save(filename, 'JPEG', quality=IMAGE_QUALITY)
     del im
 
 
@@ -34,7 +35,7 @@ def nextFrameNum(startTime, endTime, fps):
 
 
 def getVideoFrame(gpsData, filename, flip, resize):
-    """get video frames every GPSDistance (in kilometers)"""
+    """get video frames every GPS_DISTANCE (in kilometers)"""
     #@parameter {list} gpsData: GPS data list
     #@parameter {string} filename: the name of the video that is going to be processed
     #@parameter {boolean} flip: True -> flip the frame images upside down; False -> not flip the frame images
@@ -63,12 +64,13 @@ def getVideoFrame(gpsData, filename, flip, resize):
     csvDataset = []
 
     framePoint = [] #for showing points on a map
+    GPSList = {}
     imageNum = 1
     nextFrame = 1
     while success:
         """write time to the filename"""
-        print "output image number: " + str(imageNum)
-        imName = VFrameDirect + name + "-" + str(imageNum) + '.jpg'
+        print "output image number: " + str(imageNum).zfill(3)
+        imName = VIDEO_FRAME_DIRECTORY + name + "-" + str(imageNum).zfill(3) + '.jpg'
         cv2.imwrite(imName,frame)
         csvDataset.append(imName)
         if flip or resize:
@@ -76,11 +78,12 @@ def getVideoFrame(gpsData, filename, flip, resize):
         imageNum += 1
         #store points for showing points on a map
         framePoint.append((gpsData[nextGPSIdx][1][0], gpsData[nextGPSIdx][1][1]))
-        #find the next GPS time according to the GPSDistance
-        nextGPSIdx, GPSTime = FindPathDist(gpsData, nextGPSIdx, GPSDistance)
+        GPSList[imName] = (gpsData[nextGPSIdx][1][0], gpsData[nextGPSIdx][1][1])
+        print "GPS: " + str(gpsData[nextGPSIdx][0]) + "-->" + str(gpsData[nextGPSIdx][1])
+        #find the next GPS time according to the GPS_DISTANCE
+        nextGPSIdx, GPSTime = FindPathDist(gpsData, nextGPSIdx, GPS_DISTANCE)
         #find next output frame number
         nextFrame = nextFrameNum(videoCreateTime, GPSTime, fps)
-        print "GPS: " + str(gpsData[nextGPSIdx][0]) + "-->" + str(gpsData[nextGPSIdx][1])
         vc.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, nextFrame)
         success, frame = vc.read()
         #cv2.waitKey(1)
@@ -89,76 +92,21 @@ def getVideoFrame(gpsData, filename, flip, resize):
 
     #upload photos to Google Drive
     linkList = GDriveUpload(csvDataset, FOLDER_NAME)
-
+    
     #output data to csv file
     csvDataset = []
     for link in linkList:
-        csvDataset.append([link, linkList[link]])
-    outputCSV(csvDataset, output_directory + csvFilename)
+        csvDataset.append([link.strip().split("/")[2], linkList[link], GPSList[link]])
+        #check image link
+        #webbrowser.open_new(linkList[link])
+    csvDataset = sorted(csvDataset)
+    csvDataset.insert(0,['Image name', 'Image', 'GPS'])
+    outputCSV(csvDataset, OUTPUT_DIRECTORY + CSV_FILENAME)
+    
+
 
     #draw GPS path and frame points on a map
     path = []   
     for gps in gpsData[GPSStartIdx:nextGPSIdx]:
         path.append((gps[1][0], gps[1][1]))
     showPath(path , framePoint)    
-
-
-
-"""
-def getIntersectionFrame(gpsData, filename, flip, resize):
-    #get intersection image fram from a video
-    #@parameter {list} gpsData: GPS data list
-    #@parameter {string} filename: the name of the video that is going to be processed
-    #@parameter {boolean} flip: True -> flip the frame images upside down; False -> not flip the frame images
-    #The frame rate is about 29.97 FPS(frame per second)
-
-
-    #get video creation time (can only read .MP4 file)
-    videoCreateTime = creation_time(filename)
-    #the index of the first data that is nearest to the videoCreateTime
-    GPSStartIdx = searchGPS(gpsData, videoCreateTime)
-    nextGPSIdx = GPSStartIdx
-    #store GPS path
-    path = []
-
-    #get video file name "media/filename.MP4" => "filename"
-    _, name = filename.split(".")[0].split("/")
-
-
-    #open video
-    vc = cv2.VideoCapture(filename)
-    if vc.isOpened():
-        success , frame = vc.read()
-    else:
-        success = False
-    
-    #video frame rate per second
-    fps = vc.get(cv.CV_CAP_PROP_FPS)
-
-    framePoint = [] #for showing points on a map
-    print gpsData[GPSStartIdx][1][0]
-    imageNum = 1
-    nextFrame = 1
-    while success:
-        #write time to the filename
-        print "output frame: " + str(nextFrame)
-        imName = VFrameDirect + name + "-" + str(imageNum) + '.jpg'
-        cv2.imwrite(imName,frame)
-        if flip or resize:
-            processImage(imName, flip, resize)
-        imageNum += 1
-        #store points for showing points on a map
-        framePoint.append((gpsData[GPSStartIdx][1][0], gpsData[GPSStartIdx][1][1]))
-        #find the next GPS time according to the GPSDistance
-        GPSStartIdx, GPSTime = FindPathDist(gpsData, GPSStartIdx, GPSDistance)
-        #find next output frame number
-        nextFrame = nextFrameNum(videoCreateTime, GPSTime, fps)
-        print "GPS: " + str(gpsData[GPSStartIdx][0]) + "-->" + str(gpsData[GPSStartIdx][1])
-        vc.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, nextFrame)
-        success, frame = vc.read()
-        #cv2.waitKey(1)
-    
-    vc.release()   
-"""
-    
-

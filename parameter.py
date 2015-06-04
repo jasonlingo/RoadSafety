@@ -1,58 +1,58 @@
 """video file type"""
-VideoType = ".MP4"
+VIDEO_TYPE = ".MP4"
 
 """GPS file type"""
-GPSType = ".gpx"
+GPS_TYPE = ".gpx"
 
 """the length for each shorter video"""
-videolenth = 60
+VIDEO_LENGTH = 60
 
 """output image frame quality"""
 #in percent
-imageQual = 100
+IMAGE_QUALITY = 100
 
 """flip image"""
-flipImage = True
+FLIP_IMAGE = True
 
 """csv filename"""
-csvFilename = "frame.csv"
+CSV_FILENAME = "frame.csv"
 
 """output image frame size"""
 #the length of the longest side of a frame image
 #the original length is 1920
-resizeX = 1200
+RESIZE_X = 1200
 
 """GoPro time calibration"""
 #there is a difference between the real time and the recorded time in the video file
-#real creation time = recorded time + GoPro_CaliTime
-GoPro_CaliTime = -18
+#real creation time = recorded time + GOPRO_CALI_TIME
+GOPRO_CALI_TIME = -18
 
 """the GPS distance between every video frame"""
 #kilometer
-GPSDistance = 0.1
+GPS_DISTANCE = 0.1
 
 """timezone for GPS"""
 #the GPS recorder is based on UTC/GMT+0 time, so it needs to be calibrated.
-GPSTimeZone = -5
+GPS_TIME_ZONE = -5
 
 
 """Directories*******************************"""
-
 """directory for output csv file"""
-output_directory = "output/"
+OUTPUT_DIRECTORY = "output/"
+
 
 """the directory of the videos"""
-Vdirectory = "media/"
+VIDEO_DIRECTORY = "media/"
+
 
 """the directory of GPS files"""
-Gdirectory = "GPS/"
+GPS_DIRECTORY = "GPS/"
 
 """directory for splitted videos"""
-VOutDirect = Vdirectory + "out/"
+VIDEO_OUTPUT_DIRECTORY = VIDEO_DIRECTORY + "out/"
 
 """directory for output video frames"""
-VFrameDirect = output_directory + "VideoFrame/"
-
+VIDEO_FRAME_DIRECTORY = OUTPUT_DIRECTORY + "VideoFrame/"
 
 
 """Google API********************************"""

@@ -2,7 +2,7 @@ import os
 import pygmaps 
 import webbrowser
 import googlemaps
-from parameter import output_directory
+from parameter import OUTPUT_DIRECTORY
 from datetime import datetime, date, time
 
 """
@@ -37,7 +37,7 @@ def showPath(path, framePoint):
             firstPoint = False
         else:
             mymap.addpoint(point[0], point[1], "#0000FF")
-    mapFilename = output_directory + "map.html"
+    mapFilename = OUTPUT_DIRECTORY + "map.html"
     mymap.draw('./'+mapFilename)
     #sample: "file:///Users/Jason/GitHub/RoadSeftey/RoadSafety/map.html"
     url = "file://" + os.getcwd() + "/" + mapFilename
