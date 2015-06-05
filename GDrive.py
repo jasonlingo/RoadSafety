@@ -78,6 +78,33 @@ def insert_file(service, title, description, parent_id, mime_type, filename):
     return None
 
 
+def retrieve_all_files(service):
+  """Retrieve a list of File resources.
+
+  Args:
+    service: Drive API service instance.
+  Returns:
+    List of File resources.
+  """
+  result = []
+  page_token = None
+  while True:
+    try:
+      param = {}
+      if page_token:
+        param['pageToken'] = page_token
+      files = service.files().list(**param).execute()
+
+      result.extend(files['items'])
+      page_token = files.get('nextPageToken')
+      if not page_token:
+        break
+    except errors.HttpError, error:
+      print 'An error occurred: %s' % error
+      break
+  return result    
+
+
 def GDriveUpload(photoList, folder_name):
     """create a public director and upload photo
     
@@ -115,14 +142,15 @@ def GDriveUpload(photoList, folder_name):
     folder = create_public_folder(drive_service, folder_name)
     folder_id = folder['id']
 
-    
+
     # Insert files
     linkList = {}
     for photo in photoList:    	
         file = insert_file(drive_service, photo.split("/")[2], "video frame of road", folder_id, 'image/jpeg', photo)
         print photo + " uploaded!"
         #linkList[photo] = file['alternateLink']
-        templink = file['thumbnailLink'].strip().split("=")[0]
+        #pprint.pprint(file)
+        templink = file['webContentLink'].strip().split("&")[0]
         linkList[photo] = templink
     return linkList
     #webbrowser.open_new(linkToPic)
