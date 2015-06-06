@@ -5,6 +5,16 @@ import parameter
 from math import radians, cos, sin, asin, sqrt
 
 
+
+class GPSPoint:
+    """Class of GPS point, containing the latitude and longitude information of a point
+
+    """
+    def __init__(self, latitude, longitude):
+        self.latitude = latitude
+        self.longitude = longitude
+
+
 def haversine(lat1, lon1, lat2, lon2):
     """
     Calculate the great circle distance between two points 
