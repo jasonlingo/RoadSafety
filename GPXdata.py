@@ -10,9 +10,32 @@ class GPSPoint:
     """Class of GPS point, containing the latitude and longitude information of a point
 
     """
-    def __init__(self, latitude, longitude):
-        self.latitude = latitude
-        self.longitude = longitude
+    #GPS data
+    lat = None #latitude
+    lng = None #longitude
+    
+    #direction data
+    distance = 0 #distance (meters) for this step
+    duration = 0 #time (seconds) for this step
+
+    #next node
+    next = None
+
+    def __init__(self, latitude, longitude, distance=0, duration=0):
+        """constructor
+        set distance and duration to 0 if we don't get the data for those two variable
+        """
+        self.lat  = latitude
+        self.lng  = longitude
+        self.distance = distance
+        self.duration = duration
+
+    def printNode(self):
+        """print all nodes' data from current node to the last node"""
+        print "lat: %f  lng: %f  distance: %dm  duration: %dsec" %(self.lat, self.lng, self.distance, self.duration)
+        if self.next != None:
+            self.next.printNode()
+
 
 
 def haversine(lat1, lon1, lat2, lon2):
