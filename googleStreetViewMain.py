@@ -9,6 +9,9 @@ import time
 import pprint
 import sys
 
+from kml import KmzParser
+import xml
+
 
 def getBearing(start, end):
     """
@@ -70,7 +73,8 @@ def getStreetView(path, outputDirect):
     (https://developers.google.com/maps/documentation/streetview/?hl=pl&csw=1)
 
     Args:
-      path: a linked list of GPS point
+      path (linked list): a linked list of GPS point
+      outputDirect (string): image output directory
     Return:
       list of Street view points
     """
@@ -214,6 +218,29 @@ def getDirection(originAdd, destAdd):
     return head
 
 
+def road():
+    """
+    Get all gps data along a route
+
+    Args:
+
+    Return:
+      a list of GPS points along a given route
+    """
+    ROAD_API_URL = 'https://roads.googleapis.com/v1/snapToRoads?'
+    params = dict(
+        #path='39.336881,-76.6244629|39.3330933,-76.6257722|39.3329418,-76.62812939999999|39.3222026,-76.6280012|39.3210507,-76.6268723|39.3183694,-76.6296745|39.3025917,-76.6115682|39.3000233,-76.6116783|39.2965022,-76.6113835|39.2976857,-76.6094936|39.2985045,-76.5908606|39.2979582,-76.590825',
+        path='39.336881,-76.6244629|39.2979582,-76.590825',
+        interpolate='true',
+        key='AIzaSyCLP5d5vcwI1dY_2uLLYu17_3Itf4FWH_I'
+    )
+    resp = requests.get(url=ROAD_API_URL, params=params)
+    data = json.loads(resp.text)
+    gpsList = []
+    for x in data['snappedPoints']:
+        gpsList.append((x['location']['latitude'], x['location']['longitude']))
+    return gpsList
+
 
 def main():
     """
@@ -225,8 +252,16 @@ def main():
     """
     #start = GPSPoint(39.299082523,-76.589570718)
     #end = GPSPoint(39.299560499, -76.590062392)
-    #path = [start, end]
+    #path = [start, end] 
 
+    #get detail GPS point list and linked list
+    path, head = KmzParser("direction.kmz")
+
+    #path = road()
+    #print len(path)
+    #showPath(path, viewpoint)
+
+    """
     #get direction
     head = getDirection('500 West University Parkway, Baltimore', '615 N Wolfe St Baltimore, MD 21205')
     #Google map direction path
@@ -235,6 +270,6 @@ def main():
     SVPoint = getStreetView(head, VIDEO_FRAME_DIRECTORY)
     #show path and street view points on Google Map
     showPath(path, SVPoint)
-
+    """
 if __name__ == '__main__':
     main()

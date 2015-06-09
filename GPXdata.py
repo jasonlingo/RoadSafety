@@ -36,21 +36,30 @@ class GPSPoint:
         if self.next != None:
             self.next.printNode()
 
+    def nodeNum(self):
+        """return the number of node from current node to the last one"""
+        if self.next == None:
+            return 1
+        else:
+            return 1 + self.next.nodeNum()
+
+    
 
 
-def haversine(lat1, lon1, lat2, lon2):
+
+def haversine(lat1, lng1, lat2, lng2):
     """
     Calculate the great circle distance between two points 
     on the earth (specified in decimal degrees)
     """
     # return {kilometer}
     # convert decimal degrees to radians 
-    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    lng1, lat1, lng2, lat2 = map(radians, [lng1, lat1, lng2, lat2])
 
     # haversine formula 
-    dlon = lon2 - lon1 
+    dlng = lng2 - lng1 
     dlat = lat2 - lat1 
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlng/2)**2
     c = 2 * asin(sqrt(a)) 
     r = 6371 # Radius of earth in kilometers. Use 3956 for miles, 6371 for kilometers
     return c * r
@@ -64,6 +73,7 @@ def FindPathDist(gpsData, startIdx, distance):
     #@return (index, time)
     pathDist = 0
     preGPS = gpsData[startIdx]
+    print preGPS
     index = startIdx
     for gps in gpsData[startIdx+1:]:
         tempDist = haversine(preGPS[1][0], preGPS[1][1], gps[1][0], gps[1][1])
@@ -74,6 +84,11 @@ def FindPathDist(gpsData, startIdx, distance):
             break
     print "Dist: " + str(pathDist)
     return index, gpsData[index][0]
+
+
+#def FindpathDist(gpsData, startIdx, distance):
+
+
 
 
 def TimeZoneCalibrate(original_time):
