@@ -32,7 +32,7 @@ class GPSPoint:
 
     def printNode(self):
         """print all nodes' data from current node to the last node"""
-        print "lat: %f  lng: %f  distance: %dm  duration: %dsec" %(self.lat, self.lng, self.distance, self.duration)
+        print "lat: %8f  lng: %8f  distance: %5dm  duration: %5dsec" %(self.lat, self.lng, self.distance, self.duration)
         if self.next != None:
             self.next.printNode()
 

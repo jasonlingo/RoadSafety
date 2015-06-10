@@ -6,7 +6,7 @@ from VideoUtil import creation_time, time_str_to_datetime
 from parameter import VIDEO_FRAME_DIRECTORY, IMAGE_QUALITY, RESIZE_X, GPS_DISTANCE, CSV_FILENAME, FOLDER_NAME, OUTPUT_DIRECTORY
 from GPXdata import FindPathDist, searchGPS
 from FileUtil import outputCSV
-from googleMap import showPath
+from GoogleMap import showPath
 from GDrive import GDriveUpload
 
 

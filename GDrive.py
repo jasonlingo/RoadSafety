@@ -4,6 +4,7 @@ import httplib2
 import pprint
 import webbrowser
 import operator
+import datetime
 
 from apiclient import errors
 from apiclient.discovery import build
@@ -113,15 +114,11 @@ def GDriveUpload(photoList, folder_name):
     Returns:
       a list of public link to the uploaded photos
     """
-
     # Check https://developers.google.com/drive/scopes for all available scopes
     OAUTH_SCOPE = 'https://www.googleapis.com/auth/drive'
 
     # Redirect URI for installed apps
     REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
-
-    # Path to the file to upload
-    #FILENAME = 'VideoFrame/GOPR0069-1.jpg'
 
     # Run through the OAuth flow and retrieve credentials
     flow = OAuth2WebServerFlow(CLIENT_ID, CLIENT_SECRET, OAUTH_SCOPE,redirect_uri=REDIRECT_URI)
@@ -137,22 +134,17 @@ def GDriveUpload(photoList, folder_name):
 
     drive_service = build('drive', 'v2', http=http)
 
-
     # create a public folder
-    folder = create_public_folder(drive_service, folder_name)
+    folder = create_public_folder(drive_service, folder_name+"-"+datetime.datetime.now().strftime("%y-%m-%d-%H-%M"))
     folder_id = folder['id']
 
-
     # Insert files
-    linkList = {}
+    links = {}
     for photo in photoList:    	
-        file = insert_file(drive_service, photo.split("/")[2], "video frame of road", folder_id, 'image/jpeg', photo)
+        file = insert_file(drive_service, photo.split("/")[-1], "video frame of road", folder_id, 'image/jpeg', photo)
         print photo + " uploaded!"
         #linkList[photo] = file['alternateLink']
         #pprint.pprint(file)
         templink = file['webContentLink'].strip().split("&")[0]
-        linkList[photo] = templink
-    return linkList
-    #webbrowser.open_new(linkToPic)
-    #file = drive_service.files().insert(body=body, media_body=media_body).execute()
-    #pprint.pprint(file)
+        links[photo] = templink
+    return links

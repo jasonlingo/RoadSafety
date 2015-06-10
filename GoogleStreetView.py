@@ -1,6 +1,6 @@
 from GPXdata import GPSPoint
 from parameter import GPS_DISTANCE, VIDEO_FRAME_DIRECTORY, FOLDER_NAME, OUTPUT_DIRECTORY
-from googleMap import showPath
+from GoogleMap import showPath
 from GDrive import GDriveUpload
 from FileUtil import outputCSV
 import urllib, urllib2
@@ -9,10 +9,9 @@ import webbrowser
 import math
 import time
 import pprint
-import sys
-
 from kml import KmzParser
 import xml
+import sys
 
 
 def getBearing(start, end):
@@ -93,16 +92,18 @@ def getStreetView(path, outputDirect):
     #for output csv
     csvDataset = []
     GPSList = {}
-    while(path.next != None):    	
-        #parameters for API
-        #if imageNum%10 == 0:
-        #	sys.stderr.write('.')
-        #	sys.stderr.flush()
-
+    loop = 0
+    while(path.next != None):    	        
+        if loop%10==0:
+            sys.stderr.write(".")
+            sys.stderr.flush()
+        loop+=1
+        
         distance = path.distance
         cutNum = int(round(distance / gps_distance_meter))
 
         if cutNum > 1:
+            #this sub-path is too long, cut it to several shorter pathes
             gpsList = getIntermediatePoint(path, path.next, cutNum)
         elif cutNum == 0:
             #distance is less than 0.5*gps_distance_meter
@@ -117,12 +118,13 @@ def getStreetView(path, outputDirect):
         else:
             gpsList = [(path, path.next)]
 
-        for x in gpsList:
-            print x[0].lat, x[0].lng, x[1].lat, x[1].lng
-        print "distance: ", distance
+        #for x in gpsList:
+        #    print x[0].lat, x[0].lng, x[1].lat, x[1].lng
+        #print "distance: ", distance
 
         for gps in gpsList:
             bearing = getBearing(gps[0], gps[1])
+            #parameters for API
             params = {
                 #image size; max=600x400
                 'size':'600x400', 
@@ -153,6 +155,7 @@ def getStreetView(path, outputDirect):
             path = path.next
 
     #get last image
+    #parameters for API
     params = {
         #image size; max=600x400
         'size':'600x400', 
@@ -183,7 +186,7 @@ def getStreetView(path, outputDirect):
     #output data to csv file
     csvDataset = []
     for link in links:
-        csvDataset.append([link.strip().split("/")[2], links[link], GPSList[link]])
+        csvDataset.append([link.strip().split("/")[-1], links[link], GPSList[link]])
         #check image link
         #webbrowser.open_new(linkList[link])
     csvDataset = sorted(csvDataset)
@@ -266,60 +269,3 @@ def getDirection(originAdd, destAdd):
     head.printNode()
     return head
 
-
-def road():
-    """
-    Get all gps data along a route
-
-    Args:
-
-    Return:
-      a list of GPS points along a given route
-    """
-    ROAD_API_URL = 'https://roads.googleapis.com/v1/snapToRoads?'
-    params = dict(
-        #path='39.336881,-76.6244629|39.3330933,-76.6257722|39.3329418,-76.62812939999999|39.3222026,-76.6280012|39.3210507,-76.6268723|39.3183694,-76.6296745|39.3025917,-76.6115682|39.3000233,-76.6116783|39.2965022,-76.6113835|39.2976857,-76.6094936|39.2985045,-76.5908606|39.2979582,-76.590825',
-        path='39.336881,-76.6244629|39.2979582,-76.590825',
-        interpolate='true',
-        key='AIzaSyCLP5d5vcwI1dY_2uLLYu17_3Itf4FWH_I'
-    )
-    resp = requests.get(url=ROAD_API_URL, params=params)
-    data = json.loads(resp.text)
-    gpsList = []
-    for x in data['snappedPoints']:
-        gpsList.append((x['location']['latitude'], x['location']['longitude']))
-    return gpsList
-
-
-def main():
-    """
-    1. Input addresses for start and end points, 
-    2. Get direction from Google MAP API, 
-    3. Extrace GPS data from direction,
-    4. Get and store street view images according to GPS and bearing,
-    5. Show path and street view points on Google map.
-    """
-    #start = GPSPoint(39.299082523,-76.589570718)
-    #end = GPSPoint(39.299560499, -76.590062392)
-    #path = [start, end] 
-
-    #get detail GPS point list and linked list
-    path, head = KmzParser("GPS/direction.kmz")
-    SVPoint = getStreetView(head, VIDEO_FRAME_DIRECTORY)
-    showPath(path, SVPoint)
-    #path = road()
-    #print len(path)
-    #showPath(path, viewpoint)
-
-    """
-    #get direction
-    head = getDirection('500 West University Parkway, Baltimore', '615 N Wolfe St Baltimore, MD 21205')
-    #Google map direction path
-    path = LinkedListToList(head)
-    #street view points
-    SVPoint = getStreetView(head, VIDEO_FRAME_DIRECTORY)
-    #show path and street view points on Google Map
-    showPath(path, SVPoint)
-    """
-if __name__ == '__main__':
-    main()
