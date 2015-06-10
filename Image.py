@@ -91,12 +91,12 @@ def getVideoFrame(gpsData, filename, flip, resize):
     vc.release()
 
     #upload photos to Google Drive
-    linkList = GDriveUpload(csvDataset, FOLDER_NAME)
+    links = GDriveUpload(csvDataset, FOLDER_NAME)
     
     #output data to csv file
     csvDataset = []
-    for link in linkList:
-        csvDataset.append([link.strip().split("/")[2], linkList[link], GPSList[link]])
+    for link in links:
+        csvDataset.append([link.strip().split("/")[2], links[link], GPSList[link]])
         #check image link
         #webbrowser.open_new(linkList[link])
     csvDataset = sorted(csvDataset)

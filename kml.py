@@ -26,7 +26,6 @@ def KmzParser(filename):
     gpsList = []
     for gps in gpsData:
         data = gps.split(",")
-        print data
         gpsList.append((float(data[1]), float(data[0])))
 
     #GPS linked list
