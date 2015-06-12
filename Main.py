@@ -8,6 +8,7 @@ from FileUtil import getFilename
 from kml import KmzParser
 from GoogleStreetView import getStreetView, LinkedListToList, getDirection
 from GoogleMap import showPath
+import optparse
 
 import pygmaps 
 import webbrowser
@@ -22,14 +23,19 @@ def main():
       2. use Google MAP kmz file
       3. use addresses
     """
-    mode = 2
+    optparser = optparse.OptionParser()
+    optparser.add_option("-m", "--mode", dest="mode", default="3", help="mode of getting Street view")
+    (opts, _) = optparser.parse_args()
 
 
 
-    if mode == 1:
+
+    if opts.mode == "1":
         """
         Splitting videos into shorter videos and mapping GPS data to each shorter videos.
         """
+        print "Start getting street view by mode 1"
+        
         #get the video file name list in a given directory
         videos = getFilename(parameter.VIDEO_DIRECTORY, parameter.VIDEO_TYPE)
         #load GPX data in a given directory
@@ -51,14 +57,16 @@ def main():
             break
 
 
-    elif mode == 2:
+    elif opts.mode == "2":
         """
-        1. Input addresses for start and end points, 
-        2. Get direction from Google MAP API, 
-        3. Extrace GPS data from direction,
-        4. Get and store street view images according to GPS and bearing,
-        5. Show path and street view points on Google map.
+        1. Get route from KMZ file
+        2. Get street view image using Google street view API
+        3. Upload images to Google Drive
+        4. Output a csv file that contains image names, image links, and GPS data,
+        5. Show path and street view points on Google map,
         """
+        print "Start getting street view by mode 2"
+
         #get detail GPS point list and linked list
         path, head = KmzParser("GPS/direction.kmz")
         head.printNode()
@@ -67,20 +75,28 @@ def main():
         showPath(path, SVPoint)
 
 
-    elif mode == 3:
+    elif opts.mode == "3":
         """
+        1. Input addresses for start and end points, 
+        2. Get direction from Google MAP API, 
+        3. Extrace GPS data from direction,
+        4. Get and store street view images according to GPS and bearing,
+        5. Show path and street view points on Google map.
+        """
+        print "Start getting street view by mode 3"
 
-        """
         originAdd = raw_input("Please enter the address of starting point: ")
         destAdd = raw_input("Please enter destination address: ")
-        #get direction
-        direction = getDirection(originAdd, destAdd)
-        #street view point
-        SVPoint = getStreetView(direction, parameter.VIDEO_FRAME_DIRECTORY+"mode3/")
-        #get GPS list from GPS linked list
-        path = LinkedListToList(direction)
-        #show path and street view points on Google MAP
-        showPath(path, SVPoint)
+        if not (originAdd == None or originAdd == "" or destAdd == None or destAdd == ""):
+            #get direction
+            direction = getDirection(originAdd, destAdd)
+            direction.printNode()
+            #street view point
+            SVPoint = getStreetView(direction, parameter.VIDEO_FRAME_DIRECTORY+"mode3/")
+            #get GPS list from GPS linked list
+            path = LinkedListToList(direction)
+            #show path and street view points on Google MAP
+            showPath(path, SVPoint)
 
 if __name__ == '__main__':
     main()
