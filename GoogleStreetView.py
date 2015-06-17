@@ -129,7 +129,7 @@ def getStreetView(path, outputDirect):
                 #image size; max=600x400
                 'size':'600x400', 
                 #horizontal field of view; max=120 
-                'fov':'120',  
+                'fov':'75',  
                 #the up or down angle of the camera relative to the Street View vehicle;  
                 #90=sky, -90=floor, 0=front    
                 'pitch':'0',       

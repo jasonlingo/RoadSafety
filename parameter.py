@@ -29,7 +29,7 @@ GOPRO_CALI_TIME = -18
 
 """the GPS distance between every video frame"""
 #kilometer
-GPS_DISTANCE = 0.1
+GPS_DISTANCE = 1.0
 
 """timezone for GPS"""
 #the GPS recorder is based on UTC/GMT+0 time, so it needs to be calibrated.
@@ -54,8 +54,12 @@ VIDEO_OUTPUT_DIRECTORY = VIDEO_DIRECTORY + "out/"
 """directory for output video frames"""
 VIDEO_FRAME_DIRECTORY = OUTPUT_DIRECTORY + "VideoFrame/"
 
+"""directory for cpatured traffic images"""
+TRAFFIC_IMAGE_DIRECTORY = OUTPUT_DIRECTORY + "Traffic_image/"
+
 
 """Google API********************************"""
 CLIENT_ID = '789788175176-rm2oshegfhah677o7ipkr048cccla62s.apps.googleusercontent.com'
 CLIENT_SECRET = '8A9OL4byJy_S7IprQBAztbmY'
 FOLDER_NAME = "RoadSafety"
+API_KEY = "AIzaSyBMZezl7cpS3jJN3jlA-dDJxi7WAV1kHgU"
