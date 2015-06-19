@@ -9,8 +9,8 @@ def getFilename(directory, filetype):
         for filename in filenames:
             if filetype in filename:
                 filenameList.append(filename)
-
         break
+
     return filenameList
 
 

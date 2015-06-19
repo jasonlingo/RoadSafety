@@ -34,7 +34,7 @@ def nextFrameNum(startTime, endTime, fps):
     return int(delta.total_seconds() * fps)
 
 
-def getVideoFrame(gpsData, filename, flip, resize):
+def getVideoFrame(gpsData, filename, flip, resize, outputDirectory):
     """get video frames every GPS_DISTANCE (in kilometers)"""
     #@parameter {list} gpsData: GPS data list
     #@parameter {string} filename: the name of the video that is going to be processed
@@ -69,8 +69,8 @@ def getVideoFrame(gpsData, filename, flip, resize):
     nextFrame = 1
     while success:
         """write time to the filename"""
-        print "output image number: " + str(imageNum).zfill(3)
-        imName = VIDEO_FRAME_DIRECTORY + name + "-" + str(imageNum).zfill(3) + '.jpg'
+        print "output image number: " + str(imageNum).zfill(4)
+        imName = outputDirectory + name + "-" + str(imageNum).zfill(4) + '.jpg'
         cv2.imwrite(imName,frame)
         csvDataset.append(imName)
         if flip or resize:
@@ -101,7 +101,7 @@ def getVideoFrame(gpsData, filename, flip, resize):
         #webbrowser.open_new(linkList[link])
     csvDataset = sorted(csvDataset)
     csvDataset.insert(0,['Image name', 'Image', 'GPS'])
-    outputCSV(csvDataset, OUTPUT_DIRECTORY + CSV_FILENAME)
+    outputCSV(csvDataset, OUTPUT_DIRECTORY + "mode1.csv")
     
 
 

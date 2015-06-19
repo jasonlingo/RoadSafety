@@ -5,8 +5,10 @@ from time import sleep
 from PIL import Image
 from GPXdata import GPSPoint
 import datetime, pytz
-from parameter import TRAFFIC_IMAGE_DIRECTORY
-
+from parameter import TRAFFIC_IMAGE_DIRECTORY, GPS_DISTANCE, FOLDER_NAME, OUTPUT_DIRECTORY
+from GoogleStreetView import combineUrl, getBearing
+from GDrive import GDriveUpload
+from FileUtil import outputCSV
 
 
 def trafficSnapshot(gpsPoint, numOfShot, interval, size):
@@ -27,41 +29,117 @@ def trafficSnapshot(gpsPoint, numOfShot, interval, size):
     #combine request url
     url = url + gps + "," + size + traffic_param
 
-    for i in range(1, numOfShot+1):
+    for i in range(numOfShot):
         webbrowser.open(url)
         #wait for the page opens
         sleep(3) 
         #get the current time of the location
         timezone, current_time = findTimeZone(node)
-        filename = TRAFFIC_IMAGE_DIRECTORY + "traffic-" + current_time + ".png"
-        command = "screencapture " + filename
+        imgName = TRAFFIC_IMAGE_DIRECTORY + "traffic-" + current_time + ".png"
+        command = "screencapture " + imgName
         #screen shot
         os.system(command)
-        im = Image.open(filename)
+        im = Image.open(imgName)
         #get captured image size
         width, height = im.size
-        #crop the captured area
-        im.crop((60, 350, width-130, height-30)).save(filename)
-        print filename + " captured!"
+        #crop the captured area, need to be customized depending on different computer
+        im.crop((60, 350, width-130, height-30)).save(imgName)
+        print imgName + " captured!"
         #program sleeps for the interval time
         sleep(interval)
 
 
-def getStreetViewByUrl(gpsPoint):
+def getStreetViewByUrl(path, outputDirectory):
     """
-    Get 
+    Snapshot Google street view directly via url and store the images
+
+    Args:
+      (GPSPoint) path: the location of previous GPS node, used to calculate the bearing
+    Return:
+      (list) SVPoint: a list of street view points
     """
-    pass
+    #Google street view url
+    url = "http://maps.google.com/maps?q=&layer=c&"
+
+    imgNum = 1;
+    distanceBound = GPS_DISTANCE*1000 #convert to meter
+    distance = distanceBound #capture the street view of the first location
+    last = False 
+    preGPS = None
+    #street view points
+    SVPoint = []
+    #csv list
+    csvDataset = []
+    GPSList = {}
+    while path.next != None or last:
+        if distance >= distanceBound or last:
+            #Google street view parameters
+            if not last:
+                bearing = getBearing(path, path.next)
+            else:
+                bearing = getBearing(preGPS, path)
+            param = {
+                #GPS location
+                "cbll" : str(path.lat) + ',' + str(path.lng),
+                #1. Street View/map arrangement, 11=upper half Street View and lower half map, 
+                #   12=mostly Street View with corner map
+                #2. Rotation angle/bearing (in degrees)
+                #3. Tilt angle: -90 (straight up) to 90 (straight down)
+                #4. Zoom level: 0-2
+                #5. Pitch (in degrees): -90 (straight up) to 90 (straight down), default 5
+                "cbp"  : "12,"+str(bearing)+",0,0,0"
+            }
+
+            SVPoint.append((path.lat, path.lng))
+            imgName = outputDirectory + "StreetView-" + str(imgNum).zfill(4) + ".jpg";
+            csvDataset.append(imgName)
+            GPSList[imgName] = (path.lat, path.lng)
+            command = "screencapture " + imgName
+            
+            #open url on browser
+            requestUrl = combineUrl(url, param)
+            webbrowser.open(requestUrl)
+            sleep(5) #wait for browser opens the page
+            
+            #screen shot
+            os.system(command)
+            im = Image.open(imgName)
+            
+            #get captured image size
+            width, height = im.size
+            
+            #crop the captured area, need to be customized depending on different computer
+            im.crop((60, 350, width-130, height-320)).save("crop" + imgName)
+            print imgName + " captured!   distance:" + str(distance)
+            
+            #program sleeps for the interval time
+            distance = 0
+            imgNum += 1;
+        distance += path.distance
+        if not last:
+            if path.next.next == None:
+                #capture the street view of the last location
+                last = True
+                preGPS = path
+            path = path.next
+        else:
+            last = False
+
+    #upload images to Google Drive
+    links = GDriveUpload(csvDataset, FOLDER_NAME)
+
+    csvDataset = []
+    for link in links:
+        csvDataset.append([link.strip().split("/")[-1], links[link], GPSList[link]])
+    csvDataset = sorted(csvDataset)
+    csvDataset.insert(0,['Image name', 'Image', 'GPS'])
+    outputCSV(csvDataset, OUTPUT_DIRECTORY + "GoogleStreetView_m4.csv")        
+
+    return SVPoint
 
 
-
-"""
-import os 
-for j in range(1):
-  for i in range(1):
-    os.system('webkit2png -F -W 1280 -H 800 -D img -o test%(imgnum)05d "http://www.google.com/mars/#lat=%(lat).6f&amp;lon=%(lon).6f&amp;zoom=8&amp;map=visible"'  % {'imgnum': j*180+i, 'lon': 2*i-180, 'lat': j-60} )
-"""
-node = GPSPoint(13.748446,100.5343197)#Bangkok
-trafficSnapshot(node, 100, 1795, 13)
-
+#test data
+#node = GPSPoint(13.7562828,100.5501984)#Bangkok
+#trafficSnapshot(node, 50, 595, 12)
+#getStreetViewByUrl(node)
 

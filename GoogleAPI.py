@@ -1,10 +1,14 @@
 from GPXdata import GPSPoint
-from parameter import API_KEY
+from parameter import API_KEY, OUTPUT_DIRECTORY
 import time
 import json, requests
 import datetime, pytz
 from pytz import timezone
 from datetime import datetime
+from GoogleMap import showGrig
+from GoogleStreetView import getDirection
+from FileUtil import outputCSV
+
 def findTimeZone(gpsPoint):
     """
     Find time zone according to GPS data by using Google Time Zone API
@@ -39,3 +43,115 @@ def findTimeZone(gpsPoint):
     
     return timezoneName, target_dt.strftime(fmt)
     
+
+def sumDirectionTIme(directions):
+    """
+    sum the traffic time for every Google direction, store the result in a csv file
+
+    Args:
+      (list) directions: a list of Google directions
+    """
+
+    """for check csv"""
+    for direction in directions:
+        print "----------------"
+        direction.printNode()
+
+
+    
+
+
+
+
+
+
+    csvDataset = [["Latitude", "Longitude", "Distance", "Duration"]]
+    longestTime = 0
+    longestDist = 0
+    longestTimeIdx = 0
+    longestDistIdx = 0
+    for i, direction in enumerate(directions):
+        title = "Direction-" + str(i+1).zfill(4) 
+        csvDataset.append([title])
+        totalTime = 0
+        totalDist = 0
+        while(direction!=None):
+            totalTime += direction.duration
+            totalDist += direction.distance
+            csvDataset.append( [direction.lat, direction.lng, direction.distance, direction.duration] )
+            direction = direction.next
+        csvDataset.append( ["Total distance:", totalDist, "Total duration:", totalTime] )
+        csvDataset.append([])
+        if totalTime > longestTime:
+            longestTime = totalTime
+            longestTimeIdx = i+1
+        if totalDist > longestDist:
+            longestDist = totalDist
+            longestDistIdx = i+1
+
+
+    csvBottom = "The direction with longest duration is: Direction-" + str(longestTimeIdx)
+    csvDataset.append( [csvBottom] )
+    csvBottom = "The direction with longest distance is: Direction-" + str(longestDistIdx)
+    csvDataset.append( [csvBottom] )
+
+    outputCSV(csvDataset, OUTPUT_DIRECTORY+"direction.csv")
+
+
+
+
+def calcGridTrafficTime(region):
+    """
+    Calculate the traffic time of grid point in a given region
+
+    Args:
+      (Linked list) region: a linked list of GPS node of a region
+    """
+    #build a rectangle by find the most top, right, left, and bottom of the GPS nodes.
+    pointer = region
+    top = region
+    bottom = region
+    left = region
+    right = region
+    while (pointer != None):
+        if pointer.lat > top.lat:
+            top = pointer
+        if pointer.lat < bottom.lat:
+            bottom = pointer
+        if pointer.lng > right.lng:
+            right = pointer
+        if pointer.lng < left.lng:
+            left = pointer
+        pointer = pointer.next
+
+    #
+    recTopRight = GPSPoint(top.lat, right.lng)
+    recTopLeft  = GPSPoint(top.lat, left.lng)
+    recBotRight = GPSPoint(bottom.lat, right.lng)
+    recBotLeft  = GPSPoint(bottom.lat, left.lng)
+
+    regionList = []
+    while(region != None):
+        regionList.append((region.lat, region.lng))
+        region = region.next
+
+    #show grid of the region and get the returned list of grid points
+    gridPoint = showGrig(regionList, recTopRight, recTopLeft, recBotRight, recBotLeft)  
+
+    #get directions for every two nodes in gridPoint
+    directions= []
+    for i, source in enumerate(gridPoint):
+        sourceStr = str(source.lat) + "," + str(source.lng)
+        for destination in gridPoint[i+1:]:
+            destStr = str(destination.lat) + "," + str(destination.lng)
+            directions.append(getDirection(sourceStr,destStr))
+
+    sumDirectionTIme(directions)
+    
+
+
+
+
+
+
+

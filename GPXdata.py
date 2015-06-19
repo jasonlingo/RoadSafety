@@ -51,6 +51,9 @@ def haversine(lat1, lng1, lat2, lng2):
     """
     Calculate the great circle distance between two points 
     on the earth (specified in decimal degrees)
+
+    Return:
+      distance between two nodes
     """
     # return {kilometer}
     # convert decimal degrees to radians 

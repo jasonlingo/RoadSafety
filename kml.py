@@ -4,13 +4,13 @@ from GPXdata import GPSPoint, haversine
 
 def KmzParser(filename):
     """
-    Parse KMZ file, extract GPS data to a list
+    Parse KMZ file produced by Google MAP, extract GPS data to a list
 
     Args:
-      filename (str): the KMZ file
+      (string) filename: the KMZ file
     Return:
-      a list of GPS points [(lat, lng), (lat,lng),...],
-      a linked list of GPS points
+      (list) gpsList: a list of GPS points [(lat, lng), (lat,lng),...],
+      (linked list) head: a linked list of GPS points
     """
     kmz = ZipFile(filename, 'r')
     kml = kmz.open('doc.kml','r')

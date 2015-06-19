@@ -1,5 +1,5 @@
 from GPXdata import GPSPoint
-from parameter import GPS_DISTANCE, VIDEO_FRAME_DIRECTORY, FOLDER_NAME, OUTPUT_DIRECTORY
+from parameter import GPS_DISTANCE, VIDEO_FRAME_DIRECTORY, FOLDER_NAME, OUTPUT_DIRECTORY, API_KEY
 from GoogleMap import showPath
 from GDrive import GDriveUpload
 from FileUtil import outputCSV
@@ -143,7 +143,7 @@ def getStreetView(path, outputDirect):
             #get request url
             url = combineUrl(STREET_API_URL, params)
             #retrive image
-            imName = outputDirect + "StreetView-" + str(imageNum).zfill(3) + '.jpg'
+            imName = outputDirect + "StreetView-" + str(imageNum).zfill(4) + '.jpg'
             urllib.urlretrieve(url, imName)
             #for output csv
             csvDataset.append(imName)
@@ -172,7 +172,7 @@ def getStreetView(path, outputDirect):
         'key':'AIzaSyCLP5d5vcwI1dY_2uLLYu17_3Itf4FWH_I'
     }
     url = combineUrl(STREET_API_URL, params)
-    imName = outputDirect + "StreetView-" + str(imageNum).zfill(3) + '.jpg'
+    imName = outputDirect + "StreetView-" + str(imageNum).zfill(4) + '.jpg'
     urllib.urlretrieve(url, imName)
     #for output csv
     csvDataset.append(imName)
@@ -257,15 +257,18 @@ def getDirection(originAdd, destAdd):
     params = dict(
         origin=originAdd,
         destination=destAdd,
-        departure_time=str(time.strftime("%H%M%S")) #format: HHMMSS
+        departure_time=str(time.strftime("%H%M%S")), #format: HHMMSS
+        key=API_KEY
     )
     #get direction from Google MAP API
     resp = requests.get(url=DIRECTION_API_URL, params=params)
     #transform response to json format
     data = json.loads(resp.text)
-    #pprint.pprint(data)
+    
     #get GPS data from json
     head = getJSON_GPS(data)
-    head.printNode()
+    #head.printNode()
     return head
+
+
 

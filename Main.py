@@ -8,6 +8,8 @@ from FileUtil import getFilename
 from kml import KmzParser
 from GoogleStreetView import getStreetView, LinkedListToList, getDirection
 from GoogleMap import showPath
+from web_snapshot import getStreetViewByUrl
+from GoogleAPI import calcGridTrafficTime
 import optparse
 
 import pygmaps 
@@ -26,8 +28,6 @@ def main():
     optparser = optparse.OptionParser()
     optparser.add_option("-m", "--mode", dest="mode", default="3", help="mode of getting Street view")
     (opts, _) = optparser.parse_args()
-
-
 
 
     if opts.mode == "1":
@@ -53,7 +53,7 @@ def main():
 
         #get video frames according to the GPS distance
         for video in videos:
-            getVideoFrame(gpsData, parameter.VIDEO_DIRECTORY + video, parameter.FLIP_IMAGE, resize)
+            getVideoFrame(gpsData, parameter.VIDEO_DIRECTORY + video, parameter.FLIP_IMAGE, resize, parameter.VIDEO_FRAME_DIRECTORY+"mode1/")
             break
 
 
@@ -63,7 +63,7 @@ def main():
         2. Get street view image using Google street view API
         3. Upload images to Google Drive
         4. Output a csv file that contains image names, image links, and GPS data,
-        5. Show path and street view points on Google map,
+        5. Show path and street view points on Google map
         """
         print "Start getting street view by mode 2"
 
@@ -97,6 +97,32 @@ def main():
             path = LinkedListToList(direction)
             #show path and street view points on Google MAP
             showPath(path, SVPoint)
+    
+
+    elif opts.mode == "4":
+        """
+        1. Get route from KMZ file
+        2. Get street view image using Google street view url
+        3. Upload images to Google Drive
+        4. Output a csv file that contains image names, image links, and GPS data,
+        5. Show path and street view points on Google map,      
+        """
+        print "Start getting street view by mode 4"
+
+        #get detail GPS point list and linked list
+        path, head = KmzParser("GPS/Bangkok_direction.kmz")
+        head.printNode()
+        #street view point
+        SVPoint = getStreetViewByUrl(head, parameter.VIDEO_FRAME_DIRECTORY+"mode4/")
+        showPath(path, SVPoint)        
+
+
+    elif opts.mode == "5":
+        path, head = KmzParser("GPS/Bangkok.kmz")
+        calcGridTrafficTime(head)
+        
+
+
 
 if __name__ == '__main__':
     main()
