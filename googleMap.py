@@ -83,14 +83,62 @@ def showPath(path, framePoint):
     webbrowser.open_new(url)
 
 
-def showGrig(region, recTopRight, recTopLeft, recBotRight, recBotLeft):
+def findInnerGrid(region, recTopRight, recTopLeft, recBotRight, recBotLeft):
     """
-    show region with grid on Google map
+    find the inner grid within a region
+
+    Args:
+      (list) region: a list of GPS data of a region
+      (GPSPoint) recTopRight, recTopLeft, recBotRight, recBotLeft:
+                 the four corners of a rectangle that contains the region           
+    Return:
+      (list) gridPoint: a list of GPSPoints that are within the region
+    """ 
+   
+    #add grids
+    #find the distance (km) of two sides
+    width = haversine(recTopRight.lat, recTopRight.lng,
+                      recTopLeft.lat, recTopLeft.lng)
+    height = haversine(recTopRight.lat, recTopRight.lng,
+                       recBotRight.lat, recBotRight.lng)
+    
+    #number of segmentations (segmentated every 10km)
+    numWidth = int(width)/GRID_DISTANCE
+    numHeight = int(height)/GRID_DISTANCE
+
+    #vertical segmentation distance
+    lngDiff = (recTopRight.lng - recTopLeft.lng)/numWidth
+
+    #horizontal segmentation distance 
+    latDiff = (recTopRight.lat - recBotRight.lat)/numHeight
+
+    #find grid point
+    gridPoint = []
+    lng = recTopLeft.lng
+    while(lng <= recTopRight.lng*1.0001):
+        lat = recBotRight.lat
+        while(lat <= recTopRight.lat*1.0001):
+            point = GPSPoint(lat, lng)
+            if containPoint(region, point):
+                #if the region contains the point
+                gridPoint.append(point)
+            lat += latDiff
+        lng += lngDiff
+
+    return gridPoint
+
+
+def showGrig(region, recTopRight, recTopLeft, recBotRight, recBotLeft, gridPoint, longestTimeDirection):
+    """
+    show region with grid points on Google map and 
+    the direction with longest duration
 
     Args:
       (list) region: a list of GPS data of a region
       (GPSPoint) recTopRight, recTopLeft, recBotRight, recBotLeft:
                  the four corners of a rectangle that contains the region
+      (list) gridPoint: the points within the region
+      (linked list/GPSPoint) longestTimeDirection: the direction with longest duration           
     """
 
     #set middle point
@@ -110,7 +158,6 @@ def showGrig(region, recTopRight, recTopLeft, recBotRight, recBotLeft):
     newRectangle = list(rectangle)
     mymap.addpath(newRegion, "#FF0000")
     mymap.addpath(newRectangle, "#0000FF")
-
 
     #add grids
     #find the distance (km) of two sides
@@ -141,26 +188,18 @@ def showGrig(region, recTopRight, recTopLeft, recBotRight, recBotLeft):
         mymap.addpath(line, "#0000FF")
         lat += latDiff
 
-
-    #find grid point
-    gridPoint = []
-    lng = recTopLeft.lng
-    while(lng <= recTopRight.lng*1.0001):
-        lat = recBotRight.lat
-        while(lat <= recTopRight.lat*1.0001):
-            point = GPSPoint(lat, lng)
-            if containPoint(region, point):
-                #if the region contains the point
-                mymap.addpoint(lat, lng, "#FF0000")
-                gridPoint.append(point)
-            lat += latDiff
-        lng += lngDiff
-     
+    #add the direction with longest duration
+    longestTimeDirectionList = longestTimeDirection.toList()
+    mymap.addpath(longestTimeDirectionList, "#000000") #black
+    
+    #add grid points
+    for point in gridPoint:
+        mymap.addpoint(point.lat, point.lng, "#FF0000")
 
     mapFilename = OUTPUT_DIRECTORY + "mapGrid.html"
     mymap.draw('./'+mapFilename)
-    #sample: "file:///Users/Jason/GitHub/RoadSeftey/RoadSafety/map.html"
+    #sample: "file:///Users/Jason/GitHub/RoadSeftey/RoadSafety/mapGrid.html"
     url = "file://" + os.getcwd() + "/" + mapFilename
     webbrowser.open_new(url)
 
-    return gridPoint
+

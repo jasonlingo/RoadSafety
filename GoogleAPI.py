@@ -5,9 +5,11 @@ import json, requests
 import datetime, pytz
 from pytz import timezone
 from datetime import datetime
-from GoogleMap import showGrig
+from GoogleMap import showGrig, findInnerGrid
 from GoogleStreetView import getDirection
 from FileUtil import outputCSV
+from time import sleep
+import sys
 
 def findTimeZone(gpsPoint):
     """
@@ -50,19 +52,14 @@ def sumDirectionTIme(directions):
 
     Args:
       (list) directions: a list of Google directions
+    Return:
+      (linked list) GPSPoint: return the direction with longest time
     """
 
     """for check csv"""
     for direction in directions:
         print "----------------"
         direction.printNode()
-
-
-    
-
-
-
-
 
 
     csvDataset = [["Latitude", "Longitude", "Distance", "Duration"]]
@@ -97,6 +94,8 @@ def sumDirectionTIme(directions):
 
     outputCSV(csvDataset, OUTPUT_DIRECTORY+"direction.csv")
 
+    #return the direction with longest time
+    return directions[longestTimeIdx-1]
 
 
 
@@ -135,18 +134,30 @@ def calcGridTrafficTime(region):
         regionList.append((region.lat, region.lng))
         region = region.next
 
-    #show grid of the region and get the returned list of grid points
-    gridPoint = showGrig(regionList, recTopRight, recTopLeft, recBotRight, recBotLeft)  
+    #find the inner point in the region
+    gridPoint = findInnerGrid(regionList, recTopRight, recTopLeft, recBotRight, recBotLeft) 
 
     #get directions for every two nodes in gridPoint
+    #ask before perform getting directions since the total 
+    #number of direction might be very large    
+    print "Total number of directions: " + str(len(gridPoint)*(len(gridPoint)-1)/2)
+    continue_flag = raw_input("Continue? (Y/N):")
+    if continue_flag == "n" or continue_flag == "N":
+        return;
+
     directions= []
     for i, source in enumerate(gridPoint):
+        sys.stderr.write(".")
         sourceStr = str(source.lat) + "," + str(source.lng)
         for destination in gridPoint[i+1:]:
             destStr = str(destination.lat) + "," + str(destination.lng)
             directions.append(getDirection(sourceStr,destStr))
+            sleep(0.6) #2 requests per second for free account
 
-    sumDirectionTIme(directions)
+    longestTimeDirection = sumDirectionTIme(directions)
+
+    #show grid of the region and get the returned list of grid points
+    showGrig(regionList, recTopRight, recTopLeft, recBotRight, recBotLeft, gridPoint, longestTimeDirection)      
     
 
 

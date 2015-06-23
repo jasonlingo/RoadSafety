@@ -29,7 +29,7 @@ GOPRO_CALI_TIME = -18
 
 """the GPS distance between every video frame"""
 #kilometer
-GPS_DISTANCE = 0.2
+GPS_DISTANCE = 0.1
 
 """timezone for GPS"""
 #the GPS recorder is based on UTC/GMT+0 time, so it needs to be calibrated.
@@ -37,8 +37,7 @@ GPS_TIME_ZONE = -5
 
 """Grid distance"""
 #in kilometer
-GRID_DISTANCE = 13
-
+GRID_DISTANCE = 5
 
 """Directories*******************************"""
 OUTPUT_DIRECTORY = "output/"

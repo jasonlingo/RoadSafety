@@ -68,7 +68,7 @@ def main():
         print "Start getting street view by mode 2"
 
         #get detail GPS point list and linked list
-        path, head = KmzParser("GPS/direction.kmz")
+        path, head = KmzParser("GPS/Bangkok.kmz")
         head.printNode()
         #street view point
         SVPoint = getStreetView(head, parameter.VIDEO_FRAME_DIRECTORY+"mode2/")
@@ -110,7 +110,7 @@ def main():
         print "Start getting street view by mode 4"
 
         #get detail GPS point list and linked list
-        path, head = KmzParser("GPS/Bangkok_direction.kmz")
+        path, head = KmzParser("GPS/Bangkok.kmz")
         head.printNode()
         #street view point
         SVPoint = getStreetViewByUrl(head, parameter.VIDEO_FRAME_DIRECTORY+"mode4/")
@@ -118,9 +118,9 @@ def main():
 
 
     elif opts.mode == "5":
-        path, head = KmzParser("GPS/Bangkok.kmz")
+        path, head = KmzParser("GPS/Delhi.kmz")
         calcGridTrafficTime(head)
-        
+
 
 
 

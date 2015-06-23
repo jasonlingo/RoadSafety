@@ -43,7 +43,16 @@ class GPSPoint:
         else:
             return 1 + self.next.nodeNum()
 
-    
+    def toList(self):
+        """tranform linked list to list and return it"""
+        GPSList = []
+        point = self
+        while(point!=None):
+            GPSList.append((point.lat, point.lng))
+            point = point.next
+        return GPSList
+
+
 
 
 

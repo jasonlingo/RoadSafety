@@ -91,15 +91,16 @@ def getStreetViewByUrl(path, outputDirectory):
             }
 
             SVPoint.append((path.lat, path.lng))
-            imgName = outputDirectory + "StreetView-" + str(imgNum).zfill(4) + ".jpg";
-            csvDataset.append(imgName)
-            GPSList[imgName] = (path.lat, path.lng)
+            imgName = outputDirectory + "original/" + "StreetView-" + str(imgNum).zfill(4) + ".jpg";
+            cropImgName = outputDirectory + "StreetView-" + str(imgNum).zfill(4) + ".jpg";
+            csvDataset.append(cropImgName)
+            GPSList[cropImgName] = (path.lat, path.lng)
             command = "screencapture " + imgName
             
             #open url on browser
             requestUrl = combineUrl(url, param)
             webbrowser.open(requestUrl)
-            sleep(5) #wait for browser opens the page
+            sleep(6) #wait for browser opens the page
             
             #screen shot
             os.system(command)
@@ -109,8 +110,8 @@ def getStreetViewByUrl(path, outputDirectory):
             width, height = im.size
             
             #crop the captured area, need to be customized depending on different computer
-            im.crop((60, 350, width-130, height-320)).save("crop" + imgName)
-            print imgName + " captured!   distance:" + str(distance)
+            im.crop((60, 350, width-130, height-320)).save(cropImgName)
+            print cropImgName + " captured!   distance:" + str(distance)
             
             #program sleeps for the interval time
             distance = 0
