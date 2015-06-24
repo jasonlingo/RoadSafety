@@ -83,7 +83,7 @@ def showPath(path, framePoint):
     webbrowser.open_new(url)
 
 
-def findInnerGrid(region, recTopRight, recTopLeft, recBotRight, recBotLeft):
+def findInnerGrid(region, recTopRight=None, recTopLeft=None, recBotRight=None, recBotLeft=None):
     """
     find the inner grid within a region
 
@@ -107,7 +107,7 @@ def findInnerGrid(region, recTopRight, recTopLeft, recBotRight, recBotLeft):
     numHeight = int(height)/GRID_DISTANCE
 
     #vertical segmentation distance
-    lngDiff = (recTopRight.lng - recTopLeft.lng)/numWidth
+    lngDiff = (recTopRight.lng - recTopLeft.lng)/numWidth #need to deal with divide by zero
 
     #horizontal segmentation distance 
     latDiff = (recTopRight.lat - recBotRight.lat)/numHeight

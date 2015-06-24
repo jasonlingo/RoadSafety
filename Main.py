@@ -11,9 +11,9 @@ from GoogleMap import showPath
 from web_snapshot import getStreetViewByUrl
 from GoogleAPI import calcGridTrafficTime
 import optparse
-
 import pygmaps 
 import webbrowser
+from Mode.TaxiExperiment import TaxiExperiment
 
 
 def main():
@@ -68,11 +68,10 @@ def main():
         print "Start getting street view by mode 2"
 
         #get detail GPS point list and linked list
-        path, head = KmzParser("GPS/Bangkok.kmz")
-        head.printNode()
+        head = KmzParser("GPS/Bangkok.kmz")
         #street view point
         SVPoint = getStreetView(head, parameter.VIDEO_FRAME_DIRECTORY+"mode2/")
-        showPath(path, SVPoint)
+        showPath(head.toList(), SVPoint)
 
 
     elif opts.mode == "3":
@@ -110,20 +109,32 @@ def main():
         print "Start getting street view by mode 4"
 
         #get detail GPS point list and linked list
-        path, head = KmzParser("GPS/Bangkok.kmz")
+        head = KmzParser("GPS/Bangkok.kmz")
         head.printNode()
         #street view point
         SVPoint = getStreetViewByUrl(head, parameter.VIDEO_FRAME_DIRECTORY+"mode4/")
-        showPath(path, SVPoint)        
+        showPath(head.toList, SVPoint)        
 
 
     elif opts.mode == "5":
         """
-        
+        Divide the given region into grid and calculate 
+        point to point traffic itme.
         """
-        path, head = KmzParser("GPS/Delhi.kmz")
+        head = KmzParser("GPS/Delhi.kmz")
         calcGridTrafficTime(head)
 
+
+    elif opts.mode == "6":
+        """
+        TaxiExperiment: 
+        When a crash happens, find the taxi that can arrive the 
+        crash location with minimal time among all the taxis in 
+        the region.        
+        """
+        ex = TaxiExperiment("GPS_data/Delhi.kmz")
+        ex.addTaxi("GPS_data/Taxi.kmz")
+        ex.addRandomTaxi(50)
 
 
 

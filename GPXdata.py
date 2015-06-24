@@ -7,22 +7,22 @@ from math import radians, cos, sin, asin, sqrt
 
 
 class GPSPoint:
-    """Class of GPS point, containing the latitude and longitude information of a point
-
+    """
+    Class of GPS point, containing the latitude and longitude information of a point
     """
     #GPS data
     lat = None #latitude
     lng = None #longitude
     
     #direction data
-    distance = 0 #distance (meters) for this step
-    duration = 0 #time (seconds) for this step
+    distance = 0 #distance (meters) from this node to the next node
+    duration = 0 #time (seconds) from this node to the next node
 
     #next node
     next = None
 
     def __init__(self, latitude, longitude, distance=0, duration=0):
-        """constructor
+        """
         set distance and duration to 0 if we don't get the data for those two variable
         """
         self.lat  = latitude
@@ -52,14 +52,20 @@ class GPSPoint:
             point = point.next
         return GPSList
 
-
-
+    def getTail(self):
+        """return the last node"""
+        pointer = self
+        while pointer.next != None:
+            pointer = pointer.next
+        return pointer
 
 
 def haversine(lat1, lng1, lat2, lng2):
     """
     Calculate the great circle distance between two points 
     on the earth (specified in decimal degrees)
+
+    Args:
 
     Return:
       distance between two nodes
@@ -96,11 +102,6 @@ def FindPathDist(gpsData, startIdx, distance):
             break
     print "Dist: " + str(pathDist)
     return index, gpsData[index][0]
-
-
-#def FindpathDist(gpsData, startIdx, distance):
-
-
 
 
 def TimeZoneCalibrate(original_time):
@@ -148,10 +149,3 @@ def searchGPS(gpsData, time):
         else:
             return mid + 1
 
-
-def mapGPS(gpsData, start, end):
-    """find the nearest gps data according to the search_time"""
-    #start_idx = searchGPS(gpsData, start)
-    #end_idx = searchGPS(gpsData, end)
-
-    pass

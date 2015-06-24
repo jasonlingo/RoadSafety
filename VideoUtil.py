@@ -3,7 +3,6 @@ import os, sys, subprocess, shlex, re, math, datetime
 from optparse import OptionParser
 from parameter import VIDEO_OUTPUT_DIRECTORY, GOPRO_CALI_TIME
 from subprocess import call
-from GPXdata import mapGPS
 import numpy as np
 import cv2
 import datetime
@@ -91,7 +90,6 @@ def VideoSplit(directory, filename, split_length, creation_time, gpsData):
     for n in range(0, split_count):
         new_creation_time = calculate_time(creation_time, split_length*n)
         end_time = calculate_time(str(new_creation_time), split_length)
-        #(latitude, longitude, elevation) = mapGPS(gpsData, new_creation_time, end_time)
 
         split_cmd = "ffmpeg -i '"+directory+filename+"'" + ' -metadata creation_time="' + str(new_creation_time) + '"' + " -vcodec copy "
         
