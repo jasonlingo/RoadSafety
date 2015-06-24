@@ -43,7 +43,7 @@ def trafficSnapshot(gpsPoint, numOfShot, interval, size):
         #get captured image size
         width, height = im.size
         #crop the captured area, need to be customized depending on different computer
-        im.crop((60, 350, width-130, height-30)).save(imgName)
+        im.crop((500, 350, width-300, height-30)).save(imgName)
         print imgName + " captured!"
         #program sleeps for the interval time
         sleep(interval)
@@ -140,7 +140,7 @@ def getStreetViewByUrl(path, outputDirectory):
 
 
 #test data
-#node = GPSPoint(13.7562828,100.5501984)#Bangkok
-#trafficSnapshot(node, 50, 595, 12)
+#node = GPSPoint(28.6315405,77.1591438)#New Delhi
+#trafficSnapshot(node, 48, 1795, 11)
 #getStreetViewByUrl(node)
 

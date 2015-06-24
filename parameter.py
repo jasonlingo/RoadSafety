@@ -37,7 +37,7 @@ GPS_TIME_ZONE = -5
 
 """Grid distance"""
 #in kilometer
-GRID_DISTANCE = 5
+GRID_DISTANCE = 10
 
 """Directories*******************************"""
 OUTPUT_DIRECTORY = "output/"

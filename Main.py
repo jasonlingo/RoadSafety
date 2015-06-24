@@ -118,6 +118,9 @@ def main():
 
 
     elif opts.mode == "5":
+        """
+        
+        """
         path, head = KmzParser("GPS/Delhi.kmz")
         calcGridTrafficTime(head)
 
