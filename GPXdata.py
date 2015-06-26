@@ -59,6 +59,23 @@ class GPSPoint:
             pointer = pointer.next
         return pointer
 
+    def getTotalDistance(self):
+        """return the total distance from current node to the last node"""
+        totDist = 0
+        pointer = self
+        while pointer != None:
+            totDist += pointer.distance
+            pointer = pointer.next
+        return totDist
+
+    def getTotalDuration(self):
+        """return the total time from current node to the last node"""
+        totTime = 0
+        pointer = self
+        while pointer != None:
+            totTime += pointer.duration
+            pointer = pointer.next
+        return totTime
 
 def haversine(lat1, lng1, lat2, lng2):
     """

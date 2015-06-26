@@ -12,7 +12,7 @@ import pprint
 from kml import KmzParser
 import xml
 import sys
-
+from time import sleep
 
 def getBearing(start, end):
     """
@@ -268,6 +268,7 @@ def getDirection(originAdd, destAdd):
     #get GPS data from json
     head = getJSON_GPS(data)
     #head.printNode()
+    sleep(0.1)
     return head
 
 

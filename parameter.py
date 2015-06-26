@@ -37,7 +37,7 @@ GPS_TIME_ZONE = -5
 
 """Grid distance"""
 #in kilometer
-GRID_DISTANCE = 10
+GRID_DISTANCE = 5
 
 """Directories*******************************"""
 OUTPUT_DIRECTORY = "output/"
@@ -62,4 +62,4 @@ TRAFFIC_IMAGE_DIRECTORY = OUTPUT_DIRECTORY + "Traffic_image/"
 CLIENT_ID = '789788175176-rm2oshegfhah677o7ipkr048cccla62s.apps.googleusercontent.com'
 CLIENT_SECRET = '8A9OL4byJy_S7IprQBAztbmY'
 FOLDER_NAME = "RoadSafety"
-API_KEY = "AIzaSyBMZezl7cpS3jJN3jlA-dDJxi7WAV1kHgU"
+API_KEY = "AIzaSyCuOTTRq_mfEyzQCBYXnbD9Jr0XDRYnOAg"

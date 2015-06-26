@@ -1,48 +1,28 @@
-#map related utilities
-
-#to import other module from other package
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from parameter import GRID_DISTANCE
-import numpy as np
-
-def haversine(lat1, lng1, lat2, lng2):
-    """
-    Calculate the great circle distance between two points 
-    on the earth (specified in decimal degrees)
-
-    Args:
-      (float) lat1, lng1: the GPS of the first point
-      (float) lat2, lng2: the GPS of the second point
-    Return:
-      distance between two nodes
-    """
-    # return {kilometer}
-    # convert decimal degrees to radians 
-    lng1, lat1, lng2, lat2 = map(radians, [lng1, lat1, lng2, lat2])
-
-    # haversine formula 
-    dlng = lng2 - lng1 
-    dlat = lat2 - lat1 
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlng/2)**2
-    c = 2 * asin(sqrt(a)) 
-    r = 6371 # Radius of earth in kilometers. Use 3956 for miles, 6371 for kilometers
-    return c * r
+from Map.haversine import haversine
+from shapely.geometry import LineString
+#import numpy as np
 
 
 class RegionMap():
     """The map of a region"""
     #the GPS data of the region in this map
     region = None
+    #the list of all the GPS points in region linked list
+    regionList = None
+    #have the additional line connects the last point with the first point
+    CloseRegionList = None 
+    #the 
     top    = None
     bottom = None
     right  = None
     left   = None
     
-    #grid points
-    gridMatrix = None
+    matrix = None
 
     def __init__(self, region):
         """
@@ -53,6 +33,26 @@ class RegionMap():
               the GPS data of the region
         """
         self.region = region
+        self.regionList = region.toList()
+        self.CloseRegionList = region.toList()
+        self.CloseRegionList.append((region.lat, region.lng))
+
+        ### find the borders ###
+        pointer = self.region
+        self.top    = self.region.lat
+        self.bottom = self.region.lat
+        self.right  = self.region.lng
+        self.left   = self.region.lng
+        while(pointer != None):
+            if pointer.lat > self.top:
+                self.top = pointer.lat
+            if pointer.lat < self.bottom:
+                self.bottom = pointer.lat
+            if pointer.lng > self.right:
+                self.right = pointer.lng
+            if pointer.lng < self.left:
+                self.left = pointer.lng
+            pointer = pointer.next
 
 
     def findInnerGrid(self, gridSize=GRID_DISTANCE):
@@ -66,22 +66,6 @@ class RegionMap():
           (list) gridPoint: a list of GPSPoints that are within the region
         """ 
         ### find the for corner in the rectangle that contains the region ###
-        pointer = self.region
-        self.top    = self.region.lat
-        self.bottom = self.region.lat
-        self.right  = self.region.lng
-        self.left   = self.region.lng
-        while(pointer != None):
-            if pointer.lat > top:
-                top = pointer.lat
-            if pointer.lat < bottom:
-                bottom = pointer.lat
-            if pointer.lng > right:
-                right = pointer.lng
-            if pointer.lng < left:
-                left = pointer.lng
-            pointer = pointer.next
-
         TopRight = GPSPoint(top, right)
         TopLeft  = GPSPoint(top, left)
         BotRight = GPSPoint(bottom, right)
@@ -144,20 +128,17 @@ class RegionMap():
         #   check whether the line across the region line segmentation,
         #3. If the line across the region line for odd times, then the point is in the region
 
-        regionList = self.region.toList()
-        #to add the first point to the tail of this list to enclose the region
-        regionList.append((self.region.lat, self.region.lng))
-
         ### find a point outside the region ###
-        highest = (top*0.0001, right)
+        highest = (self.top*1.0001, self.right*1.0001)
         #the number of intersection of the region line and 
         #the line connects the outside point and the checkPoint
         intersectNum = 0
         #initialize
-        pre = firstPoint
+
+        pre = self.CloseRegionList[0]
         #the line connects the ckeckPoint and outside point
         line1 = LineString([(highest[0], highest[1]), (checkPoint.lat, checkPoint.lng)])         
-        for point in region[1:]:
+        for point in self.CloseRegionList[1:]:
             #region line
             line2 = LineString([(pre[0], pre[1]), (point[0], point[1])]) 
             if str(line1.intersection(line2)) != "GEOMETRYCOLLECTION EMPTY":
@@ -167,7 +148,7 @@ class RegionMap():
         return intersectNum%2 == 1
 
 
-    class gridNode{
+    class gridNode:
         """The data structure that stores the grid node infor"""
         #GPS data
         lat = None
@@ -179,9 +160,5 @@ class RegionMap():
             """Construct the node"""
             self.lat = lat
             self.lng = lng
-    }
-
-
-
-
+    
 

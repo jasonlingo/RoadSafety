@@ -133,8 +133,15 @@ def main():
         the region.        
         """
         ex = TaxiExperiment("GPS_data/Delhi.kmz")
-        ex.addTaxi("GPS_data/Taxi.kmz")
+        #Hospitals must be added before adding taxis and crashes
+        ex.addHospital("GPS_data/Hospital.kmz")
+        #ex.addTaxi("GPS_data/Taxi.kmz")
         ex.addRandomTaxi(50)
+
+        ex.addRandomCrash(5)
+
+        ex.showMap()
+        #ex.MapMatrix.printArea()
 
 
 
