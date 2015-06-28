@@ -99,7 +99,7 @@ class TaxiExperiment:
         pointer = self.taxis
         while pointer != None:
             area = self.MapMatrix.findArea(pointer)
-            taxi = Taxi(pointer.lat, pointer.lng)
+            taxi = Taxi(pointer.lat, pointer.lng, self.hospitals)
             area.addHospital(taxi)
             pointer = pointer.next            
 
@@ -346,7 +346,7 @@ class TaxiExperiment:
         if len(self.sendHistory) > 0:
             for direction in self.sendHistory:
                 i += 1
-                mymap.addpath(direction.toList(), "#ff6700")
+                mymap.addpath(direction.toList(), "#0000FF")
                 totalDuration += direction.getTotalDuration()
                 #direction = getRoadGPS(direction)
                 #mymap.addpath(direction.toList(), "#0038ff")

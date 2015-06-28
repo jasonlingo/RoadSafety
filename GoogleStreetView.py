@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 from GPXdata import GPSPoint
 from parameter import GPS_DISTANCE, VIDEO_FRAME_DIRECTORY, FOLDER_NAME, OUTPUT_DIRECTORY, API_KEY
 from GoogleMap import showPath
@@ -9,7 +13,7 @@ import webbrowser
 import math
 import time
 import pprint
-from kml import KmzParser
+from Util.kml import KmzParser
 import xml
 import sys
 from time import sleep
@@ -181,7 +185,9 @@ def getStreetView(path, outputDirect):
     SVPoint.append((path.lat, path.lng))
      
     #upload images to Google Drive
-    links = GDriveUpload(csvDataset, FOLDER_NAME)
+    lastForderName = outputDirect.strip().split("/")[-2]
+    print lastForderName
+    links = GDriveUpload(csvDataset, FOLDER_NAME+"-"+lastForderName)
 
     #output data to csv file
     csvDataset = []
@@ -191,7 +197,7 @@ def getStreetView(path, outputDirect):
         #webbrowser.open_new(linkList[link])
     csvDataset = sorted(csvDataset)
     csvDataset.insert(0,['Image name', 'Image', 'GPS'])
-    outputCSV(csvDataset, OUTPUT_DIRECTORY + "GoogleStreetView.csv")
+    outputCSV(csvDataset, outputDirect + "GoogleStreetView.csv")
 
     return SVPoint
 

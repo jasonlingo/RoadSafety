@@ -62,7 +62,7 @@ def containPoint(region, checkPoint):
 
 
 
-def showPath(path, framePoint):
+def showPath(path, framePoint, outputDirectory):
     """show GPS path on Google map"""
     #@parameter {list} path: a list of GPS data of a path
     #@parameter {list} framePoint: a list of GPS data of extracted video frames
@@ -76,7 +76,7 @@ def showPath(path, framePoint):
             firstPoint = False
         else:
             mymap.addpoint(point[0], point[1], "#0000FF")
-    mapFilename = OUTPUT_DIRECTORY + "map.html"
+    mapFilename = outputDirectory + "map.html"
     mymap.draw('./'+mapFilename)
     #sample: "file:///Users/Jason/GitHub/RoadSeftey/RoadSafety/map.html"
     url = "file://" + os.getcwd() + "/" + mapFilename

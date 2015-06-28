@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 import datetime
 import parameter
 from Image import getVideoFrame
 from GPXdata import parseGPX
 from FileUtil import getFilename
-from kml import KmzParser
+from Util.kml import KmzParser
 from GoogleStreetView import getStreetView, LinkedListToList, getDirection
 from GoogleMap import showPath
 from web_snapshot import getStreetViewByUrl
@@ -68,10 +71,11 @@ def main():
         print "Start getting street view by mode 2"
 
         #get detail GPS point list and linked list
-        head = KmzParser("GPS/Bangkok.kmz")
+        head = KmzParser("GPS_data/Thailand_roads/Rattanathibet.kmz")
         #street view point
-        SVPoint = getStreetView(head, parameter.VIDEO_FRAME_DIRECTORY+"mode2/")
-        showPath(head.toList(), SVPoint)
+        outputDirectory = parameter.VIDEO_FRAME_DIRECTORY+"mode2/Rattanathibet/"
+        SVPoint = getStreetView(head, outputDirectory)
+        showPath(head.toList(), SVPoint, outputDirectory)
 
 
     elif opts.mode == "3":
@@ -91,11 +95,12 @@ def main():
             direction = getDirection(originAdd, destAdd)
             direction.printNode()
             #street view point
-            SVPoint = getStreetView(direction, parameter.VIDEO_FRAME_DIRECTORY+"mode3/")
+            outputDirectory = parameter.VIDEO_FRAME_DIRECTORY+"mode3/"
+            SVPoint = getStreetView(direction, outputDirectory)
             #get GPS list from GPS linked list
             path = LinkedListToList(direction)
             #show path and street view points on Google MAP
-            showPath(path, SVPoint)
+            showPath(path, SVPoint, outputDirectory)
     
 
     elif opts.mode == "4":
@@ -109,11 +114,12 @@ def main():
         print "Start getting street view by mode 4"
 
         #get detail GPS point list and linked list
-        head = KmzParser("GPS/Bangkok.kmz")
+        head = KmzParser("GPS_data/Thailand_roads/Sukhumvit_road.kmz")
         head.printNode()
         #street view point
-        SVPoint = getStreetViewByUrl(head, parameter.VIDEO_FRAME_DIRECTORY+"mode4/")
-        showPath(head.toList, SVPoint)        
+        outputDirectory = parameter.VIDEO_FRAME_DIRECTORY+"mode4/Sukhumvit/"
+        SVPoint = getStreetViewByUrl(head, outputDirectory)
+        showPath(head.toList, SVPoint, outputDirectory)        
 
 
     elif opts.mode == "5":
@@ -136,10 +142,22 @@ def main():
         #Hospitals must be added before adding taxis and crashes
         ex.addHospital("GPS_data/Hospital.kmz")
         #ex.addTaxi("GPS_data/Taxi.kmz")
-        ex.addRandomTaxi(50)
-
-        ex.addRandomCrash(5)
-
+        try:
+            taxiNum = raw_input("How many taxis? ")
+            taxiNum = int(taxiNum)
+            print "The number of taxis is ", taxiNum
+        except ValueError:
+            print "The input format is wrong. We will use 50 taxis in this experiment."
+            taxiNum = 50;
+        ex.addRandomTaxi(taxiNum)
+        #add crashes
+        crashNum = 1
+        while crashNum > 0:
+            try:
+                crashNum = int(raw_input("How many crashes do you want to add? "))
+                ex.addRandomCrash(crashNum)
+            except ValueError:
+                print "Wrong format!"
         ex.showMap()
         #ex.MapMatrix.printArea()
 

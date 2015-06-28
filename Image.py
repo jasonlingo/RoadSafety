@@ -109,4 +109,4 @@ def getVideoFrame(gpsData, filename, flip, resize, outputDirectory):
     path = []   
     for gps in gpsData[GPSStartIdx:nextGPSIdx]:
         path.append((gps[1][0], gps[1][1]))
-    showPath(path , framePoint)    
+    showPath(path , framePoint, outputDirectory)    
