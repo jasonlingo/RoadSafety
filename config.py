@@ -29,7 +29,7 @@ GOPRO_CALI_TIME = -18
 
 """the GPS distance between every video frame"""
 #kilometer
-GPS_DISTANCE = 0.1
+GPS_DISTANCE = 1.0
 
 """timezone for GPS"""
 #the GPS recorder is based on UTC/GMT+0 time, so it needs to be calibrated.
@@ -37,7 +37,11 @@ GPS_TIME_ZONE = -5
 
 """Grid distance"""
 #in kilometer
-GRID_DISTANCE = 5
+GRID_DISTANCE = 10
+
+## use kilometer (K) or mile (M)
+METER_TYPE = "K"
+
 
 """Directories*******************************"""
 OUTPUT_DIRECTORY = "output/"
@@ -46,7 +50,7 @@ OUTPUT_DIRECTORY = "output/"
 VIDEO_DIRECTORY = "media/"
 
 """the directory of GPS files"""
-GPS_DIRECTORY = "GPS/"
+GPS_DIRECTORY = "GPS_data/"
 
 """directory for splitted videos"""
 VIDEO_OUTPUT_DIRECTORY = VIDEO_DIRECTORY + "out/"

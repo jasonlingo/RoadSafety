@@ -1,16 +1,17 @@
 #!/usr/bin/python
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import httplib2
-import pprint
 import webbrowser
 import operator
 import datetime
-
 from apiclient import errors
 from apiclient.discovery import build
 from apiclient.http import MediaFileUpload
 from oauth2client.client import OAuth2WebServerFlow
-from parameter import CLIENT_ID, CLIENT_SECRET
+from config import CLIENT_ID, CLIENT_SECRET
 
 
 def create_public_folder(service, folder_name):
@@ -140,11 +141,10 @@ def GDriveUpload(photoList, folder_name):
 
     # Insert files
     links = {}
-    for photo in photoList:    	
+    for photo in photoList:     
         file = insert_file(drive_service, photo.split("/")[-1], "video frame of road", folder_id, 'image/jpeg', photo)
         print photo + " uploaded!"
         #linkList[photo] = file['alternateLink']
-        #pprint.pprint(file)
         templink = file['webContentLink'].strip().split("&")[0]
         links[photo] = templink
     return links

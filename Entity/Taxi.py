@@ -2,12 +2,13 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from GPXdata import GPSPoint
-from GoogleStreetView import getDirection
+from Entity.Car import Car
+from Google.Direction import getDirection
+from GPS.GPSPoint import GPSPoint
 
 
-class Taxi(GPSPoint):
-    """Taxi object"""
+class Taxi(Car):
+    """Taxi class"""
 
     def __init__(self, lat, lng, hospitals):
         """Constructor.
@@ -16,26 +17,26 @@ class Taxi(GPSPoint):
           (float) lat, lng: the lat and lng of this taxi
           (GPSPoint) hospitals: a linked list of hospitals
         """
-        self.lat = lat
-        self.lng = lng
+        Car.__init__(self, lat, lng)
+        #self.lat = lat
+        #self.lng = lng
         self.hospitals = hospitals
 
         self.isEmpty = True
         self.nearestHospital = None
 
 
-    def timeToLocation(self, GPS):
+    def TimeToCustomer(self, customerGPS):
         """
-        Calculate the time fro current location the 
-        customer's location
+        The time for this taxi to go from current location the 
+        customer's location.
 
         Args:
-          (GPSPoint) GPS: the customer's lcoation
+          (GPSPoint) customerGPS: the customer's location
         Return:
-          (int) the time (in second) to go the customer's
-                location
+          (int) time (in second) to the customer
         """
-        pass
+        # Using Google direction API to get the traffic time.
 
 
 

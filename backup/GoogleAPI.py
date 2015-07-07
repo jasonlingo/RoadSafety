@@ -1,5 +1,5 @@
-from GPXdata import GPSPoint
-from parameter import API_KEY, OUTPUT_DIRECTORY
+from GPS.GPSPoint import GPSPoint
+from config import API_KEY, OUTPUT_DIRECTORY
 import time
 import json, requests
 import datetime, pytz

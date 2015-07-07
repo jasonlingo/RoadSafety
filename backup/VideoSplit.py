@@ -5,7 +5,7 @@ import subprocess
 import re
 import math
 from optparse import OptionParser
-from parameter import VIDEO_OUTPUT_DIRECTORY
+from config import VIDEO_OUTPUT_DIRECTORY
 
 
 length_regexp = 'Duration: (\d{2}):(\d{2}):(\d{2})\.\d+,'

@@ -4,9 +4,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from Entity.Taxi import Taxi
 from Entity.Crash import Crash
-from GPXdata import GPSPoint
-from Map.haversine import haversine
-from parameter import GRID_DISTANCE
+from GPS.GPSPoint import GPSPoint
+from GPS.Haversine import Haversine
+from config import GRID_DISTANCE
 
 
 
@@ -16,49 +16,54 @@ class MapMatrix():
     hospitals, crashes, and taxis in the unit. A map unit 
     is obtained by dividing the map into several small squares.
     """
-    #the border of this MapMatrix
-    top    = None
-    bottom = None
-    right  = None
-    left   = None
-    #the length of each side of areas in this MapMatrix
-    areaSize = 0
-    #the GPS difference of width and height of each side of areas
-    latDiff = 0
-    lngDiff = 0
-    #the matrix that stores the areas in thie MapMatrix
     areas = []
-
     def __init__(self, top, bottom, right, left, areaSize=GRID_DISTANCE):
         """
         Args:
           (float) top, bottom, right, left: the four borders 
                   of this MapMatrix
         """
+        # the border of this MapMatrix
         self.top    = top
         self.bottom = bottom
         self.right  = right
         self.left   = left
+
+        # the length of each side of areas in this MapMatrix
         self.areaSize = areaSize
         self.genAreas()
-    
+
+        # the GPS difference of width and height of each side of areas
+        self.latDiff = 0
+        self.lngDiff = 0
+
+        # the matrix that stores the areas in thie MapMatrix
+        self.areas = []
+
+        # generate the matrix for this map
+        self.genAreas()
+
 
     def genAreas(self):
         """
-        Generate areas with each side length = areaSize in this map
+        Generate sub-areas with each side length = areaSize in this map. There 
+        might have some areas whose sides is small than areaSize.
+        Each sub-area contains lists of taxis, hospitals and crashes.
         """
-        #calculate the width and height of the MapMatrix
-        width = haversine(self.top, self.left, self.top, self.right)
-        height = haversine(self.top, self.left, self.bottom, self.left)
-        #calculate the number of seqments
-        numWidth = float(width)/float(self.areaSize)
-        numHeight = float(height)/float(self.areaSize)
-        #calculate the GPS difference between each segment
-        self.latDiff = (self.top - self.bottom)/numHeight
-        self.lngDiff = (self.right - self.left)/numWidth
+        # calculate the width and height of this MapMatrix
+        width = Haversine(self.top, self.left, self.top, self.right)
+        height = Haversine(self.top, self.left, self.bottom, self.left)
+        
+        # calculate the number of seqments of each side
+        segmentW = float(width)/float(self.areaSize)
+        segmentH = float(height)/float(self.areaSize)
+        
+        # calculate the GPS difference between each segment
+        self.latDiff = (self.top - self.bottom)/segmentH
+        self.lngDiff = (self.right - self.left)/segmentW
 
-        #start generate areas
-        row = 0
+        # start generate areas
+        row = 0 # row-major order matrix, index starts from 0
         areaTop = self.top
         while areaTop > self.bottom: #from top to bottom
             self.areas.append([])
@@ -67,7 +72,8 @@ class MapMatrix():
             else:
                 #last area use the residual space
                 areaBot = self.bottom
-            col = 0
+            
+            col = 0 # index starts from 0
             areaLeft = self.left
             while areaLeft < self.right: #from left to right
                 if areaLeft + self.lngDiff <= self.right:
@@ -75,6 +81,7 @@ class MapMatrix():
                 else:
                     #last area use the residual space
                     areaRight = self.right
+                
                 self.areas[-1].append(self.Area(areaTop, areaBot, areaRight, areaLeft, row, col))
                 areaLeft = areaRight
                 col += 1
@@ -144,24 +151,23 @@ class MapMatrix():
 
     class Area():
         """The unit area in the matrix"""
-        #the lists
-        #(GPSPoint)
-        hospitals = None
-        #(Taxi)
-        taxis = None
-        #(Crash)
-        crashes = None 
 
         def __init__(self, top, bottom, right, left, row, col):
             """Constructor"""
-            #The broders of this area
+            # The broders of this area
             self.top = top
             self.bottom = bottom
             self.right = right 
             self.left = left
-            #matrix indices
+            
+            # matrix indices
             self.row = row
             self.col = col
+
+            #the lists
+            self.hospitals = None
+            self.taxis = None
+            self.crashes = None             
 
 
         def addHospital(self, hospitalList):
@@ -217,3 +223,5 @@ class MapMatrix():
                 return True
             else:
                 return False
+
+

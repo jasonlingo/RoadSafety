@@ -1,37 +1,20 @@
 import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 import cv, cv2
-import webbrowser
-from PIL import Image
-from VideoUtil import creation_time, time_str_to_datetime
-from parameter import VIDEO_FRAME_DIRECTORY, IMAGE_QUALITY, RESIZE_X, GPS_DISTANCE, CSV_FILENAME, FOLDER_NAME, OUTPUT_DIRECTORY
-from GPXdata import FindPathDist, searchGPS
-from FileUtil import outputCSV
-from GoogleMap import showPath
-from GDrive import GDriveUpload
-
-
-def processImage(filename, flip, resize):
-    """flip an image vertically"""
-    im = Image.open(filename)
-    #flip image upside down
-    if flip:
-        im = im.transpose(Image.FLIP_TOP_BOTTOM)
-        im = im.transpose(Image.FLIP_LEFT_RIGHT)
-    #resize image (16:9)
-    if resize:
-        im = im.resize((RESIZE_X, RESIZE_X*9/16), Image.ANTIALIAS)
-    #output file with adjusted image quality (IMAGE_QUALITY)
-    im.save(filename, 'JPEG', quality=IMAGE_QUALITY)
-    del im
-
-
-def nextFrameNum(startTime, endTime, fps):
-    """calculate the next frame number according to the start and end time"""
-    #@parameter {datetime} startTime
-    #@parameter {datetime} endTime
-    #@parameter {float} fps
-    delta = endTime - startTime
-    return int(delta.total_seconds() * fps)
+#import webbrowser
+#from PIL import Image
+from Util.TimeStringToDatetime import TimeStringToDatetime
+from Video.videoCreationTime import videoCreationTime
+from Image.FlipResizeImage import FlipResizeImage
+from Video.nextFrameNum import nextFrameNum
+from GPS.FindPathByDist import FindPathByDist
+from GPS.searchGPS import searchGPS
+from Google.Drive import GDriveUpload
+from Google.showPath import showPath
+from File.outputCSV import outputCSV
+from config import GOPRO_CALI_TIME, GPS_DISTANCE, FOLDER_NAME, OUTPUT_DIRECTORY
 
 
 def getVideoFrame(gpsData, filename, flip, resize, outputDirectory):
@@ -43,7 +26,7 @@ def getVideoFrame(gpsData, filename, flip, resize, outputDirectory):
 
 
     #get video creation time (can only read .MP4 file)
-    videoCreateTime = creation_time(filename)
+    videoCreateTime = videoCreationTime(filename)
     #the index of the first data that is nearest to the videoCreateTime
     GPSStartIdx = searchGPS(gpsData, videoCreateTime)
     nextGPSIdx = GPSStartIdx 
@@ -74,14 +57,14 @@ def getVideoFrame(gpsData, filename, flip, resize, outputDirectory):
         cv2.imwrite(imName,frame)
         csvDataset.append(imName)
         if flip or resize:
-            processImage(imName, flip, resize)
+            FlipResizeImage(imName, flip, resize)
         imageNum += 1
         #store points for showing points on a map
         framePoint.append((gpsData[nextGPSIdx][1][0], gpsData[nextGPSIdx][1][1]))
         GPSList[imName] = (gpsData[nextGPSIdx][1][0], gpsData[nextGPSIdx][1][1])
         print "GPS: " + str(gpsData[nextGPSIdx][0]) + "-->" + str(gpsData[nextGPSIdx][1])
         #find the next GPS time according to the GPS_DISTANCE
-        nextGPSIdx, GPSTime = FindPathDist(gpsData, nextGPSIdx, GPS_DISTANCE)
+        nextGPSIdx, GPSTime = FindPathByDist(gpsData, nextGPSIdx, GPS_DISTANCE)
         #find next output frame number
         nextFrame = nextFrameNum(videoCreateTime, GPSTime, fps)
         vc.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, nextFrame)
@@ -109,4 +92,4 @@ def getVideoFrame(gpsData, filename, flip, resize, outputDirectory):
     path = []   
     for gps in gpsData[GPSStartIdx:nextGPSIdx]:
         path.append((gps[1][0], gps[1][1]))
-    showPath(path , framePoint, outputDirectory)    
+    showPath(path , framePoint, outputDirectory)  

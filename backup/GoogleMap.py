@@ -2,9 +2,10 @@ import os
 import pygmaps 
 import webbrowser
 import googlemaps
-from parameter import OUTPUT_DIRECTORY, GRID_DISTANCE
+from config import OUTPUT_DIRECTORY, GRID_DISTANCE
 from datetime import datetime, date, time
-from GPXdata import GPSPoint, haversine
+from GPS.GPSPoint import GPSPoint 
+from GPXdata import haversine
 from shapely.geometry import LineString
 
 """

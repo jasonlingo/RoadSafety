@@ -3,8 +3,8 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from GPXdata import GPSPoint
-from parameter import API_KEY
+from GPS import GPSPoint
+from config import API_KEY
 import json, requests
 from pprint import pprint
 from GoogleStreetView import getDirection

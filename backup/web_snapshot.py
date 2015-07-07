@@ -3,9 +3,9 @@ import webbrowser
 from GoogleAPI import findTimeZone
 from time import sleep
 from PIL import Image
-from GPXdata import GPSPoint
+from GPS.GPSPoint import GPSPoint
 import datetime, pytz
-from parameter import TRAFFIC_IMAGE_DIRECTORY, GPS_DISTANCE, FOLDER_NAME, OUTPUT_DIRECTORY
+from config import TRAFFIC_IMAGE_DIRECTORY, GPS_DISTANCE, FOLDER_NAME, OUTPUT_DIRECTORY
 from GoogleStreetView import combineUrl, getBearing
 from GDrive import GDriveUpload
 from FileUtil import outputCSV

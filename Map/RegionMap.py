@@ -2,10 +2,9 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from parameter import GRID_DISTANCE
-from Map.haversine import haversine
+from config import GRID_DISTANCE
+from GPS.Haversine import Haversine
 from shapely.geometry import LineString
-#import numpy as np
 
 
 class RegionMap():
@@ -53,65 +52,6 @@ class RegionMap():
             if pointer.lng < self.left:
                 self.left = pointer.lng
             pointer = pointer.next
-
-
-    def findInnerGrid(self, gridSize=GRID_DISTANCE):
-        """
-        Find the inner grid within a region
-
-        Args:
-          (GPSPoint linked list) region: GPS data of a region 
-          (float) gridSize: the length (in km) of the sides of all grids           
-        Return:
-          (list) gridPoint: a list of GPSPoints that are within the region
-        """ 
-        ### find the for corner in the rectangle that contains the region ###
-        TopRight = GPSPoint(top, right)
-        TopLeft  = GPSPoint(top, left)
-        BotRight = GPSPoint(bottom, right)
-        BotLeft  = GPSPoint(bottom, left)
-   
-
-        ### calculate the number of grid for width and height ###
-        #find the distance (km) of two sides
-        width = haversine(TopRight.lat, TopRight.lng,
-                          TopLeft.lat, TopLeft.lng)
-        height = haversine(TopRight.lat, TopRight.lng,
-                           BotRight.lat, BotRight.lng)
-    
-        #number of segmentations in width and height
-        numWidth = int(width/gridSize)
-        numHeight = int(height/gridSize)
-        if numWidth == 0:
-            numWidth = 1
-        if numHeight ==0:
-            numHeight = 1
-
-        #vertical segmentation distance
-        lngDiff = (TopRight.lng - TopLeft.lng)/numWidth
-        #horizontal segmentation distance 
-        latDiff = (TopRight.lat - BotRight.lat)/numHeight
-
-
-        ### find grid point inside the region ###
-        #use dynamic programming to build the grid list
-        #start checking the grid points on the four sides first, 
-        #then the inner grid points
-        gridPoint = []
-        #starting point for lng
-        lng = TopLeft.lng 
-        while lnb <= TopRight.lng + lngDiff*0.0001: # "+ lngDiff*0.0001" due to the inaccuracy of numerical computation
-            #starting point for lat
-            lat = BotRight.lat 
-            while lat <= TopRight.lat+latDiff*0.0001: 
-                point = GPSPoint(lat, lng)
-                if self.isInnerPoint(point):
-                    #if the region contains the point
-                    gridPoint.append(point)
-                lat += latDiff
-            lng += lngDiff
-
-        return gridPoint
 
 
     def isInnerPoint(self, checkPoint):

@@ -2,21 +2,18 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from parameter import OUTPUT_DIRECTORY
+from config import OUTPUT_DIRECTORY
 from random import uniform 
-from GPXdata import GPSPoint
+from GPS.GPSPoint import GPSPoint
 from Util.kml import KmzParser
-from Map.haversine import haversine
 from Map.RegionMap import RegionMap
 from Map.MapMatrix import MapMatrix
-from Google.Road import getRoadGPS
-from GoogleStreetView import getDirection
+from Google.Direction import getDirection
 from Entity.Taxi import Taxi
 from Entity.Crash import Crash
 from time import sleep
 import pygmaps
 import webbrowser
-import thread
 
 
 class TaxiExperiment:

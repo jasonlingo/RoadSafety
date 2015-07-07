@@ -1,58 +1,14 @@
-#!/usr/bin/env python
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
 import os, sys, subprocess, shlex, re, math, datetime
 from optparse import OptionParser
-from parameter import VIDEO_OUTPUT_DIRECTORY, GOPRO_CALI_TIME
+from config import VIDEO_OUTPUT_DIRECTORY, GOPRO_CALI_TIME
 from subprocess import call
 import numpy as np
 import cv2
 import datetime
-
-
-
-def creation_time(filename):
-    """get the creation time of a video"""
-
-    cmnd = ['ffprobe', '-show_format', '-pretty', '-loglevel', 'quiet', filename]
-    p = subprocess.Popen(cmnd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    #print filename
-    out, err =  p.communicate()
-    
-    #print "==========output=========="
-    #print out
-    
-    if err:
-        print "========= error ========"
-        print err
-    t = out.splitlines()
-    time = str(t[14][18:37])
-    delta = datetime.timedelta(0, GOPRO_CALI_TIME)
-    time = time_str_to_datetime(time) + delta
-    return time
-
-
-def time_str_to_datetime(timeStr):
-    """convert time string into datetime format"""
-    #format of timeStr: [2015-04-29 07:55:39]
-    year  = int(timeStr[0:4])
-    month = int(timeStr[5:7])
-    day   = int(timeStr[8:10])
-    hh    = int(timeStr[11:13])
-    mm    = int(timeStr[14:16])
-    ss    = int(timeStr[17:])
-    return datetime.datetime(year,month,day,hh,mm,ss)
-
-
-def calculate_time(creation_time, add_time):
-    """output the new creation fime by adding add_time to creation_time"""
-    #creation_time {datetime}
-    #add_time {int} in second
-    #return {datetime}
-    #the unit of add_time is second
-    
-    creation_time = time_str_to_datetime(creation_time)
-    new_time = creation_time + datetime.timedelta(0, add_time)
-    return new_time
-
 
 def VideoSplit(directory, filename, split_length, creation_time, gpsData):
     """split video into shorter videos with length of split_size"""
@@ -108,4 +64,3 @@ def VideoSplit(directory, filename, split_length, creation_time, gpsData):
         print "About to run: "+split_cmd+split_str
         output = subprocess.Popen(split_cmd+split_str, shell = True, stdout =
                                subprocess.PIPE).stdout.read()
-
