@@ -2,16 +2,10 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-#import pygmaps 
-#import webbrowser
-#import googlemaps
-#from config import OUTPUT_DIRECTORY, GRID_DISTANCE
 from config import GRID_DISTANCE
 from Map.containPoint import containPoint
-#from datetime import datetime, date, time
 from GPS.GPSPoint import GPSPoint 
 from GPS.Haversine import Haversine
-#from shapely.geometry import LineString
 
 
 def findInnerGrid(region, recTopRight=None, recTopLeft=None, recBotRight=None, recBotLeft=None):

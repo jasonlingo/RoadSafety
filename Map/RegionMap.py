@@ -5,7 +5,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from config import GRID_DISTANCE
 from GPS.Haversine import Haversine
 from shapely.geometry import LineString
-
+from GPS.FindRectangleSideGPS import FindRectangleSideGPS
 
 class RegionMap():
     """The map of a region"""
@@ -28,7 +28,7 @@ class RegionMap():
         Construct the map by the region
         
         Args: 
-          (GPSPoint linked list) region:
+          (GPSPoint linkedlist) region:
               the GPS data of the region
         """
         self.region = region
@@ -37,6 +37,10 @@ class RegionMap():
         self.CloseRegionList.append((region.lat, region.lng))
 
         ### find the borders ###
+
+        (self.top, self.bottom, self.right, self.left) = \
+                          FindRectangleSideGPS(self.region)
+        """
         pointer = self.region
         self.top    = self.region.lat
         self.bottom = self.region.lat
@@ -52,6 +56,7 @@ class RegionMap():
             if pointer.lng < self.left:
                 self.left = pointer.lng
             pointer = pointer.next
+        """
 
 
     def isInnerPoint(self, checkPoint):

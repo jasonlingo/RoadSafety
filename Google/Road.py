@@ -51,6 +51,6 @@ def getRoadGPS(GPS):
             pointer = pointer.next
         return roadGPS 
 
-    return GPS
+    return GPS # No data replied, return the original GPS data
 
 

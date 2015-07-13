@@ -15,15 +15,14 @@ import urllib
 def getStreetView(path, outputDirect):
     """
     1.Get street view from Google Street View Image API 
-    (https://developers.google.com/maps/documentation/streetview/?hl=pl&csw=1)
     2.Upload images to Google Drive
-    3.Output csv file containing image names, links to image, and GPS data
+    3.Output a csv file that contains image names, links to image, and GPS data
 
     Args:
-      path (linked list): a linked list of GPS point
-      outputDirect (string): image output directory
+      (GPSPoint) path: a linked list of GPS point
+      (String) outputDirect: the directory for storing extracted images
     Return:
-      list of Street view points
+      (list) Street view points
     """
     STREET_API_URL = 'https://maps.googleapis.com/maps/api/streetview?'
     #the number of total images

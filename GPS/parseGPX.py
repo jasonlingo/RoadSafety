@@ -4,6 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import gpxpy
 import gpxpy.gpx
+from config import GPS_TIME_ZONE
 from TimeZoneCalibrate import TimeZoneCalibrate
 
 def parseGPX(GPXfile):
@@ -16,12 +17,15 @@ def parseGPX(GPXfile):
       (list) a list of GPS data
     """
     f = open(GPXfile,'r')
+    # Use gpxpy function to parse the gpx data 
     gpx = gpxpy.parse(f)
     gpsData = []
     for track in gpx.tracks:
         for segment in track.segments:
             for point in segment.points:
-                gpsData.append([TimeZoneCalibrate(point.time), (point.latitude, point.longitude, point.elevation)])
-                #print 'Point at ({0},{1}) -> {2}, time={3}'.format(point.latitude, point.longitude, point.elevation, point.time)
+                # Append the adjusted time, latitude, longitude, 
+                # and elevation of every GPS record
+                gpsData.append([TimeZoneCalibrate(point.time, GPS_TIME_ZONE), \
+                    (point.latitude, point.longitude, point.elevation)])
     return gpsData
 

@@ -41,13 +41,13 @@ class MapMatrix():
         self.areas = []
 
         # generate the matrix for this map
-        self.genAreas()
+        self.genSubAreas()
 
 
-    def genAreas(self):
+    def genSubAreas(self):
         """
         Generate sub-areas with each side length = areaSize in this map. There 
-        might have some areas whose sides is small than areaSize.
+        might be some areas whose sides are small than areaSize.
         Each sub-area contains lists of taxis, hospitals and crashes.
         """
         # calculate the width and height of this MapMatrix

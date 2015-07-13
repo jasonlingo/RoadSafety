@@ -3,27 +3,12 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-
-#import datetime
 import optparse
-from File.getFilename import getFilename
-from Video.getVideoFrame import getVideoFrame
-from config import VIDEO_DIRECTORY, GPS_DIRECTORY, VIDEO_FRAME_DIRECTORY
-from config import VIDEO_TYPE, GPS_TYPE, RESIZE_X, FLIP_IMAGE
-from GPS.parseGPX import parseGPX
+from config import VIDEO_FRAME_DIRECTORY
 from Util.kml import KmzParser
-
-
+from File.Directory import createDirectory
 
 def main():
-    """
-    Get street view images associated with GPS data
-
-    mode:
-      1. use video and recorded GPS data 
-      2. use Google MAP kmz file
-      3. use addresses
-    """
     optparser = optparse.OptionParser()
     optparser.add_option("-m", "--mode", dest="mode", default="3", help="mode of getting Street view")
     (opts, _) = optparser.parse_args()
@@ -31,29 +16,47 @@ def main():
 
     if opts.mode == "1":
         """
-        Splitting videos into shorter videos and mapping GPS data to each shorter videos.
+        Get street view images from road videos. Extract video frames
+        every certain distance according to GPS data. 
+
+        Args: 
+          (String) VIDEO_DIRECTORY: the directory of videos
+          (String) VIDEO_TYPE: the file type of videos
+          (String) GPS_DIRECTORY: the directory of GPS files
+          (String) GPS_TYPE: the file type of GPS data
+          (int) RESIZE_X: the maximum size of the width of extracted images
         """
-        print "Start getting street view by mode 1"
-        
-        #get the video file name list in a given directory
+        print "Start getting street view images by mode 1"
+        from config import VIDEO_DIRECTORY, GPS_DIRECTORY, VIDEO_FRAME_DIRECTORY
+        from config import VIDEO_TYPE, GPS_TYPE, RESIZE_X, FLIP_IMAGE, GPS_DISTANCE
+        from Video.getVideoFrame import getVideoFrame
+        from File.getFilename import getFilename
+        from GPS.parseGPX import parseGPX
+
+        # Get the video file name list in a given directory
         videos = getFilename(VIDEO_DIRECTORY, VIDEO_TYPE)
-        #load GPX data in a given directory
+        # Get the GPX file name list in a given directory
         GPXs = getFilename(GPS_DIRECTORY, GPS_TYPE)
+
+        # Parse all the GPS data and store them in a list
         gpsData = []
         for GPX in GPXs:
             gpsData += parseGPX(GPS_DIRECTORY + GPX)
+        # Sort GPS data by date and time
         gpsData = sorted(gpsData)
 
-        #check whether or not resize image, should modify this to compare the actual size, not pre-defined size
-        if RESIZE_X == 1920:
-            resize = False
-        else:
-            resize = True
+        # Create the output folder if it doesn't exist
+        createDirectory(VIDEO_FRAME_DIRECTORY+"mode1/")
 
-        #get video frames according to the GPS distance
+        # Get video frames according to the GPS distance
         for video in videos:
-            getVideoFrame(gpsData, VIDEO_DIRECTORY + video, FLIP_IMAGE, resize, VIDEO_FRAME_DIRECTORY+"mode1/")
-            break
+            getVideoFrame(gpsData, VIDEO_DIRECTORY + video, \
+                         FLIP_IMAGE, RESIZE_X, VIDEO_FRAME_DIRECTORY+"mode1/", \
+                         GPS_DISTANCE)
+            
+            # Only process the first video, 
+            # Should be able to process multiple videos
+            break 
 
 
     elif opts.mode == "2":

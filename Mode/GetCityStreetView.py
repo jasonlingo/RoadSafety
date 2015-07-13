@@ -24,7 +24,7 @@ class GetCityStreetView:
         # Parse the GPX data to GPSPoint linkedlist
         self.region = KmzParser(region_filename)
         # create a RegionMap
-        self.Map = RegionMap(self.region)
+        self.Map = GridMap(self.region)
         # Find the for corners of the rectangle of this map
         self.recTopRight = GPSPoint(self.Map.top, self.Map.right)
         self.recTopLeft = GPSPoint(self.Map.top, self.Map.left)
@@ -32,8 +32,10 @@ class GetCityStreetView:
         self.recBotLeft = GPSPoint(self.Map.buttom, self.Map.left)
 
         # Find the inner grid in this grid map
-        self.gridPoint = findInnerGrid()
+        self.gridPoint = findInnerGrid(self.recTopRight, self.recTopLeft, \
+                                       self.recBotRight, self.recBotLeft)
 
+        
 
     def getStreetView(self):
 

@@ -10,7 +10,7 @@ def KmzParser(filename):
     Args:
       (string) filename: the KMZ file
     Return:
-      (linked list) head: a linked list of GPS points
+      (GPSPoint) head: a linked list of GPS points
     """
     kmz = ZipFile(filename, 'r')
     kml = kmz.open('doc.kml','r')

@@ -3,32 +3,39 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import subprocess
-#shlex, re, math 
 import datetime
-#from optparse import OptionParser
-#from config import VIDEO_OUTPUT_DIRECTORY, 
+# There might be a difference between the real and recorded creation time
+# of a video recorded by GoPro. COPRO_CALI_TIME needed to be test in order 
+# to find the nearest calibration time.
 from config import GOPRO_CALI_TIME
-#from subprocess import call
-#import numpy as np
-#import cv2
 from Util.TimeStringToDatetime import TimeStringToDatetime
 
 def videoCreationTime(filename):
-    """get the creation time of a video"""
+    """
+    Get the creation time of a video
 
+    Args:
+      (String) filename: the name of a video that we want to 
+                         extract its creation time
+    Return:
+      (datetime) time: the creation time of a given video file
+    """
+    # Use subprocess to execute the command to get the creation time of a video
     cmnd = ['ffprobe', '-show_format', '-pretty', '-loglevel', 'quiet', filename]
     p = subprocess.Popen(cmnd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    #print filename
     out, err =  p.communicate()
-    
-    #print "==========output=========="
-    #print out
-    
+      
     if err:
-        print "========= error ========"
+        print "========= Get creation time error! ========"
         print err
-    t = out.splitlines()
-    time = str(t[14][18:37])
-    delta = datetime.timedelta(0, GOPRO_CALI_TIME)
-    time = TimeStringToDatetime(time) + delta
-    return time
+        return -1
+    else:    
+        t = out.splitlines()
+        # Extract the creation time
+        time = str(t[14][18:37])
+        # The time difference 
+        delta = datetime.timedelta(0, GOPRO_CALI_TIME)
+        # Convert the time from a stirng to datetime type, 
+        # then add the difference to adjust the time
+        time = TimeStringToDatetime(time) + delta
+        return time
