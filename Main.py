@@ -27,7 +27,7 @@ def main():
           (int) RESIZE_X: the maximum size of the width of extracted images
         """
         print "Start getting street view images by mode 1"
-        from config import VIDEO_DIRECTORY, GPS_DIRECTORY, VIDEO_FRAME_DIRECTORY
+        from config import VIDEO_DIRECTORY, GPS_DIRECTORY
         from config import VIDEO_TYPE, GPS_TYPE, RESIZE_X, FLIP_IMAGE, GPS_DISTANCE
         from Video.getVideoFrame import getVideoFrame
         from File.getFilename import getFilename
@@ -35,6 +35,7 @@ def main():
 
         # Get the video file name list in a given directory
         videos = getFilename(VIDEO_DIRECTORY, VIDEO_TYPE)
+        
         # Get the GPX file name list in a given directory
         GPXs = getFilename(GPS_DIRECTORY, GPS_TYPE)
 
@@ -53,7 +54,6 @@ def main():
             getVideoFrame(gpsData, VIDEO_DIRECTORY + video, \
                          FLIP_IMAGE, RESIZE_X, VIDEO_FRAME_DIRECTORY+"mode1/", \
                          GPS_DISTANCE)
-            
             # Only process the first video, 
             # Should be able to process multiple videos
             break 
@@ -72,11 +72,19 @@ def main():
 
         print "Start getting street view by mode 2"
 
-        #get detail GPS point list and linked list
+        # Parse the kmz file and get a GPSPoing linkedlist
         head = KmzParser("GPS_data/Thailand_roads/Rattanathibet.kmz")
-        #street view point
-        outputDirectory = VIDEO_FRAME_DIRECTORY+"mode2/Rattanathibet/"
+        
+        # Set the output folder
+        outputDirectory = VIDEO_FRAME_DIRECTORY + "mode2/Rattanathibet/"
+
+        # Create the output folder if it doesn't exist
+        createDirectory(outputDirectory)
+
+        # Get street view images and get the corresponding locations
         SVPoint = getStreetView(head, outputDirectory)
+
+        # Show the path and street view images on a map
         showPath(head.toList(), SVPoint, outputDirectory)
 
 
@@ -91,18 +99,22 @@ def main():
         from Google.Direction import getDirection
         from Google.StreetView import getStreetView
         from Google.showPath import showPath
-        print "Start getting street view by mode 3"
+        from GPS.GPSPoint import GPSPoint
 
+        print "Start getting street view by mode 3"
+        # Get the source and destination addresses form user input
         originAdd = raw_input("Please enter the address of starting point: ")
         destAdd = raw_input("Please enter destination address: ")
+
         if not (originAdd == None or originAdd == "" or destAdd == None or destAdd == ""):
-            #get direction
+            # Get direction from Google Direction API
             direction = getDirection(originAdd, destAdd)
+            # Print the direction data
             direction.printNode()
-            #street view point
-            outputDirectory = VIDEO_FRAME_DIRECTORY+"mode3/"
+            # Get Street view images
+            outputDirectory = VIDEO_FRAME_DIRECTORY + "mode3/"
             SVPoint = getStreetView(direction, outputDirectory)
-            #get GPS list from GPS linked list
+            #get GPS list from GPSPoint linked list
             path = direction.toList()
             #show path and street view points on Google MAP
             showPath(path, SVPoint, outputDirectory)
@@ -114,32 +126,49 @@ def main():
         2. Get street view image using Google street view url
         3. Upload images to Google Drive
         4. Output a csv file that contains image names, image links, and GPS data,
-        5. Show path and street view points on Google map,      
+        5. Show path and street view points on Google map      
         """
         from Google.getStreetViewByUrl import getStreetViewByUrl
         from Google.showPath import showPath
         print "Start getting street view by mode 4"
 
-        #get detail GPS point list and linked list
+        # Get detail GPS points in a linked list
         head = KmzParser("GPS_data/Thailand_roads/Sukhumvit.kmz")
+        # Print the GPS data on the screen
         head.printNode()
-        #street view point
-        outputDirectory = VIDEO_FRAME_DIRECTORY+"mode4/Sukhumvit/"
+        # Set the output directory
+        outputDirectory = VIDEO_FRAME_DIRECTORY + "mode4/Sukhumvit/"
+        # Get the street view images via web browser
         SVPoint = getStreetViewByUrl(head, outputDirectory)
+        # Show the path and the location of extraced street view images
         showPath(head.toList(), SVPoint, outputDirectory)        
-
 
     elif opts.mode == "5":
         """
-        Divide the given region into grid and calculate 
-        point to point traffic itme.
+        Get street view images of major roads in a region/city.
+        """
+        from Mode.GetCityStreetView import GetCityStreetView
+
+        # initialize a GetCityStreetView 
+        st = GetCityStreetView("GPS_data/Delhi.kmz")
+
+
+
+
+
+
+
+    elif opts.mode == "6":
+        """
+        Divide the given region into grids and calculate 
+        point-to-point traffic time.
         """
         from Google.GridTrafficTime import GridTrafficTime
         head = KmzParser("GPS_data/Delhi.kmz")
         GridTrafficTime(head)
 
 
-    elif opts.mode == "6":
+    elif opts.mode == "7":
         """
         TaxiExperiment: 
         When a crash happens, find the taxi that can arrive the 
@@ -170,14 +199,7 @@ def main():
         ex.showMap()
         #ex.MapMatrix.printArea()
 
-    elif opts.mode == "7":
-        """
-        Get street view images of major roads in a region/city.
-        """
-        from Mode.GetCityStreetView import GetCityStreetView
 
-        # initialize a GetCityStreetView 
-        st = GetCityStreetView("GPS_data/Delhi.kmz")
         
 
 

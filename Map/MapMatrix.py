@@ -31,7 +31,7 @@ class MapMatrix():
 
         # the length of each side of areas in this MapMatrix
         self.areaSize = areaSize
-        self.genAreas()
+        self.genSubAreas()
 
         # the GPS difference of width and height of each side of areas
         self.latDiff = 0

@@ -12,22 +12,29 @@ def KmzParser(filename):
     Return:
       (GPSPoint) head: a linked list of GPS points
     """
+    # Open kmz file
     kmz = ZipFile(filename, 'r')
+    # Open the kml file in a kmz file
     kml = kmz.open('doc.kml','r')
+
+    # Extract coordinates from the kmz file
     coordinates = []
     for i, x in enumerate(kml):
         if "<coordinates>" in x:
+            # The desired data will be the first data with "<coordinates>" keyword
             coordinates.append(x.replace("<coordinates>","").replace("</coordinates>","").replace("\t","").replace("\n",""))
-            #the desired data will be the first data with "<coordinates>" keyword
         if "</LineString>" in x:
-            #in a route KMZ file, we only need the first coordinates data
-            #the other two are source and destination points
+            # In a route KMZ file, we only need the first coordinates data
+            # The other two are source and destination points
             break
 
+    # The flag used for the first point
     first = True
-    head = None #the head of GPSPoint linked list
+    # The head of GPSPoint linked list
+    head = None 
+    # The node used to operate the linked list
     pointer = None
-    GPSList = []
+    # Extract GPS data 
     for coordinate in coordinates:
         GPSs = coordinate.split()
         for GPS in GPSs:
@@ -35,12 +42,14 @@ def KmzParser(filename):
             lat = float(lat)
             lng = float(lng)
             if first:
+                # Deal with the first point, keep the head of this linked list
                 head = GPSPoint(lat, lng)
                 pointer = head
                 first = False
             else:
                 pointer.next = GPSPoint(lat, lng)
-                pointer.distance = Haversine(pointer.lat, pointer.lng,
+                # Calculate the distance between this and next points
+                pointer.distance = Haversine(pointer.lat, pointer.lng,\
                                              lat, lng)*1000
                 pointer = pointer.next
 

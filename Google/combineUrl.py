@@ -4,14 +4,15 @@ def combineUrl(api, params):
     
     Args:
       (String) api: the url for API
-      (dict) params: the parameters for the request
+      (dictionary) params: the parameters for the request
     Return:
-      a string of combined url
+      (String) combined url
     """
     url = api 
     length = len(params)
     for i, param in enumerate(params):
         url += param + "=" + params[param]
-        if i < length-1:
+        if i < length - 1:
+            # Add an "&" between every two parameters
             url += "&"
     return url

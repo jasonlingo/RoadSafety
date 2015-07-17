@@ -24,119 +24,123 @@ def getStreetView(path, outputDirect):
     Return:
       (list) Street view points
     """
+    # The API url of the street view API
     STREET_API_URL = 'https://maps.googleapis.com/maps/api/streetview?'
-    #the number of total images
+    # The number of total images
     imageNum = 1
-    #convert kilometer to meter
+    # Convert kilometer to meter
     gps_distance_meter = GPS_DISTANCE*1000
-    #street view points
+    # Street view points
     SVPoint = []
-    #for output csv
+    # Dataset for csv file
     csvDataset = []
     GPSList = {}
-    #for showing the progress
+    # For showing the progress
     loop = 0
     while(path.next != None):               
-        if loop%10==0:
+        # Show the progress on the command line screen
+        if loop % 10 == 0:
             sys.stderr.write(".")
             sys.stderr.flush()
         loop+=1
         
-
         distance = path.distance
-        #calculate how many segments in this path
+        # Calculate how many segments in this path
         cutNum = int(round(distance / gps_distance_meter))
 
         if cutNum > 1:
-            # this sub-path is too long, cut it to several shorter pathes
+            # This sub-path is too long, so cut it into several shorter pathes
             gpsList = getIntermediatePoint(path, path.next, cutNum)
         elif cutNum == 0:
-            # this sub-path is too short (less than 0.5*gps_distance_meter), find the next point 
-            # that will make this sub-path longer
+            # This sub-path is too short (less than 0.5 * gps_distance_meter), 
+            # so find the next point that will make this sub-path longer
             start = path
             while path.next != None:
-                if distance + path.next.distance < 1.2*gps_distance_meter:
+                if distance + path.next.distance < 1.2 * gps_distance_meter:
+                    # Accumulate the distance
                     distance += path.next.distance
                     path = path.next
                 else:
+                    # The new sub-path is already long enough, so stop this while loop
                     break
             gpsList = [(start, path)]
         else:
-            # this sub-path is larger than 0.5*gps_distance_meter and less than 1.5*gps_distance_meter
+            # this sub-path is larger than 0.5 * gps_distance_meter but less than 1.5 * gps_distance_meter
             gpsList = [(path, path.next)]
 
+        # Get the street view images of the GPS points in gpsList using Google Street view API
         for gps in gpsList:
             bearing = getBearing(gps[0], gps[1])
-            #parameters for API
+            # The parameters for Google street view API
             params = {
-                #image size; max=600x400
+                # Image size; max=600x400
                 'size':'600x400', 
-                #horizontal field of view; max=120 
+                # Horizontal field of view; max=120 
                 'fov':'75',  
-                #the up or down angle of the camera relative to the Street View vehicle;  
-                #90=sky, -90=floor, 0=front    
+                # The up or down angle of the camera relative to the Street View vehicle;  
+                # 90=sky, -90=floor, 0=front    
                 'pitch':'0',       
-                #the compass bearing; 0~360; 0=North, 90=East, 180=South, 270=West                   
+                # The compass bearing; 0~360; 0=North, 90=East, 180=South, 270=West                   
                 'heading':str(bearing), 
-                #current GPS point 
+                # Current GPS point 
                 'location':str(gps[0].lat) + ',' + str(gps[0].lng),
-                #Google API key
-                'key':'AIzaSyCLP5d5vcwI1dY_2uLLYu17_3Itf4FWH_I'
-                #'key': API_KEY
+                # Google API key
+                #'key':'AIzaSyCLP5d5vcwI1dY_2uLLYu17_3Itf4FWH_I'
+                'key': API_KEY
             }
-            #get request url
+            # Combine the request url with its parameters
             url = combineUrl(STREET_API_URL, params)
-            #retrive image
+            # Retrive image
             imName = outputDirect + "StreetView-" + str(imageNum).zfill(4) + '.jpg'
             urllib.urlretrieve(url, imName)
-            #for output csv
+            # Store data for CSV data set
             csvDataset.append(imName)
             GPSList[imName] = (gps[0].lat, gps[0].lng)
-            #record street view point
+            # Record street view points
             SVPoint.append((gps[0].lat, gps[0].lng))
             imageNum += 1
         if path.next != None: 
             path = path.next
 
-    #get last image
-    #parameters for API
+    # Get last image
+    # Parameters for API
     params = {
-        #image size; max=600x400
+        # Image size; max=600x400
         'size':'600x400', 
-        #horizontal field of view; max=120 
+        # Horizontal field of view; max=120 
         'fov':'120',  
-        #the up or down angle of the camera relative to the Street View vehicle;  
-        #90=sky, -90=floor, 0=front    
+        # The up or down angle of the camera relative to the Street View vehicle;  
+        # 90=sky, -90=floor, 0=front    
         'pitch':'0',       
-        #the compass bearing; 0~360; 0=North, 90=East, 180=South, 270=West                   
+        # The compass bearing; 0~360; 0=North, 90=East, 180=South, 270=West                   
         'heading':str(bearing), 
-         #current GPS point 
+         # Current GPS point 
         'location':str(path.lat) + ',' + str(path.lng),
-         #Google API key
+         # Google API key
         'key':'AIzaSyCLP5d5vcwI1dY_2uLLYu17_3Itf4FWH_I'
     }
     url = combineUrl(STREET_API_URL, params)
     imName = outputDirect + "StreetView-" + str(imageNum).zfill(4) + '.jpg'
     urllib.urlretrieve(url, imName)
-    #for output csv
+    # For output csv
     csvDataset.append(imName)
     GPSList[imName] = (path.lat, path.lng)
-    #record street view point
+    # Record street view point
     SVPoint.append((path.lat, path.lng))
      
-    #upload images to Google Drive
+    # Upload images to Google Drive
     lastForderName = outputDirect.strip().split("/")[-2]
-    print lastForderName
-    links = GDriveUpload(csvDataset, FOLDER_NAME+"-"+lastForderName)
+    links = GDriveUpload(csvDataset, FOLDER_NAME + "-" + lastForderName)
 
-    #output data to csv file
+    # Output data to csv file
     csvDataset = []
     for link in links:
         csvDataset.append([link.strip().split("/")[-1], links[link], GPSList[link]])
-        #check image link
-        #webbrowser.open_new(linkList[link])
+    # Sort the GPS data by date and time
     csvDataset = sorted(csvDataset)
+    # Insert the titles of the columns
     csvDataset.insert(0,['Image name', 'Image', 'GPS'])
+    # Write data to a csv file
     outputCSV(csvDataset, outputDirect + "GoogleStreetView.csv")
 
     return SVPoint

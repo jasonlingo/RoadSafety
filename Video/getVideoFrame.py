@@ -98,7 +98,7 @@ def getVideoFrame(gpsData, filename, flip, resize, outputDirectory, gpsDistance)
     # Get a dictionary of photos and their public url
     links = GDriveUpload(csvDataset, FOLDER_NAME)
     
-    # Output data to csv file
+    # Output data to a csv file
     csvDataset = []
     for link in links:
         # Record: [filename, link, GPS data]

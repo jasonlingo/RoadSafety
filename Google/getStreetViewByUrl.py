@@ -21,22 +21,33 @@ def getStreetViewByUrl(path, outputDirectory):
     Return:
       (list) SVPoint: a list of street view points
     """
-    #Google street view url
+    # Google street view url
     url = "http://maps.google.com/maps?q=&layer=c&"
-
-    imgNum = 1;
-    distanceBound = GPS_DISTANCE*1000 #convert to meter
-    distance = distanceBound #capture the street view of the first location
+    # Extracted image number
+    imgNum = 1
+    # The distance between every two consecutive street view images
+    distanceBound = GPS_DISTANCE * 1000 # Convert to meter
+    # Set distance = distanceBound so that the street view image of 
+    # the starting point will be captured.
+    distance = distanceBound 
+    # The flag for the last point
     last = False 
+    # Record the previous GPS data for calculating the bearing with 
+    # current point
     preGPS = None
-    #street view points
+    # street view points 
     SVPoint = []
-    #csv list
+    # Data set for csv file
     csvDataset = []
     GPSList = {}
+
     while path.next != None or last:
         if distance >= distanceBound or last:
-            #Google street view parameters
+            # If the accumulated distance between two GPS points is 
+            # larger than the desired distanceBound 
+            # or it reaches the end of this route.
+
+            # Google street view parameters
             if not last:
                 bearing = getBearing(path, path.next)
             else:
@@ -53,32 +64,38 @@ def getStreetViewByUrl(path, outputDirectory):
                 "cbp"  : "12,"+str(bearing)+",0,0,0"
             }
 
+            # Record the street view images' location
             SVPoint.append((path.lat, path.lng))
+            # The name of the originally extracted image
             imgName = outputDirectory + "original/" + "StreetView-" + str(imgNum).zfill(4) + ".jpg";
+            # The name of the cropped image
             cropImgName = outputDirectory + "StreetView-" + str(imgNum).zfill(4) + ".jpg";
             csvDataset.append(cropImgName)
             GPSList[cropImgName] = (path.lat, path.lng)
-            command = "screencapture " + imgName
             
-            #open url on browser
+            # Open url on browser
             requestUrl = combineUrl(url, param)
             webbrowser.open(requestUrl)
-            sleep(6) #wait for browser opens the page
+            # Wait for browser opens the page
+            sleep(6) 
             
-            #screen shot
+            # Screen shot
+            command = "screencapture " + imgName
             os.system(command)
             im = Image.open(imgName)
             
-            #get captured image size
+            # Get captured image size
             width, height = im.size
             
-            #crop the captured area, need to be customized depending on different computer
+            # Crop the captured area, need to be customized depending on different computer
             im.crop((60, 350, width-130, height-320)).save(cropImgName)
             print cropImgName + " captured!   distance:" + str(distance)
             
-            #program sleeps for the interval time
+            # Reset the accumulated distance
             distance = 0
-            imgNum += 1;
+            # Accrete the image number
+            imgNum += 1
+
         distance += path.distance
         if not last:
             if path.next.next == None:
@@ -87,16 +104,19 @@ def getStreetViewByUrl(path, outputDirectory):
                 preGPS = path
             path = path.next
         else:
+            print "last"
             last = False
 
-    #upload images to Google Drive
+    # Upload images to Google Drive
     links = GDriveUpload(csvDataset, FOLDER_NAME)
 
+    # Generate data for csv file
     csvDataset = []
     for link in links:
         csvDataset.append([link.strip().split("/")[-1], links[link], GPSList[link]])
     csvDataset = sorted(csvDataset)
     csvDataset.insert(0,['Image name', 'Image', 'GPS'])
+    # Output data to a csv file
     outputCSV(csvDataset, OUTPUT_DIRECTORY + "GoogleStreetView_m4.csv")        
 
     return SVPoint

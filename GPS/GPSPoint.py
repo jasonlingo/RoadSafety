@@ -42,21 +42,22 @@ class GPSPoint:
     def toList(self):
         """tranform this linked list to a list and return it"""
         GPSList = []
-        point = self
-        while point != None:
-            GPSList.append((point.lat, point.lng))
-            point = point.next
+        pointer = self
+        while pointer != None:
+            # Append all the latitude and longitude to a GPS list
+            GPSList.append((pointer.lat, pointer.lng))
+            pointer = pointer.next
         return GPSList
 
     def getTail(self):
-        """return the last node"""
+        """Return the last node"""
         pointer = self
         while pointer.next != None:
             pointer = pointer.next
         return pointer
 
     def getTotalDistance(self):
-        """return the total distance from current node to the last node"""
+        """Return the total distance from current node to the last node"""
         totDist = 0
         pointer = self
         while pointer != None:
@@ -65,7 +66,7 @@ class GPSPoint:
         return totDist
 
     def getTotalDuration(self):
-        """return the total time from current node to the last node"""
+        """Return the total time from current node to the last node"""
         totTime = 0
         pointer = self
         while pointer != None:

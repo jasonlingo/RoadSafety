@@ -10,17 +10,20 @@ def getIntermediatePoint(start, end, cutNum):
     Cut the path into cutNum lines
 
     Args:
-      start (GPSPoint): the start point
-      end (GPSPoint)  : the end point
-      cutNum (int)    : the number of cuts
+      (GPSPoint) start: the start point
+      (GPSPoint) end: the end point
+      (int) cutNum: the number of cuts
     Return:
-      a list of GPS points
+      (list) GPS points
     """
+    # Calculate the amount of difference of each segmentation
     latDif = (end.lat - start.lat)/cutNum
     lngDif = (end.lng - start.lng)/cutNum
+
     gpsList = []
     for i in xrange(cutNum): 
-        startPt = GPSPoint(start.lat+latDif*i, start.lng+lngDif*i)
-        endPt = GPSPoint(start.lat+latDif*(i+1), start.lng+lngDif*(i+1))
+        # Create the start and end points of each segmentation
+        startPt = GPSPoint(start.lat + latDif * i, start.lng + lngDif * i)
+        endPt = GPSPoint(start.lat + latDif * (i + 1), start.lng + lngDif * (i + 1))
         gpsList.append((startPt, endPt))
     return gpsList    
