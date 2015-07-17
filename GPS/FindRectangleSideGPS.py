@@ -25,11 +25,12 @@ def FindRectangleSideGPS(region):
     while region != None:
         if region.lat > top:
             top = region.lat
-        if region.lat < bottom:
+        elif region.lat < bottom:
             bottom = region.lat
+        
         if region.lng > right:
             right = region.lng
-        if region.lng < left:
+        elif region.lng < left:
             left = region.lng
         region = region.next
 

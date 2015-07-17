@@ -37,7 +37,7 @@ GPS_TIME_ZONE = -5
 
 """Grid distance"""
 #in kilometer
-GRID_DISTANCE = 6
+GRID_DISTANCE = 8
 
 ## use kilometer (K) or mile (M)
 METER_TYPE = "K"

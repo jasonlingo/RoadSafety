@@ -14,7 +14,7 @@ def Haversine(lat1, lng1, lat2, lng2):
       (float) lat1, lng1: the position of the first point
       (float) lat2, lng2: the position of the second point
     Return:
-      distance (in km) between two nodes
+      (float) distance (in km) between two nodes
     """
     # Convert decimal degrees to radians 
     lng1, lat1, lng2, lat2 = map(radians, [lng1, lat1, lng2, lat2])

@@ -10,7 +10,7 @@ from GPS.Haversine import Haversine
 
 def findInnerGrid(region, recTopRight=None, recTopLeft=None, recBotRight=None, recBotLeft=None):
     """
-    find the inner grid within a region
+    Find the inner grid within a region
 
     Args:
       (list) region: a list of GPS data of a region
@@ -19,33 +19,32 @@ def findInnerGrid(region, recTopRight=None, recTopLeft=None, recBotRight=None, r
     Return:
       (list) gridPoint: a list of GPSPoints that are within the region
     """ 
-   
-    #add grids
-    #find the distance (km) of two sides
+    # Find the length (km) of two sides of the given rectangle
     width = Haversine(recTopRight.lat, recTopRight.lng,
                       recTopLeft.lat, recTopLeft.lng)
     height = Haversine(recTopRight.lat, recTopRight.lng,
                        recBotRight.lat, recBotRight.lng)
     
-    #number of segmentations (segmentated every 10km)
-    numWidth = int(width)/GRID_DISTANCE
-    numHeight = int(height)/GRID_DISTANCE
+    # Number of segmentations. Each segmentation has length of GRID_DISTANCE, 
+    # and the last grid will use the remainder length.
+    numWidth = max(1, int(width)/GRID_DISTANCE)
+    numHeight = max(1, int(height)/GRID_DISTANCE)
 
-    #vertical segmentation distance
-    lngDiff = (recTopRight.lng - recTopLeft.lng)/numWidth #need to deal with divide by zero
+    # Vertical segmentation distance
+    lngDiff = (recTopRight.lng - recTopLeft.lng)/numWidth
 
-    #horizontal segmentation distance 
+    # Horizontal segmentation distance 
     latDiff = (recTopRight.lat - recBotRight.lat)/numHeight
 
-    #find grid point
+    # Find grid point
     gridPoint = []
     lng = recTopLeft.lng
-    while(lng <= recTopRight.lng*1.0001):
+    while(lng <= recTopRight.lng * 1.0001):
         lat = recBotRight.lat
-        while(lat <= recTopRight.lat*1.0001):
+        while(lat <= recTopRight.lat * 1.0001):
             point = GPSPoint(lat, lng)
             if containPoint(region, point):
-                #if the region contains the point
+                # If the region contains the point
                 gridPoint.append(point)
             lat += latDiff
         lng += lngDiff

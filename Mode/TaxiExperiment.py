@@ -22,11 +22,6 @@ class TaxiExperiment:
     crash location with minimal time among all the taxis in 
     the region.
     """
-    #map object
-    #Map = None
-    #MapMatrix = None
-    #(GPSPoint) the GPS data of the region
-    #region = None
     #(Taxi) the location of all taxis
     taxis = None
     #(Crash) the location of car creahes 
@@ -36,32 +31,28 @@ class TaxiExperiment:
 
     #send-to-hospital record
     sendHistory = []
-    
-    #rectangle 
-    #top = 0
-    #bottom = 0
-    #right = 0
-    #left = 0
-
 
     def __init__(self, region_filename):
         """
-        Construct the experiment
+        Construct an experiment
 
         Args:
           (String) region_filename: the location of the region 
                    file from Google MAP kmz file
         """
-        #(GPSPoint) the GPS data of the region
+        # (GPSPoint) the GPS data of the region
         self.region = KmzParser(region_filename)
-        #RegionMap object
+        
+        # RegionMap object
         self.Map = RegionMap(self.region)
-        #rectangle of this map
+        
+        # Rectangle of this map
         self.top = self.Map.top
         self.bottom = self.Map.bottom
         self.right = self.Map.right
         self.left = self.Map.left
-        #the map matrix storing useful information
+        
+        # The map matrix used to store useful information
         self.MapMatrix = MapMatrix(self.top, self.bottom, self.right, self.left)
 
 
@@ -73,31 +64,43 @@ class TaxiExperiment:
           (String) hospital_filename: the locations of hospitals
                    to be added into the map
         """
+        # Parse the hospitals' GPS data
         self.hospitals = KmzParser(hospital_filename)
         
         pointer = self.hospitals
         while pointer != None:
+            # Find the sub-area that this hospital belongs to
             area = self.MapMatrix.findArea(pointer)
-            #print "add Hospital: Area[%d, %d]" %(area.row, area.col)
+            
+            # Add this hospital to the area
             hos = GPSPoint(pointer.lat, pointer.lng)
             area.addHospital(hos)
+            
+            # Next loop
             pointer = pointer.next
 
 
     def addTaxi(self, taxis_filename):
         """
-        Add taxis according to the given location.
+        Add taxis according to the given locations.
         
         Args:
           (String) taxis_filename: the location of a list of all 
                    the taxis in the region
         """
+        # Parse the locations of taxis
         self.taxis = KmzParser(taxis_filename)
         pointer = self.taxis
         while pointer != None:
+            # Find the sub-area that this hospital belongs to
             area = self.MapMatrix.findArea(pointer)
+            # Create a taxi object
             taxi = Taxi(pointer.lat, pointer.lng, self.hospitals)
-            area.addHospital(taxi)
+            
+            # Add this hospital to the area
+            area.addTaxi(taxi)
+
+            # Next loop 
             pointer = pointer.next            
 
 
@@ -109,18 +112,20 @@ class TaxiExperiment:
           (int) num: the number of taxis to add.
         """
         if self.taxis != None:
+            # If this region already has taxis, append the new taxi 
+            # to the tail of the taxi list.
             pointer = self.taxis.getTail()
 
         while num > 0:
-            #create random taxi's location
+            # Randomly create taxi's location
             lat = uniform(self.Map.bottom, self.Map.top)
             lng = uniform(self.Map.left, self.Map.right)
             
-            #get nearest road's GPS of that random location
             taxiGPS = GPSPoint(lat, lng)
-            #taxiGPS = getRoadGPS(taxiGPS)
+            # Get nearest road's GPS of that random location
+            # taxiGPS = getRoadGPS(taxiGPS)
             
-            #check whether the taxi's GPS is in the region
+            # Check whether the taxi's GPS is in the region
             if self.Map.isInnerPoint(taxiGPS):
                 #print "add a texi"
                 num -= 1;

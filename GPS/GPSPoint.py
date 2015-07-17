@@ -1,6 +1,6 @@
 class GPSPoint:
     """
-    Class of GPS point with a linked list data structure
+    A class of GPS point with a linked list data structure
     """
     #GPS position
     #lat = None #latitude
@@ -19,9 +19,11 @@ class GPSPoint:
         # GPS positoin
         self.lat  = latitude
         self.lng  = longitude
+
         # direction data
         self.distance = distance # distance from this node to the next node
         self.duration = duration # time (seconds) from this node to the next node
+        
         # next node
         self.next = next
 

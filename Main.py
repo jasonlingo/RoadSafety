@@ -163,23 +163,29 @@ def main():
         Divide the given region into grids and calculate 
         point-to-point traffic time.
         """
-        from Google.GridTrafficTime import GridTrafficTime
+        from Mode.GridTrafficTime import GridTrafficTime
         head = KmzParser("GPS_data/Delhi.kmz")
         GridTrafficTime(head)
 
 
     elif opts.mode == "7":
         """
-        TaxiExperiment: 
+        Taxi-based EMS Simulation: 
         When a crash happens, find the taxi that can arrive the 
         crash location with minimal time among all the taxis in 
         the region.        
         """
         from Mode.TaxiExperiment import TaxiExperiment
+        # Create an experiment object of the given region
         ex = TaxiExperiment("GPS_data/Delhi.kmz")
-        #Hospitals must be added before adding taxis and crashes
+
+        # Hospitals must be added before adding taxis and crashes
         ex.addHospital("GPS_data/Hospital.kmz")
-        #ex.addTaxi("GPS_data/Taxi.kmz")
+
+        # If you want to add taxis at pre-defined locations, use the command
+        # ex.addTaxi("GPS_data/Taxi.kmz")
+        
+        # Ask the number of randomly generated taxis
         try:
             taxiNum = raw_input("How many taxis? ")
             taxiNum = int(taxiNum)
@@ -187,20 +193,23 @@ def main():
         except ValueError:
             print "The input format is wrong. We will use 50 taxis in this experiment."
             taxiNum = 50;
+
+        # Randomly generate taxis    
         ex.addRandomTaxi(taxiNum)
-        #add crashes
+
+        # Add crashes
         crashNum = 1
-        while crashNum > 0:
+        while crashNum > 0: # enter 0 to end this process
+            # Ask the number of crashes
             try:
                 crashNum = int(raw_input("How many crashes do you want to add? "))
                 ex.addRandomCrash(crashNum)
             except ValueError:
                 print "Wrong format!"
+
+        # Show the result
         ex.showMap()
-        #ex.MapMatrix.printArea()
 
-
-        
 
 
 
