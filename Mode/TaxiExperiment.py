@@ -44,16 +44,10 @@ class TaxiExperiment:
         self.region = KmzParser(region_filename)
         
         # RegionMap object
-        self.Map = RegionMap(self.region)
-        
-        # Rectangle of this map
-        self.top = self.Map.top
-        self.bottom = self.Map.bottom
-        self.right = self.Map.right
-        self.left = self.Map.left
+        #self.Map = RegionMap(self.region)
         
         # The map matrix used to store useful information
-        self.MapMatrix = MapMatrix(self.top, self.bottom, self.right, self.left)
+        self.Map = MapMatrix(self.region)
 
 
     def addHospital(self, hospital_filename):
@@ -70,7 +64,7 @@ class TaxiExperiment:
         pointer = self.hospitals
         while pointer != None:
             # Find the sub-area that this hospital belongs to
-            area = self.MapMatrix.findArea(pointer)
+            area = self.Map.findArea(pointer)
             
             # Add this hospital to the area
             hos = GPSPoint(pointer.lat, pointer.lng)
@@ -93,7 +87,7 @@ class TaxiExperiment:
         pointer = self.taxis
         while pointer != None:
             # Find the sub-area that this hospital belongs to
-            area = self.MapMatrix.findArea(pointer)
+            area = self.Map.findArea(pointer)
             # Create a taxi object
             taxi = Taxi(pointer.lat, pointer.lng, self.hospitals)
             
@@ -125,11 +119,11 @@ class TaxiExperiment:
             # Get nearest road's GPS of that random location
             # taxiGPS = getRoadGPS(taxiGPS)
             
-            # Check whether the taxi's GPS is in the region
+            # Check whether the taxi's GPS location is in the region
             if self.Map.isInnerPoint(taxiGPS):
                 #print "add a texi"
                 num -= 1;
-                area = self.MapMatrix.findArea(taxiGPS)
+                area = self.Map.findArea(taxiGPS)
                 taxi = Taxi(taxiGPS.lat, taxiGPS.lng, self.hospitals)
                 taxi2 = Taxi(taxiGPS.lat, taxiGPS.lng, self.hospitals) #be careful of "pass by reference"
                 taxi.next = None
@@ -157,7 +151,7 @@ class TaxiExperiment:
         self.crashes = KmzParser(crash_filename)
         pointer = self.crashes
         while pointer != None:
-            area = self.MapMatrix.findArea(pointer)
+            area = self.Map.findArea(pointer)
             crash = Crash(pointer.lat, pointer.lng, self.hospitals)
             area.addCrash(crash)
             pointer = pointer.next  
@@ -187,7 +181,7 @@ class TaxiExperiment:
             #check whether the taxi's GPS is in the region
             if self.Map.isInnerPoint(crashGPS):
                 num -= 1;
-                area = self.MapMatrix.findArea(crashGPS)
+                area = self.Map.findArea(crashGPS)
                 crash = Crash(crashGPS.lat, crashGPS.lng, self.hospitals)
                 crash2 = Crash(crashGPS.lat, crashGPS.lng, self.hospitals)
                 #print "add crash: Area[%d, %d]" % (area.row, area.col)
@@ -210,12 +204,12 @@ class TaxiExperiment:
           (Crash) crash: the crash event
         """
         GPS = GPSPoint(crash.lat, crash.lng)
-        area = self.MapMatrix.findArea(GPS)
+        area = self.Map.findArea(GPS)
         row = area.row
         col = area.col
         print "a crash happened in area[%d, %d]" % (row, col)
-        maxRow = len(self.MapMatrix.areas)
-        maxCol = len(self.MapMatrix.areas[0])
+        maxRow = len(self.Map.areas)
+        maxCol = len(self.Map.areas[0])
         sleep(2)
         #checking range
         i = 0
@@ -239,9 +233,9 @@ class TaxiExperiment:
                         #already checked
                         continue
                     #print "checking area[%d, %d]" % (j, k) 
-                    if self.MapMatrix.hasTaxi(j,k):
+                    if self.Map.hasTaxi(j,k):
                         foundTaxi = True
-                        taxi = self.MapMatrix.areas[j][k].taxis
+                        taxi = self.Map.areas[j][k].taxis
                         while taxi != None:
                             if taxi.isEmpty:
                                 source = str(taxi.lat) + "," + str(taxi.lng)
@@ -291,40 +285,40 @@ class TaxiExperiment:
         mymap.addpath(self.region.toList(), "#FF0000") #red
 
         #add rectangle lines
-        rectangle = [(self.top, self.left), 
-                     (self.top, self.right),
-                     (self.bottom, self.right),
-                     (self.bottom, self.left),
-                     (self.top, self.left)]
+        rectangle = [(self.Map.top, self.Map.left), 
+                     (self.Map.top, self.Map.right),
+                     (self.Map.bottom, self.Map.right),
+                     (self.Map.bottom, self.Map.left),
+                     (self.Map.top, self.Map.left)]
         mymap.addpath(rectangle, "#000000") #black  
 
         #get the length of the side of each area
-        latDiff = self.MapMatrix.latDiff    
-        lngDiff = self.MapMatrix.lngDiff    
+        latDiff = self.Map.latDiff    
+        lngDiff = self.Map.lngDiff    
         #add vertical lines
-        lng = self.left
-        while lng <= self.right:
-            line = [(self.top, lng),
-                    (self.bottom, lng)]
+        lng = self.Map.left
+        while lng <= self.Map.right:
+            line = [(self.Map.top, lng),
+                    (self.Map.bottom, lng)]
             mymap.addpath(line, "#000000") #black             
             lng += lngDiff
         #add last vertical line
-        if lng - lngDiff < self.right:
-            line = [(self.top, self.right),
-                    (self.bottom, self.right)]
+        if lng - lngDiff < self.Map.right:
+            line = [(self.Map.top, self.Map.right),
+                    (self.Map.bottom, self.Map.right)]
             mymap.addpath(line, "#000000") #black 
 
         #add horizontal lines
-        lat = self.top
-        while lat >= self.bottom:
-            line = [(lat, self.left),
-                    (lat, self.right)]
+        lat = self.Map.top
+        while lat >= self.Map.bottom:
+            line = [(lat, self.Map.left),
+                    (lat, self.Map.right)]
             mymap.addpath(line, "#000000") #black
             lat -= latDiff        
         #add last horizontal line
-        if lat + latDiff > self.bottom:
-            line = [(self.bottom, self.left),
-                    (self.bottom, self.right)]
+        if lat + latDiff > self.Map.bottom:
+            line = [(self.Map.bottom, self.Map.left),
+                    (self.Map.bottom, self.Map.right)]
             mymap.addpath(line, "#000000") #black             
 
         #add taxis

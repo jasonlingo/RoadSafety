@@ -40,23 +40,6 @@ class RegionMap():
 
         (self.top, self.bottom, self.right, self.left) = \
                           FindRectangleSideGPS(self.region)
-        """
-        pointer = self.region
-        self.top    = self.region.lat
-        self.bottom = self.region.lat
-        self.right  = self.region.lng
-        self.left   = self.region.lng
-        while(pointer != None):
-            if pointer.lat > self.top:
-                self.top = pointer.lat
-            if pointer.lat < self.bottom:
-                self.bottom = pointer.lat
-            if pointer.lng > self.right:
-                self.right = pointer.lng
-            if pointer.lng < self.left:
-                self.left = pointer.lng
-            pointer = pointer.next
-        """
 
 
     def isInnerPoint(self, checkPoint):

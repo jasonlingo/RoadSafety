@@ -8,6 +8,9 @@ from GPS.GPSPoint import GPSPoint
 from GPS.Haversine import Haversine
 from config import GRID_DISTANCE
 
+from shapely.geometry import LineString
+from GPS.FindRectangleSideGPS import FindRectangleSideGPS
+
 
 
 class MapMatrix():
@@ -17,30 +20,36 @@ class MapMatrix():
     is obtained by dividing the map into several small squares.
     """
     areas = []
-    def __init__(self, top, bottom, right, left, areaSize=GRID_DISTANCE):
+    def __init__(self, region, areaSize=GRID_DISTANCE):
         """
-        Args:
-          (float) top, bottom, right, left: the four borders 
-                  of this MapMatrix
-        """
-        # the border of this MapMatrix
-        self.top    = top
-        self.bottom = bottom
-        self.right  = right
-        self.left   = left
+        Constructor
 
-        # the length of each side of areas in this MapMatrix
+        Args:
+          (GPSPoint) region: the GPS data of the given region
+          (float) areaSize: the length of each side of sub-areas
+        """
+        self.region = region
+
+        # The border of this MapMatrix
+        (self.top, self.bottom, self.right, self.left) = \
+                            FindRectangleSideGPS(self.region)
+
+        # For checking inner grid point
+        self.CloseRegionList = region.toList()
+        self.CloseRegionList.append((region.lat, region.lng))                            
+
+        # The length of each side of areas in this MapMatrix
         self.areaSize = areaSize
         self.genSubAreas()
 
-        # the GPS difference of width and height of each side of areas
+        # The GPS difference of width and height of each side of areas
         self.latDiff = 0
         self.lngDiff = 0
 
-        # the matrix that stores the areas in thie MapMatrix
+        # The matrix that stores the areas in thie MapMatrix
         self.areas = []
 
-        # generate the matrix for this map
+        # Generate the matrix for this map
         self.genSubAreas()
 
 
@@ -87,6 +96,42 @@ class MapMatrix():
                 col += 1
             areaTop = areaBot
             row += 1
+
+
+    def isInnerPoint(self, checkPoint):
+        """ 
+        Check whether the region contains the checkPoint
+        #1. Find a point outside the region
+        #2. Connect the new point with the checkPoint, then
+        #   check whether the line across the region line segmentation
+        #3. If the line across the region line for odd times, then the point is inside the region        
+
+        Args:
+          (GPSPoint) checkPoint: a point to be checked
+        Return:
+          (boolean) True if the region contains the point; False otherwise
+        """
+        ### Find a point outside the region ###
+        highest = (self.top * 1.0001, self.right * 1.0001)
+       
+        # The number of intersection of the region line and 
+        # the line connects the outside point and the checkPoint
+        intersectNum = 0
+
+        # The line connects the ckeckPoint and outside point
+        line1 = LineString([(highest[0], highest[1]), (checkPoint.lat, checkPoint.lng)])         
+        
+        # Start counting the times of the line intersects the region lines
+        pre = self.CloseRegionList[0]
+        for point in self.CloseRegionList[1:]:
+            # Region line
+            line2 = LineString([(pre[0], pre[1]), (point[0], point[1])]) 
+            if str(line1.intersection(line2)) != "GEOMETRYCOLLECTION EMPTY":
+                # Has an intersection
+                intersectNum += 1
+            pre = point
+
+        return intersectNum % 2 == 1
 
 
     def hasTaxi(self, row, col):
