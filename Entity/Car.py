@@ -14,9 +14,6 @@ class Car(GPSPoint):
         Constructor
         """
         GPSPoint.__init__(self, lat, lng)
-        # The position (GPSPoint) of this car.
-        #self.lat = lat
-        #self.lng = lng
 
         # The multiplier of the speed. Different types of cars
         # will have different priority on the road. Ex: an ambulance

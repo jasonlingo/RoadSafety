@@ -6,11 +6,12 @@ from config import OUTPUT_DIRECTORY
 from random import uniform 
 from GPS.GPSPoint import GPSPoint
 from Util.kml import KmzParser
-from Map.RegionMap import RegionMap
 from Map.MapMatrix import MapMatrix
 from Google.Direction import getDirection
 from Entity.Taxi import Taxi
 from Entity.Crash import Crash
+from Entity.Hospital import Hospital
+from File.Directory import createDirectory
 from time import sleep
 import pygmaps
 import webbrowser
@@ -22,15 +23,16 @@ class TaxiExperiment:
     crash location with minimal time among all the taxis in 
     the region.
     """
-    #(Taxi) the location of all taxis
+    ### Instance variable ###
+    # (Taxi) the location of all taxis
     taxis = None
-    #(Crash) the location of car creahes 
+    # (Crash) the location of car creahes 
     crashes = None
-    #(GPSPoint) list of hospital
+    # (GPSPoint) list of hospital
     hospitals = None
-
-    #send-to-hospital record
+    # Send-to-hospital record
     sendHistory = []
+
 
     def __init__(self, region_filename):
         """
@@ -42,9 +44,6 @@ class TaxiExperiment:
         """
         # (GPSPoint) the GPS data of the region
         self.region = KmzParser(region_filename)
-        
-        # RegionMap object
-        #self.Map = RegionMap(self.region)
         
         # The map matrix used to store useful information
         self.Map = MapMatrix(self.region)
@@ -63,14 +62,12 @@ class TaxiExperiment:
         
         pointer = self.hospitals
         while pointer != None:
-            # Find the sub-area that this hospital belongs to
+            # Find the sub-area that contains the GPS location of this hospital
             area = self.Map.findArea(pointer)
-            
             # Add this hospital to the area
-            hos = GPSPoint(pointer.lat, pointer.lng)
+            hos = Hospital(pointer.lat, pointer.lng)
             area.addHospital(hos)
-            
-            # Next loop
+            # Next hospital
             pointer = pointer.next
 
 
@@ -82,20 +79,29 @@ class TaxiExperiment:
           (String) taxis_filename: the location of a list of all 
                    the taxis in the region
         """
-        # Parse the locations of taxis
-        self.taxis = KmzParser(taxis_filename)
-        pointer = self.taxis
+        # Parse the locations of taxis stored in a kmz file
+        newTaxis = KmzParser(taxis_filename)
+        
+        # Add each taxi to its area
+        pointer = newTaxis
         while pointer != None:
-            # Find the sub-area that this hospital belongs to
+            # Find the sub-area that contains the GPS location of this taxi
             area = self.Map.findArea(pointer)
             # Create a taxi object
-            taxi = Taxi(pointer.lat, pointer.lng, self.hospitals)
-            
-            # Add this hospital to the area
+            taxi = Taxi(pointer.lat, pointer.lng, self.hospitals) # remove the hospital
+            # Add this taxi to the area
             area.addTaxi(taxi)
+            # Next taxi 
+            pointer = pointer.next 
 
-            # Next loop 
-            pointer = pointer.next            
+        if self.taxis != None:
+            # There already are taxis in this experiment region, so attach the new taxis
+            # to the tail of the taxis linked list
+            pointer = self.taxis.getTail()
+            pointer.next = newTaxis 
+        else:
+            # There is no taxi in thie experiemnt region, so just replace the linked list
+            self.taxis = newTaxis          
 
 
     def addRandomTaxi(self, num):
@@ -121,24 +127,22 @@ class TaxiExperiment:
             
             # Check whether the taxi's GPS location is in the region
             if self.Map.isInnerPoint(taxiGPS):
-                #print "add a texi"
                 num -= 1;
+                # Find the sub-area that contains the GPS location of this taxi
                 area = self.Map.findArea(taxiGPS)
+                # Create two identical taxi objects in order to prevent "pass by reference"
                 taxi = Taxi(taxiGPS.lat, taxiGPS.lng, self.hospitals)
-                taxi2 = Taxi(taxiGPS.lat, taxiGPS.lng, self.hospitals) #be careful of "pass by reference"
+                taxi2 = Taxi(taxiGPS.lat, taxiGPS.lng, self.hospitals) 
                 taxi.next = None
-                #print "add taxi: Area[%d, %d]" % (area.row, area.col)
                 area.addTaxi(taxi)
                 
+                # Add this taxi to the taxis linked list
                 if self.taxis == None:
                     self.taxis = taxi2
                     pointer = self.taxis
                 else:
                     pointer.next = taxi2
                     pointer = pointer.next
-            #sleep(0.1)
-
-
 
     def addCrash(self, crash_filename):
         """
@@ -148,13 +152,29 @@ class TaxiExperiment:
           (String) crash_filename: the location of a list of all 
                    the crashes in the region
         """
-        self.crashes = KmzParser(crash_filename)
+        # Parse the locations of crashes stored in a kmz file
+        newCrashes = KmzParser(crash_filename)
+
+        # Add each crash to its area
         pointer = self.crashes
         while pointer != None:
+            # Find the sub-area that contains the GPS location of this crash
             area = self.Map.findArea(pointer)
+            # Create a single crash object
             crash = Crash(pointer.lat, pointer.lng, self.hospitals)
+            # Add this crash to this area
             area.addCrash(crash)
+            # Next crash
             pointer = pointer.next  
+
+        if self.crashes != None:
+            # There already are crashes in this experiment region, so attach the new crashes
+            # to the tail of the crashes linked list
+            pointer = self.crashes.getTail()
+            pointer.next = newCrashes
+        else:
+            # There is no taxi in thie experiemnt region, so just replace the linked list
+            self.taxis = newCrashes      
 
 
     def addRandomCrash(self, num):
@@ -168,24 +188,26 @@ class TaxiExperiment:
             pointer = self.crashes.getTail()
 
         while num > 0:
-            #create random taxi's location
+            # Create random crash's location
             lat = uniform(self.Map.bottom, self.Map.top)
             lng = uniform(self.Map.left, self.Map.right)
             
-            #get nearest road's GPS of that random location
             crashGPS = GPSPoint(lat, lng)
-            #assume the accident not exactly happens on the road, 
-            #it can be in a building (not car crash)
+            # Get nearest road's GPS of that random location
             #crashGPS = getRoadGPS(crashGPS)
             
             #check whether the taxi's GPS is in the region
             if self.Map.isInnerPoint(crashGPS):
                 num -= 1;
+                # Find the sub-area that contains the GPS location of this crash
                 area = self.Map.findArea(crashGPS)
+                # Create two identical taxi objects in order to prevent "pass by reference"
                 crash = Crash(crashGPS.lat, crashGPS.lng, self.hospitals)
                 crash2 = Crash(crashGPS.lat, crashGPS.lng, self.hospitals)
-                #print "add crash: Area[%d, %d]" % (area.row, area.col)
+                crash.next = None
                 area.addCrash(crash)
+
+                # Add this crash to the crashes linked list
                 if self.crashes ==  None:
                     self.crashes = crash2
                     pointer = self.crashes
@@ -193,9 +215,19 @@ class TaxiExperiment:
                     pointer.next = crash2
                     pointer = pointer.next
 
-                self.sendToHospital(crash2)
+    def sendPatients(self):
+        """
+        Send every patient to hospitals
+        """
+        if self.crashes == None:
+            # No patient
+            return
 
-
+        self.crashes.printNode()
+        pointer = self.crashes
+        while pointer != None:
+            self.sendToHospital(pointer)
+            pointer = pointer.next
 
     def sendToHospital(self, crash):
         """send people to hospital from the crash location using Taxi.
@@ -203,61 +235,90 @@ class TaxiExperiment:
         Args:
           (Crash) crash: the crash event
         """
-        GPS = GPSPoint(crash.lat, crash.lng)
-        area = self.Map.findArea(GPS)
+        area = self.Map.findArea(crash)
+        if area == None:
+            print "This crash has a wrong location!!"
+            return None
         row = area.row
         col = area.col
-        print "a crash happened in area[%d, %d]" % (row, col)
+        print "A crash happened in area[%d, %d]" % (row, col)
         maxRow = len(self.Map.areas)
         maxCol = len(self.Map.areas[0])
-        sleep(2)
-        #checking range
-        i = 0
-        #check starts from current location and expand the range
-        #when four flags are all True, stop checking
+        # Checking ranges
+        if row > maxRow or col > maxCol:
+            print "This crash has a wrong location!!"
+            return None
+        
+        # Start to check from current location and its 8 neighbor sub-areas, 
+        # and expand the range until a taxi or hospital is found.
+        # When four flags (reachTop, reachBottom, reachRight, reachLeft) 
+        # are all True, stop the checking process.
         reachTop    = False
         reachBottom = False
         reachRight  = False
         reachLeft   = False
+        foundTaxi   = False
         shortestTime = float("inf")
-        foundTaxi = False
         nearestTaxi = None
         nearestDirection = None
-        #the duration between this crash to the nearest hospital
+        # The duration between this crash to the nearest hospital
 
         destination = str(crash.lat) + "," + str(crash.lng)
+        i = 0
         while not (reachTop and reachBottom and reachRight and reachLeft):
-            for j in xrange(row-i, row+i+1): 
-                for k in xrange(col-i, col+i+1):
-                    if abs(row-j) < i and abs(col-k) < i:
-                        #already checked
+            for j in xrange(row - i, row + i + 1): 
+                for k in xrange(col - i, col + i + 1):
+                    if abs(row - j) < i and abs(col - k) < i:
+                        # Already checked
                         continue
-                    #print "checking area[%d, %d]" % (j, k) 
+
                     if self.Map.hasTaxi(j,k):
-                        foundTaxi = True
+                        # Get the taxis linked list of this sub-area
                         taxi = self.Map.areas[j][k].taxis
                         while taxi != None:
                             if taxi.isEmpty:
+                                foundTaxi = True
+                                # Get a direction from the taxi's location to 
+                                # the crash's location using Google Direciton API.
                                 source = str(taxi.lat) + "," + str(taxi.lng)
                                 direction = getDirection(source, destination)
                                 duration = direction.getTotalDuration()
                                 if duration < shortestTime:
+                                    # Fine the taxi with shortest traffic time
                                     shortestTime = duration
                                     nearestTaxi = taxi
                                     nearestDirection = direction
                             taxi = taxi.next
+            
             if foundTaxi and i > 0:
+                # Mark this taxi as non-empty
                 nearestTaxi.isEmpty = False
+                # Update the taxi's GPS location
                 nearestTaxi.lat = crash.lat
                 nearestTaxi.lng = crash.lng
+                # Market this patient as saved
                 crash.isSaved = True
+                # Make this taxi to find the nearest hospital and 
+                # get the direction. 
+                minute, second = nearestDirection.getDurationMS()
+                print "The time for a nearest taxi to arrive this crash's location is "\
+                      "%dmins %dsec" % (minute, second)
+                
                 HospitalDirection = nearestTaxi.toNearestHospital()
+                minute, second = HospitalDirection.getDurationMS()
+                print "Sending this patient to the nearest hospital needs------------ "\
+                      "%dmins %dsec" % (minute, second)
+                
                 tail = nearestDirection.getTail()
                 tail.next = HospitalDirection
+                minute, second = nearestDirection.getDurationMS()
+                print "Total time---------------------------------------------------- "\
+                      "%dmins %dsec" % (minute, second)
                 self.sendHistory.append(nearestDirection)
                 break
 
             i += 1
+            # Check whether any side of this region has been reached.
             if reachBottom == False and row + i >= maxRow:
                 reachBottom = True
             if reachTop == False and row - i < 0:
@@ -267,24 +328,20 @@ class TaxiExperiment:
             if reachLeft == False and col - i < 0:
                 reachLeft = True
 
-        totalSecond = nearestDirection.getTotalDuration()
-        second = totalSecond % 60
-        minute = (totalSecond - second)/60
-        print "sending people to hospital needs %dmins %dsec" % (minute, second)
-
     def showMap(self):
         """
         Show the experiment on Google map, including hospitals, 
-        taxis, and crashes
+        taxis, crashes, and taxis' route.
         """
-        midLat = (self.Map.top + self.Map.bottom)/2.0
-        midLng = (self.Map.left + self.Map.right)/2.0
-        #set the middle point of this map
+        # Set the middle point of this map
+        midLat = (self.Map.top + self.Map.bottom) / 2.0
+        midLng = (self.Map.left + self.Map.right) / 2.0
         mymap = pygmaps.maps(midLat, midLng, 10)    
-        #add region line
+        
+        # Add region line
         mymap.addpath(self.region.toList(), "#FF0000") #red
 
-        #add rectangle lines
+        # Add rectangle lines
         rectangle = [(self.Map.top, self.Map.left), 
                      (self.Map.top, self.Map.right),
                      (self.Map.bottom, self.Map.right),
@@ -292,71 +349,81 @@ class TaxiExperiment:
                      (self.Map.top, self.Map.left)]
         mymap.addpath(rectangle, "#000000") #black  
 
-        #get the length of the side of each area
+        # Get the length of the side of each area
         latDiff = self.Map.latDiff    
         lngDiff = self.Map.lngDiff    
-        #add vertical lines
+        
+        # Add vertical lines
         lng = self.Map.left
-        while lng <= self.Map.right:
+        while lng <= self.Map.right: # From left to right
             line = [(self.Map.top, lng),
                     (self.Map.bottom, lng)]
             mymap.addpath(line, "#000000") #black             
             lng += lngDiff
-        #add last vertical line
+
+        # Add last vertical line, using the residual length
         if lng - lngDiff < self.Map.right:
             line = [(self.Map.top, self.Map.right),
                     (self.Map.bottom, self.Map.right)]
             mymap.addpath(line, "#000000") #black 
 
-        #add horizontal lines
+        # Add horizontal lines
         lat = self.Map.top
-        while lat >= self.Map.bottom:
+        while lat >= self.Map.bottom: # From top to bottom
             line = [(lat, self.Map.left),
                     (lat, self.Map.right)]
             mymap.addpath(line, "#000000") #black
-            lat -= latDiff        
-        #add last horizontal line
+            lat -= latDiff  
+
+        # Add last horizontal line, using the residual length
         if lat + latDiff > self.Map.bottom:
             line = [(self.Map.bottom, self.Map.left),
                     (self.Map.bottom, self.Map.right)]
             mymap.addpath(line, "#000000") #black             
 
-        #add taxis
-        if self.taxis != None:
-            for taxi in self.taxis.toList():
-                mymap.addpoint(taxi[0], taxi[1], "#0000FF") #blue
+        # Add taxis' locations
+        pointer = self.taxis
+        while pointer != None:
+            mymap.addpoint(pointer.lat, pointer.lng, "#0000FF") #blue
+            pointer = pointer.next
 
-        #add crashes
-        if self.crashes != None:
-            for crash in self.crashes.toList():
-                mymap.addpoint(crash[0], crash[1], "#00FF00") #green
+        # Add crashes' locations
+        pointer = self.crashes
+        while pointer != None:
+            mymap.addpoint(pointer.lat, pointer.lng, "#00FF00") #green
+            pointer = pointer.next
 
-        #add hospitals
-        if self.hospitals != None:
-            for hospital in self.hospitals.toList():
-                mymap.addpoint(hospital[0], hospital[1], "#FF0000") #red
+        # Add hospitals' locations
+        pointer = self.hospitals
+        while pointer != None:
+            mymap.addpoint(pointer.lat, pointer.lng, "#FF0000") #green
+            pointer = pointer.next
 
-        #add taxi routes:
-        i = 0
+        # Add taxi routes:
         totalDuration = 0
         if len(self.sendHistory) > 0:
             for direction in self.sendHistory:
-                i += 1
                 mymap.addpath(direction.toList(), "#0000FF")
                 totalDuration += direction.getTotalDuration()
-                #direction = getRoadGPS(direction)
-                #mymap.addpath(direction.toList(), "#0038ff")
+        
+        # Calculate average total time
+        i = len(self.sendHistory)
         if i > 0:
-            avgDuration = totalDuration/i
+            avgDuration = totalDuration / i
             sec = avgDuration % 60
-            mins = (avgDuration - sec)/60
+            mins = (avgDuration - sec) / 60
             print "Average time: %dmins %dsec" % (mins, sec)
 
-
-        
-        mapFilename = OUTPUT_DIRECTORY + "map.html"
+        # The output directory
+        output_directory = OUTPUT_DIRECTORY + "Taxi_based_EMS/"   
+        # Check whether the output directory exists. If not, create the directory
+        createDirectory(output_directory)  
+        # The file name of the result map   
+        mapFilename = output_directory + "map.html"
+        # Create the map
         mymap.draw('./'+mapFilename)
-        #sample: "file:///Users/Jason/GitHub/RoadSeftey/RoadSafety/map.html"
+        
+        # Open the file on a web browser
         url = "file://" + os.getcwd() + "/" + mapFilename
         webbrowser.open_new(url)
 

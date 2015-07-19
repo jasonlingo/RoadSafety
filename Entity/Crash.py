@@ -16,9 +16,8 @@ class Crash(GPSPoint):
           (float) lat, lng: the lat and lng of this crash
           (GPSPoint) hospitals: a linked list of hospitals
         """
-        GPSPoint.__init__(self, lat, lng)
-        #self.lat = lat
-        #self.lng = lng
+        self.lat = lat
+        self.lng = lng
         self.isSaved = False
         self.hospitals = hospitals
         self.nearestHospital = None
