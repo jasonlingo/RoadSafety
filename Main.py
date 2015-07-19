@@ -176,7 +176,6 @@ def main():
         the region.        
         """
         from Mode.TaxiExperiment import TaxiExperiment
-
         # Create an experiment object of the given region
         ex = TaxiExperiment("GPS_data/Delhi.kmz")
 
@@ -184,34 +183,29 @@ def main():
         ex.addHospital("GPS_data/Hospital.kmz")
 
         # If you want to add taxis at pre-defined locations, use the command
-        ex.addTaxi("GPS_data/Taxi.kmz")
+        # ex.addTaxi("GPS_data/Taxi.kmz")
         
         # Ask the number of randomly generated taxis
         try:
             taxiNum = raw_input("How many taxis? ")
             taxiNum = int(taxiNum)
+            print "The number of taxis is ", taxiNum
         except ValueError:
-            print "The input format is wrong. We will use 50"\
-                  "taxis in this experiment."
+            print "The input format is wrong. We will use 50 taxis in this experiment."
             taxiNum = 50;
 
         # Randomly generate taxis    
         ex.addRandomTaxi(taxiNum)
 
-        print "The total number of taxis is ", ex.taxis.nodeNum()
-
         # Add crashes
-        # Ask the number of randomly generated crashes
-        try:
-            crashNum = int(raw_input("How many crashes do you want to add in this experiment? "))
-            crashNum = int(crashNum)
-            ex.addRandomCrash(crashNum)
-        except ValueError:
-            print "Wrong format!"
-            sys.exit()
-
-        # Send patients from the crash locations to hospitals
-        ex.sendPatients()
+        crashNum = 1
+        while crashNum > 0: # enter 0 to end this process
+            # Ask the number of crashes
+            try:
+                crashNum = int(raw_input("How many crashes do you want to add? "))
+                ex.addRandomCrash(crashNum)
+            except ValueError:
+                print "Wrong format!"
 
         # Show the result
         ex.showMap()

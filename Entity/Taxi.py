@@ -18,7 +18,8 @@ class Taxi(Car):
           (GPSPoint) hospitals: a linked list of hospitals
         """
         Car.__init__(self, lat, lng)
-
+        #self.lat = lat
+        #self.lng = lng
         self.hospitals = hospitals
 
         self.isEmpty = True
@@ -36,7 +37,6 @@ class Taxi(Car):
           (int) time (in second) to the customer
         """
         # Using Google direction API to get the traffic time.
-        pass
 
 
 

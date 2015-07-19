@@ -2,6 +2,17 @@ class GPSPoint:
     """
     A class of GPS point with a linked list data structure
     """
+    #GPS position
+    #lat = None #latitude
+    #lng = None #longitude
+    
+    #direction data
+    #distance = 0 #distance (meters) from this node to the next node
+    #duration = 0 #time (seconds) from this node to the next node
+
+    #next node
+    #next = None
+    
 
     def __init__(self, latitude, longitude, distance=0, duration=0, next=None):
         """Constructor"""
@@ -64,13 +75,3 @@ class GPSPoint:
             totTime += pointer.duration
             pointer = pointer.next
         return totTime
-
-    def getDurationMS(self):
-        """
-        Return the total time in minutes and seconds from current node to the last node.
-        """
-        totalSecond = self.getTotalDuration()
-        second = totalSecond % 60
-        minute = (totalSecond - second) / 60   
-        return minute, second     
-
