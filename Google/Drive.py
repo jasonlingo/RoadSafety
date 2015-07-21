@@ -12,83 +12,98 @@ from apiclient.http import MediaFileUpload
 from oauth2client.client import OAuth2WebServerFlow
 from config import CLIENT_ID, CLIENT_SECRET
 
-def GDriveUpload(photoList, folder_name):
+
+def GDriveUpload(imageList, folderName):
     """
-    Create a public director and upload photos.
+    Create a public folder on Google Drive and upload images to it.
     
     Args:
-      (list) photoList: photos to be uploaded
+      (list) imageList: the images to be uploaded.
+      (String) folderName: the folder's name on Google Drive.
     Returns:
-      (dictionary) a dictionary of uploaded photos and their public link
+      (dictionary) a dictionary of uploaded images and their public link.
     """
-    # Check https://developers.google.com/drive/scopes for all available scopes
+    
+    # Get an authorization from Google Drive API.
+    # Check https://developers.google.com/drive/scopes for all available scopes.
     OAUTH_SCOPE = 'https://www.googleapis.com/auth/drive'
 
-    # Redirect URI for installed apps
+    # Redirect URI for installed apps.
     REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
 
-    # Run through the OAuth flow and retrieve credentials
+    # Run through the OAuth flow and retrieve credentials.
     flow = OAuth2WebServerFlow(CLIENT_ID, CLIENT_SECRET, OAUTH_SCOPE,redirect_uri=REDIRECT_URI)
     authorize_url = flow.step1_get_authorize_url()
     print 'Go to the following link in your browser: ' + authorize_url
-    # Open the web to get an authorization code
+    
+    # Open a web page using the authorize_url to get an authorization code.
     webbrowser.open_new(authorize_url)
-    # User inputs the authorization code
+    
+    # User inputs the authorization code.
     code = raw_input('Enter verification code: ').strip()
     credentials = flow.step2_exchange(code)
 
-    # Create an httplib2.Http object and authorize it with our credentials
+    # Create an httplib2.Http object and authorize it with our credentials.
     http = httplib2.Http()
     http = credentials.authorize(http)
     
-    # Build a Google Drive service
+    # Build a Google Drive service.
     drive_service = build('drive', 'v2', http=http)
 
-    # Create a public folder on Google Drive
-    folder = create_public_folder(drive_service, folder_name + "-" + datetime.datetime.now().strftime("%y-%m-%d-%H-%M"))
-    # Get the folder from the replied data
+    # Create a public folder on Google Drive.
+    folder = create_public_folder(drive_service, folderName + "-" + datetime.datetime.now().strftime("%y-%m-%d-%H-%M"))
+    
+    # Get the folder id from the replied data.
     folder_id = folder['id']
 
-    # Insert files
+    # Upload images to Google Drive.
     links = {}
-    for photo in photoList:     
-        file = insert_file(drive_service, photo.split("/")[-1], "video frame of road", folder_id, 'image/jpeg', photo)
-        print photo + " uploaded!"
-        # Get the public web link of the uploaded photo
+    for image in imageList:     
+        # Upload images. 
+        # insert_file( drive service, image name, description, folder id on Google Drive, media type, the address of the image)
+        file = insert_file(drive_service, image.split("/")[-1], "video frame of road", folder_id, 'image/jpeg', image)
+        print image + " uploaded!"
+        
+        # Get the public web link of the uploaded image.
         templink = file['webContentLink'].strip().split("&")[0]
-        links[photo] = templink
+        links[image] = templink
+    
     return links
 
 
-def create_public_folder(service, folder_name):
+
+def create_public_folder(service, folderName):
     """
-    Create a public folder on Google Drive
+    Create a public folder on Google Drive.
 
     Args:
-      service: the Google drive service 
-      (String) folder_name: the name of the folder that is going to be created
+      (Google service) service: the Google drive service.
+      (String) folderName: the name of the folder that is going to be created.
     Returns:
-      (dictionary) information of the created folder
+      (dictionary) information of the created folder.
     """
-    # Parameters for uploading photos
+    
+    # Parameters for uploading images.
     body = {
-      'title': folder_name,
+      'title': folderName,
       'mimeType': 'application/vnd.google-apps.folder'
     }
     
-    # Insert the photo
+    # Insert the image
     file = service.files().insert(body=body).execute()
 
-    # Parameters for setting photo privacy
+    # Parameters for setting the privacy of the new folder.
     permission = {
       'value': '',
       'type': 'anyone',
       'role': 'reader'
     }
     
-    # Set photo privacy
+    # Set the privacy of the created folder.
     service.permissions().insert(fileId=file['id'], body=permission).execute()
+    
     return file
+
 
 
 def insert_file(service, title, description, parent_id, mime_type, filename):
@@ -105,19 +120,21 @@ def insert_file(service, title, description, parent_id, mime_type, filename):
     Returns:
       (dictionary) Inserted file metadata if successful, None otherwise.
     """
-    # Parameters for uploading photos
+    
+    # Parameters for uploading a file.
     media_body = MediaFileUpload(filename, mimetype=mime_type, resumable=True)
     body = {
       'title': title,
       'description': description,
       'mimeType': mime_type
     }
+
     # Set the parent folder.
     if parent_id:
         body['parents'] = [{'id': parent_id}]
 
     try:
-        # Insert a photo
+        # Insert a file.
         file = service.files().insert(
             body=body,
             media_body=media_body).execute()
@@ -126,29 +143,4 @@ def insert_file(service, title, description, parent_id, mime_type, filename):
         print 'An error occured: %s' % error
         return None
 
-
-def retrieve_all_files(service):
-  """Retrieve a list of File resources.
-
-  Args:
-    service: Drive API service instance.
-  Returns:
-    List of File resources.
-  """
-  result = []
-  page_token = None
-  while True:
-    try:
-      param = {}
-      if page_token:
-        param['pageToken'] = page_token
-      files = service.files().list(**param).execute()
-
-      result.extend(files['items'])
-      page_token = files.get('nextPageToken')
-      if not page_token:
-        break
-    except errors.HttpError, error:
-      print 'An error occurred: %s' % error
-      break
-  return result    
+  

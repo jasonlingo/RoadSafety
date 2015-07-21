@@ -1,69 +1,76 @@
-"""video file type"""
 VIDEO_TYPE = ".MP4"
+"""Video file type"""
 
-"""GPS file type"""
 GPS_TYPE = ".gpx"
+"""GPS file type"""
 
-"""the length for each shorter video"""
 VIDEO_LENGTH = 60
+"""The length for each shorter video"""
 
-"""output image frame quality"""
-#in percent
 IMAGE_QUALITY = 100
+"""Output image frame quality (%)"""
 
-"""flip image"""
 FLIP_IMAGE = True
+"""Flip extracted images if the original video is recored upside down"""
 
-"""csv filename"""
 CSV_FILENAME = "frame.csv"
+"""csv filename"""
 
-"""output image frame size"""
-#the length of the longest side of a frame image
-#the original length is 1920
 RESIZE_X = 1200
+"""Output image frame size"""
 
-"""GoPro time calibration"""
-#there is a difference between the real time and the recorded time in the video file
-#real creation time = recorded time + GOPRO_CALI_TIME
 GOPRO_CALI_TIME = -18
+"""GoPro time calibration
+There might be a difference between the real and recorded creation time
+of a video recorded by GoPro. COPRO_CALI_TIME needed to be test in order 
+to find the nearest calibration time.
+"""
 
-"""the GPS distance between every video frame"""
-#kilometer
 GPS_DISTANCE = 1.0
+"""The GPS distance between every video frame (km)"""
 
-"""timezone for GPS"""
-#the GPS recorder is based on UTC/GMT+0 time, so it needs to be calibrated.
 GPS_TIME_ZONE = -5
+"""Timezone for GPS
+The GPS recorder is based on UTC/GMT+0 time, so it needs to be calibrated.
+"""
 
-"""Grid distance"""
-#in kilometer
-GRID_DISTANCE = 8
+GRID_DISTANCE = 10
+"""Grid distance (km)"""
 
-## use kilometer (K) or mile (M)
 METER_TYPE = "K"
+"""Use kilometer (K) or mile (M) for the haversine function"""
 
 
-"""Directories*******************************"""
+
+### Directories ###
 OUTPUT_DIRECTORY = "output/"
+"""The main output directory"""
 
-"""the directory of the videos"""
 VIDEO_DIRECTORY = "media/"
+"""The directory of the videos"""
 
-"""the directory of GPS files"""
 GPS_DIRECTORY = "GPS_data/"
+"""The directory of GPS files"""
 
-"""directory for splitted videos"""
 VIDEO_OUTPUT_DIRECTORY = VIDEO_DIRECTORY + "out/"
+"""Directory for splitted videos"""
 
-"""directory for output video frames"""
 VIDEO_FRAME_DIRECTORY = OUTPUT_DIRECTORY + "VideoFrame/"
+"""Directory for output video frames"""
 
-"""directory for cpatured traffic images"""
 TRAFFIC_IMAGE_DIRECTORY = OUTPUT_DIRECTORY + "Traffic_image/"
+"""Directory for cpatured traffic images"""
 
 
-"""Google API********************************"""
+### Google APIs ###
 CLIENT_ID = '789788175176-rm2oshegfhah677o7ipkr048cccla62s.apps.googleusercontent.com'
+"""A client id for Google API"""
+
 CLIENT_SECRET = '8A9OL4byJy_S7IprQBAztbmY'
+"""The client secret for Google API"""
+
 FOLDER_NAME = "RoadSafety"
+"""The forder name on Google Drive for uploading images"""
+
 API_KEY = "AIzaSyCuOTTRq_mfEyzQCBYXnbD9Jr0XDRYnOAg"
+"""The API key for Google API"""

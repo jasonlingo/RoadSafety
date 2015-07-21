@@ -2,9 +2,9 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from config import API_KEY
 from Google.getGpsFromJson import getGpsFromJson
 from GPS.GPSPoint import GPSPoint
+from config import API_KEY
 from time import sleep
 import json, requests
 import time
@@ -22,25 +22,31 @@ def getDirection(originAdd, destAdd, waypoints=None):
     Return:
       (GPSPoint) a linked list of direction
     """
-    # API url
+    
+    # API url.
     DIRECTION_API_URL = 'https://maps.googleapis.com/maps/api/directions/json?'
-    # Parameters for API
+    
+    # Parameters for API.
     params = dict(
         origin=originAdd,
         destination=destAdd,
-        waypoints=waypointsConvert(waypoints), # convert waypoints
-        unit='metric', # return distance in meter
+        waypoints=waypointsConvert(waypoints), # Convert waypoints.
+        unit='metric', # Return distance in meter.
         departure_time=str(time.strftime("%H%M%S")), #format: HHMMSS
         key=API_KEY
     )
 
-    # Get direction from Google MAP API
+    # Get direction from Google MAP API.
     resp = requests.get(url=DIRECTION_API_URL, params=params)
-    # Transform response to json format
+    
+    # Transform response to json format.
     data = json.loads(resp.text)
-    # Get GPS data from json
+    
+    # Get GPS data from json.
     head = getGpsFromJson(data)
-    # For the request limit by Google Direction API
+
+    # For the request limit by Google Direction API.
+    # For Free account, the limit is 10 request per second.
     sleep(0.1)
 
     return head
@@ -49,8 +55,7 @@ def getDirection(originAdd, destAdd, waypoints=None):
 def waypointsConvert(ways):
     """
     Convert waypoints from GPSPoint linkedlist to a string by 
-    concatenating every consecutive points with a '|' word 
-    between them.
+    concatenating every consecutive points with a '|'  between them.
 
     Args:
       (GPSPoint) ways: the points of intermediate points between 
@@ -58,8 +63,10 @@ def waypointsConvert(ways):
     Return:
       (String) the concatenated waypoints string.
     """
+
     # Initialize waypoints string
     waypoints = ""
+
     # First point doesn't have to add "|" before it
     first = True
     while ways != None:
@@ -70,6 +77,7 @@ def waypointsConvert(ways):
             waypoints += "|"
         waypoints += str(ways.lat) + "," + str(ways.lng)
         ways = ways.next
+
     return waypoints
 
 

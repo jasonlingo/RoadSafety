@@ -4,15 +4,13 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import subprocess
 import datetime
-# There might be a difference between the real and recorded creation time
-# of a video recorded by GoPro. COPRO_CALI_TIME needed to be test in order 
-# to find the nearest calibration time.
 from config import GOPRO_CALI_TIME
 from Util.TimeStringToDatetime import TimeStringToDatetime
 
+
 def videoCreationTime(filename):
     """
-    Get the creation time of a video
+    Get the creation time of a video.
 
     Args:
       (String) filename: the name of a video that we want to 
@@ -31,11 +29,14 @@ def videoCreationTime(filename):
         return -1
     else:    
         t = out.splitlines()
-        # Extract the creation time
+
+        # Extract the creation time.
         time = str(t[14][18:37])
-        # The time difference 
+
+        # The time difference .
         delta = datetime.timedelta(0, GOPRO_CALI_TIME)
+
         # Convert the time from a stirng to datetime type, 
-        # then add the difference to adjust the time
+        # then add the time difference to adjust the time.
         time = TimeStringToDatetime(time) + delta
         return time

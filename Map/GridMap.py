@@ -2,10 +2,12 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from Util.kml import kmzParser
+from Util.kml import KmzParser
 from config import GRID_DISTANCE
 from GPS.Haversine import Haversine
 from Google.Direction import getDirection
+from GPS.FindRectangleSideGPS import FindRectangleSideGPS
+
 
 class GridMap:
     """ 
@@ -27,8 +29,7 @@ class GridMap:
                          FindRectangleSideGPS(self.region)
         # All grid points in this rectangle
         self.grids = []
-
-        # paths of directions
+        # Paths of directions
         self.paths = []
 
 
@@ -73,7 +74,7 @@ class GridMap:
         colNum = len(self.grids[0]) # number of columns
 
         for i in xrange(colNum):
-
+            pass
 
     def showMap(self):  
         pass  

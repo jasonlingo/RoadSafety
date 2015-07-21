@@ -217,7 +217,8 @@ class MapMatrix():
             # The lists of hospitals, taxis, crashes in this sub-area.
             self.hospitals = None
             self.taxis     = None
-            self.crashes   = None             
+            self.crashes   = None         
+
 
         def addHospital(self, hospitalList):
             """
@@ -227,8 +228,11 @@ class MapMatrix():
               (GPSPoint) hospitalList: linked list of hospitals
             """
             if self.hospitals == None:
+                # If this sub-area has no hospital before.
                 self.hospitals = hospitalList
             else:
+                # Attach the hospital list to the one originally 
+                # stored in this sub-area.
                 tail = self.hospitals.getTail()
                 tail.next = hospitalList
 
@@ -240,8 +244,11 @@ class MapMatrix():
               (Taxi) taxiList: linked list of taxis
             """
             if self.taxis == None:
+                # If this sub-area has no taxi before.
                 self.taxis = taxiList
             else:
+                # Attach the taxi list to the one originally stored
+                # in this sub-area.
                 tail = self.taxis.getTail()
                 tail.next = taxiList
 
@@ -253,8 +260,11 @@ class MapMatrix():
               (Crash) crashList: linked list of crashes
             """
             if self.crashes == None:
+                # If this sub-area has no crash before.
                 self.crashes = crashList
             else:
+                # Attach the crash list to the one originally stored
+                # in this sub-area.
                 tail = self.crashes.getTail()
                 tail.next = crashList
 
@@ -268,9 +278,7 @@ class MapMatrix():
               (boolean) True if the GPS point is in this MapMatrix;
                         False otherwise
             """
-            if GPS.lng <= self.right and GPS.lng >= self.left and GPS.lat <= self.top and GPS.lat >= self.bottom:
-                return True
-            else:
-                return False
+            return GPS.lng <= self.right and GPS.lng >= self.left and \
+                   GPS.lat <= self.top and GPS.lat >= self.bottom
 
 

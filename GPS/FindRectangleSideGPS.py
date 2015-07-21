@@ -2,8 +2,8 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-
 from GPS.GPSPoint import GPSPoint
+
 
 def FindRectangleSideGPS(region):
     """

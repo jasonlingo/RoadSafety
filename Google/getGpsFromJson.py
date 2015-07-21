@@ -4,25 +4,27 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from GPS.GPSPoint import GPSPoint
 
+
 def getGpsFromJson(jsonGPS):
     """
-    Parse Google direction data in json format
+    Parse Google direction data in json format.
     
     Args:
-      (dictionary) jsonGPS: json file containing direction received 
-                            from Google MAP direction API
+      (dictionary) jsonGPS: a json file containing direction replied
+                            from Google MAP direction API.
     Return:
-      (GPSPoint) a linked list of GPSPoint
+      (GPSPoint) a linked list of GPSPoint.
     """
-    # The flag for the first point
+    
+    # The flag for the first point.
     first = True
 
-    # Add GPS points of the direction
-    # Every route has several legs; every leg has several steps
+    # Add GPS points of the direction.
+    # Every route has several legs; every leg has several steps.
     for leg in jsonGPS['routes'][0]['legs']:
         for data in leg['steps']:
             if first: 
-                # Keep the first point as the head of the linked list           
+                # Keep the first point as the head of the linked list.
                 head = GPSPoint(data['start_location']['lat'], 
                                 data['start_location']['lng'],
                                 data['distance']['value'],
@@ -35,4 +37,5 @@ def getGpsFromJson(jsonGPS):
                                         data['distance']['value'],
                                         data['duration']['value'])
                 pointer = pointer.next
+                
     return head

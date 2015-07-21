@@ -2,12 +2,12 @@ from os import walk
 
 def getFilename(directory, filetype):
     """
-    Get all the file names in the directory. 
+    Get all the name of files match the filetype in the directory. 
     
     Args:
       (String) directory: the directory that we want to find 
                           all the file of the desinated filetype.
-      (String) filetyp: the file type we want to find. ex ".MP4"
+      (String) filetyp: the file type we want to find. (ex ".MP4")
     Return:
       (list) a list of filename.
     """
