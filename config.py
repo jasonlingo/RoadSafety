@@ -74,3 +74,6 @@ FOLDER_NAME = "RoadSafety"
 
 API_KEY = "AIzaSyCuOTTRq_mfEyzQCBYXnbD9Jr0XDRYnOAg"
 """The API key for Google API"""
+
+
+

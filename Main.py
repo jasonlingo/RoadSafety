@@ -201,13 +201,8 @@ def main():
         rsv = GetRegionStreetView(head)
 
 
-    elif opts.mode == "6":
-        """Traffic snapshot"""
-        pass
 
-
-
-    ### Taxi-based EMS experiments ###
+    ##### Taxi-based EMS experiments #####
 
     elif opts.mode == "a":
         """
@@ -232,16 +227,16 @@ def main():
         """
         from Mode.TaxiExperiment import TaxiExperiment
 
-        # Create an experiment object of the given region
+        # Create an experiment object of the given region.
         ex = TaxiExperiment("GPS_data/Delhi.kmz")
 
-        # Hospitals must be added before adding taxis and crashes
+        # Hospitals must be added before adding taxis and crashes.
         ex.addHospital("GPS_data/Hospital.kmz")
 
-        # If you want to add taxis at pre-defined locations, use the command
+        # If you want to add taxis at pre-defined locations, use the command.
         ex.addTaxi("GPS_data/Taxi.kmz")
         
-        # Ask the number of randomly generated taxis
+        # Ask the number of randomly generated taxis.
         try:
             taxiNum = raw_input("How many taxis? ")
             taxiNum = int(taxiNum)
@@ -250,13 +245,16 @@ def main():
                   "taxis in this experiment."
             taxiNum = 50;
 
-        # Randomly generate taxis    
+        # Generate taxis at random locations.
         ex.addRandomTaxi(taxiNum)
 
-        print "The total number of taxis is ", ex.taxis.nodeNum()
+        totTaxi = ex.taxis.nodeNum()
 
-        # Add crashes
-        # Ask the number of randomly generated crashes
+        print "The total number of taxis is %d, including %d pre-defined taxis." \
+                                 % (totTaxi, totTaxi - taxiNum) 
+
+        # Add crashes to this experiment.
+        # Ask the number of crashes that are going to be generated randomly.
         try:
             crashNum = int(raw_input("How many crashes do you want to add in this experiment? "))
             crashNum = int(crashNum)
@@ -265,12 +263,22 @@ def main():
             print "Wrong format!"
             sys.exit()
 
-        # Send patients from the crash locations to hospitals
+        # Send patients from the crash locations to hospitals.
         ex.sendPatients()
 
-        # Show the result
+        # Show the result.
         ex.showMap()
 
+
+    elif opts.mode == "c":
+        """
+        Capture Google traffic snapshot periodically
+        """
+        from Google.trafficSnapshot import trafficSnapshot
+        from GPS.GPSPoint import GPSPoint
+
+        center = GPSPoint(13.7246005,100.6331108)
+        trafficSnapshot(center, 5, 2, 12)
 
 
 

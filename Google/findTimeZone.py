@@ -3,6 +3,12 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from GPS.GPSPoint import GPSPoint
+import time
+from config import API_KEY
+import requests, json
+import time
+from datetime import datetime
+from pytz import timezone
 
 
 def findTimeZone(gpsPoint):

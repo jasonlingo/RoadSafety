@@ -11,61 +11,64 @@ class Taxi(Car):
     """Taxi class"""
 
     def __init__(self, lat, lng, hospitals):
-        """Constructor.
+        """
+        Construct a Taxi object.
 
         Args:
-          (float) lat, lng: the lat and lng of this taxi
-          (GPSPoint) hospitals: a linked list of hospitals
+          (float) lat, lng: the latitude and longitude of this taxi.
+          (GPSPoint) hospitals: a linked list of hospitals.
         """
         Car.__init__(self, lat, lng)
 
+        # Keep the hospital list
         self.hospitals = hospitals
 
-        self.isEmpty = True
-        self.nearestHospital = None
-
-
-    def TimeToCustomer(self, customerGPS):
-        """
-        The time for this taxi to go from current location the 
-        customer's location.
-
-        Args:
-          (GPSPoint) customerGPS: the customer's location
-        Return:
-          (int) time (in second) to the customer
-        """
-        # Using Google direction API to get the traffic time.
-        pass
-
+        # The nearest hospital to this taxi.
+        # self.nearestHospital = None
 
 
     def toNearestHospital(self):
         """
-        Find the distance between current location and 
-        the nearest hospital
+        Find the distance between current location and the nearest hospital.
 
         Return:
-          (GPSPoint) return the direction from current location 
-                     to the nearest hospital
+          (GPSPoint) return the direction from current location to the 
+                     nearest hospital.
         """
-        #the time to hospital
+        # Initialize the time to the neareset hospital.
         Hduration = float("inf")
+
+        # Initialize nearestHospital
         self.nearestHospital = None
 
-        pointer = self.hospitals
+        # The string of the GPS data of the current location.
         curLoc = str(self.lat) + "," + str(self.lng)
+        
+        # For every hospital in the list, check the traffic time from the 
+        # current location to it, and find the one with the shortest traffic 
+        # time.
+        pointer = self.hospitals
         while pointer != None:
+            # The string of the GPS data of this hospital.
             hosLoc = str(pointer.lat) + "," + str(pointer.lng)
+
+            # Get a direction from the current location to this hospital using 
+            # Google Direction API.
             direction = getDirection(curLoc, hosLoc)
+
+            # Get the traffic time of this direction.
             duration = direction.getTotalDuration()
+            
             if duration < Hduration:
+                # The traffic time is less than shortest traffic time so far, 
+                # so update the shortest traffic time data.
                 Hdirection = direction
                 Hduration = duration
                 self.nearestHospital = GPSPoint(pointer.lat, pointer.lng)
             pointer = pointer.next
+    
         return Hdirection
-        #print "hos: " + str(self.nearestHospital.lat) + "," + str(self.nearestHospital.lng)
+    
 
 
 

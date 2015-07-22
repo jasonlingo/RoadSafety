@@ -21,8 +21,8 @@ class Car(GPSPoint):
         # shorter traffic time.
         self.speed = speed
 
-        # Different types of car will have different size, thus will
-        # have different capacity 
+        # Different types of car will have different sizes, thus will
+        # have different capacities.
         self.size = size
 
         # Whether this car is able to take customers.

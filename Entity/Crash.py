@@ -16,14 +16,14 @@ class Crash(GPSPoint):
           (float) lat, lng: the lat and lng of this crash
           (GPSPoint) hospitals: a linked list of hospitals
         """
-        self.lat = lat
-        self.lng = lng
+        GPSPoint.__init__(self, lat, lng)
+
         self.isSaved = False
         self.hospitals = hospitals
         self.nearestHospital = None
         self.next = next
+        
         #find the nearest hospital
-        #print "cur: " + str(self.lat) +","+ str(self.lng)
         #self.getNearestHospital()
 
 
@@ -47,7 +47,6 @@ class Crash(GPSPoint):
                 self.Hdistance = dist
                 self.nearestHospital = GPSPoint(pointer.lat, pointer.lng)
             pointer = pointer.next
-        #print "hos: " + str(self.nearestHospital.lat) + "," + str(self.nearestHospital.lng)
 
 
 

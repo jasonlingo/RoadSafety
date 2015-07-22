@@ -3,12 +3,12 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from GPS import GPSPoint
+from Google.Direction import getDirection
+from GPS.GPSPoint import GPSPoint
+from GPS.Haversine import Haversine
 from config import API_KEY
-import json, requests
 from pprint import pprint
-from GoogleStreetView import getDirection
-from Map.haversine import haversine
+import json, requests
 
 def getRoadGPS(GPS):
     """

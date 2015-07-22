@@ -8,13 +8,13 @@ class Hospital(GPSPoint):
 
     def __init__(self, lat, lng, name="", capacity=10):
         """
-        Constructor
+        Construct a Hospital object.
 
         Args:
-          (float) lat, lng: the GPS location of this Hospital
-          (String) name: the hospital name
+          (float) lat, lng: the GPS location of this Hospital.
+          (String) name: the hospital name.
           (int) capacity: the capacity (the number of patients 
-                          that can be accepted) of this hospital
+                          that can be accepted) of this hospital.
         """
         GPSPoint.__init__(self, lat, lng)
 
@@ -41,25 +41,24 @@ class Hospital(GPSPoint):
         of this hospital and reduce the capacity by one.
 
         Args:
-          (crash) patient: the patient who is sending to this hospital
+          (crash) patient: the patient who is sending to this hospital.
         Return:
           (boolean) True: if accept this patient successfully; 
-                    False: otherwise
+                    False: otherwise.
         """
         if self.hasCapacity():
-            # Has at least one capacity
-            
-            # Add this patient to the list
+            # Has at least one capacity, so use one capacity of this hospital.
+            self.capacity -= 1
+            # Add this patient to the list.
             if self.patients == None:
                 self.patients = patient
             else:
                 pointer = self.patients.getTail()
                 pointer.next = patient
-            # Reduce the capacity 
-            self.capacity -= 1
+            # Reduce the capacity.
             return True
         else:
-            # Has no capacity
+            # Has no capacity.
             return False
 
 

@@ -3,15 +3,14 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from GPS.GPSPoint import GPSPoint
-#import webbrowser
-#from GoogleAPI import findTimeZone
-#from time import sleep
-#from PIL import Image
-#import datetime, pytz
-#from config import TRAFFIC_IMAGE_DIRECTORY, GPS_DISTANCE, FOLDER_NAME, OUTPUT_DIRECTORY
-#from GoogleStreetView import combineUrl, getBearing
-#from GDrive import GDriveUpload
-#from FileUtil import outputCSV
+from File.Directory import createDirectory
+import webbrowser
+from Google.findTimeZone import findTimeZone
+from time import sleep
+from PIL import Image
+import datetime, pytz
+from config import TRAFFIC_IMAGE_DIRECTORY
+
 
 def trafficSnapshot(gpsPoint, numOfShot, interval, size):
     """
@@ -31,12 +30,14 @@ def trafficSnapshot(gpsPoint, numOfShot, interval, size):
     #combine request url
     url = url + gps + "," + size + traffic_param
 
+    createDirectory(TRAFFIC_IMAGE_DIRECTORY)
+
     for i in range(numOfShot):
         webbrowser.open(url)
         #wait for the page opens
         sleep(3) 
         #get the current time of the location
-        timezone, current_time = findTimeZone(node)
+        timezone, current_time = findTimeZone(gpsPoint)
         imgName = TRAFFIC_IMAGE_DIRECTORY + "traffic-" + current_time + ".png"
         command = "screencapture " + imgName
         #screen shot
@@ -49,3 +50,5 @@ def trafficSnapshot(gpsPoint, numOfShot, interval, size):
         print imgName + " captured!"
         #program sleeps for the interval time
         sleep(interval)
+
+
