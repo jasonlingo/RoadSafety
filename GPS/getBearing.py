@@ -10,6 +10,7 @@ def getBearing(start, end):
     Return:
       (int) The bearing (0~360)
     """
+    
     radians = math.atan2(end.lng - start.lng, end.lat - start.lat)
     bearing = radians * 180.0 / math.pi
     return bearing

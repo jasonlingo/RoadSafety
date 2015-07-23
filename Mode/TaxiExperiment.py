@@ -101,7 +101,7 @@ class TaxiExperiment:
             # Find the sub-area that contains the GPS location of this taxi.
             area = self.Map.findArea(pointer)
             # Create a taxi object.
-            taxi = Taxi(pointer.lat, pointer.lng, self.hospitals) # remove the hospital
+            taxi = Taxi(pointer.lat, pointer.lng) 
             # Add this taxi to the area.
             area.addTaxi(taxi)
             # Next taxi.
@@ -153,8 +153,8 @@ class TaxiExperiment:
                 # Find the sub-area that contains the GPS location of this taxi.
                 area = self.Map.findArea(taxiGPS)
                 # Create two identical taxi objects in order to prevent "pass by reference".
-                taxi = Taxi(taxiGPS.lat, taxiGPS.lng, self.hospitals)
-                taxi2 = Taxi(taxiGPS.lat, taxiGPS.lng, self.hospitals) 
+                taxi = Taxi(taxiGPS.lat, taxiGPS.lng)
+                taxi2 = Taxi(taxiGPS.lat, taxiGPS.lng) 
                 taxi.next = None
                 area.addTaxi(taxi)
                 
@@ -233,8 +233,8 @@ class TaxiExperiment:
                 # Find the sub-area that contains the GPS location of this crash.
                 area = self.Map.findArea(crashGPS)
                 # Create two identical taxi objects in order to prevent "pass by reference".
-                crash = Crash(crashGPS.lat, crashGPS.lng, self.hospitals)
-                crash2 = Crash(crashGPS.lat, crashGPS.lng, self.hospitals)
+                crash = Crash(crashGPS.lat, crashGPS.lng)
+                crash2 = Crash(crashGPS.lat, crashGPS.lng)
                 crash.next = None
                 area.addCrash(crash)
 
@@ -245,6 +245,7 @@ class TaxiExperiment:
                 else:
                     pointer.next = crash2
                     pointer = pointer.next
+        
 
     def sendPatients(self):
         """
@@ -367,7 +368,7 @@ class TaxiExperiment:
                 
                 # Make the taxi to find the nearest hospital by get and compare
                 # the traffic time of each direction to different hospital.
-                HospitalDirection = nearestTaxi.toNearestHospital()
+                HospitalDirection = nearestTaxi.toNearestHospital(self.hospitals)
                 minute, second = HospitalDirection.getDurationMS()
                 print "Sending this patient to the nearest hospital needs------------ "\
                       "%dmins %dsec" % (minute, second)

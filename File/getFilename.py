@@ -2,7 +2,7 @@ from os import walk
 
 def getFilename(directory, filetype):
     """
-    Get all the name of files match the filetype in the directory. 
+    Get all the name of files matching the filetype in the directory. 
     
     Args:
       (String) directory: the directory that we want to find 
@@ -11,6 +11,7 @@ def getFilename(directory, filetype):
     Return:
       (list) a list of filename.
     """
+    
     filenameList = []
     for (dirpath, dirnames, filenames) in walk(directory):
         for filename in filenames:

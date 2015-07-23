@@ -27,10 +27,15 @@ def getDirection(originAdd, destAdd, waypoints=None):
     
     # Parameters for API.
     params = dict(
+        # Address or GPS of the source point.
         origin=originAdd,
+        # Address or GPS of the destination point.
         destination=destAdd,
-        waypoints=waypointsConvert(waypoints), # Convert waypoints.
-        unit='metric', # Return distance in meter.
+        # Intermediate points between source and destination.
+        waypoints=waypointsConvert(waypoints), 
+        # Return distance in meter.
+        unit='metric', 
+        # Departure time. (default: now)
         departure_time=str(time.strftime("%H%M%S")), #format: HHMMSS
         key=API_KEY
     )
@@ -63,19 +68,16 @@ def waypointsConvert(ways):
       (String) the concatenated waypoints string.
     """
 
-    # Initialize waypoints string
-    waypoints = ""
+    # Initialize waypoints list.
+    waypointList = []
 
-    # First point doesn't have to add "|" before it
-    first = True
+    # Append every waypoint into the list.
     while ways != None:
-        if first:
-            first = False
-        else:
-            # Add "|" between every two waypoints
-            waypoints += "|"
-        waypoints += str(ways.lat) + "," + str(ways.lng)
+        waypointList.append(str(ways.lat) + "," + str(ways.lng))
         ways = ways.next
+
+    # Concatenating waypoints with a "|" between them.
+    waypoints = "|".join(waypointList)
 
     return waypoints
 

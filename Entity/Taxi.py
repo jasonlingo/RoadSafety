@@ -10,27 +10,22 @@ from GPS.GPSPoint import GPSPoint
 class Taxi(Car):
     """Taxi class"""
 
-    def __init__(self, lat, lng, hospitals):
+    def __init__(self, lat, lng):
         """
         Construct a Taxi object.
 
         Args:
           (float) lat, lng: the latitude and longitude of this taxi.
-          (GPSPoint) hospitals: a linked list of hospitals.
         """
         Car.__init__(self, lat, lng)
 
-        # Keep the hospital list
-        self.hospitals = hospitals
 
-        # The nearest hospital to this taxi.
-        # self.nearestHospital = None
-
-
-    def toNearestHospital(self):
+    def toNearestHospital(self, hospitals):
         """
         Find the distance between current location and the nearest hospital.
 
+        Args:
+          (GPSPoint) hospitals: a linked list of hospitals.                
         Return:
           (GPSPoint) return the direction from current location to the 
                      nearest hospital.
@@ -47,7 +42,7 @@ class Taxi(Car):
         # For every hospital in the list, check the traffic time from the 
         # current location to it, and find the one with the shortest traffic 
         # time.
-        pointer = self.hospitals
+        pointer = hospitals
         while pointer != None:
             # The string of the GPS data of this hospital.
             hosLoc = str(pointer.lat) + "," + str(pointer.lng)

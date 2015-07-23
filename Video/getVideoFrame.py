@@ -3,16 +3,14 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import cv, cv2
-from Util.TimeStringToDatetime import TimeStringToDatetime
 from Video.videoCreationTime import videoCreationTime
 from Image.FlipResizeImage import FlipResizeImage
-from Video.nextFrameNum import nextFrameNum
 from GPS.searchGPS import searchGPSByTime, searchGPSByDistance
 from Google.Drive import GDriveUpload
 from Google.showPath import showPath
 from File.outputCSV import outputCSV
 from config import GOPRO_CALI_TIME, FOLDER_NAME, IMAGE_QUALITY
-
+import datetime
 
 
 def getVideoFrame(gpsData, VideoFilename, flip, resize, outputDirectory, gpsDistance):
@@ -138,3 +136,23 @@ def getVideoFrame(gpsData, VideoFilename, flip, resize, outputDirectory, gpsDist
     showPath(path , framePoint, outputDirectory)  
 
 
+
+def nextFrameNum(startTime, endTime, fps):
+    """
+    Calculate the total frame number between the start and end time.
+
+    Args:
+      (datetime) startTime.
+      (datetime) endTime.
+      (float) fps: frame per second.
+    Return:
+      (int) totFrameNum: total number of frames between the start and end time.
+    """
+    
+    # Calculate the time difference between the given start and end time.
+    delta = endTime - startTime
+
+    # Calculate the total number of frames by multiply the total seconds with fps.
+    totFrameNum = int(delta.total_seconds() * fps)
+    
+    return totFrameNum

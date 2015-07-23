@@ -93,11 +93,12 @@ def getRoadGPS(GPS):
                     pointer.distance = Haversine(pointer.lat, pointer.lng, lat, lng) * 1000 # Convert to meter.
                     pointer = pointer.next
             except:
-                
                 print "An error happened while parsing the replied data from Google Road API!!"
                 print data
                 return GPS
-
-    return roadGPS
+    if headFlag:
+        return roadGPS
+    else:
+        return GPS
 
 

@@ -71,7 +71,7 @@ def sumDirectionTime(directions):
     # Output data to a csv file.
     outputCSV(csvDataset, OUTPUT_DIRECTORY + "direction.csv")
 
-    #return the direction with the longest traffic time.
+    # Return the direction with the longest traffic time.
     return directions[longestTimeIdx - 1]
 
 

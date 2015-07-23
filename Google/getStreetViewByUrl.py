@@ -148,7 +148,7 @@ def getStreetViewByUrl(path, outputDirectory):
     csvDataset.insert(0,['Image name', 'Image', 'GPS'])
     
     # Output data to a csv file
-    outputCSV(csvDataset, OUTPUT_DIRECTORY + "GoogleStreetView_m4.csv")        
+    outputCSV(csvDataset, outputDirectory + "GoogleStreetView_m4.csv")        
 
     return SVPoint
 

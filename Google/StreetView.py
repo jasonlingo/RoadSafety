@@ -151,7 +151,6 @@ def getStreetView(path, outputDirect):
 
     # Record street view point.
     SVPoint.append((path.lat, path.lng))
-    
     #=== Getting last image finished ===
 
 

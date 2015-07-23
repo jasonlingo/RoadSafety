@@ -17,8 +17,8 @@ def getIntermediatePoint(start, end, cutNum):
       (list) GPS points
     """
     # Calculate the amount of difference of each segmentation
-    latDif = (end.lat - start.lat)/cutNum
-    lngDif = (end.lng - start.lng)/cutNum
+    latDif = (end.lat - start.lat) / cutNum
+    lngDif = (end.lng - start.lng) / cutNum
 
     gpsList = []
     for i in xrange(cutNum): 
@@ -26,4 +26,5 @@ def getIntermediatePoint(start, end, cutNum):
         startPt = GPSPoint(start.lat + latDif * i, start.lng + lngDif * i)
         endPt = GPSPoint(start.lat + latDif * (i + 1), start.lng + lngDif * (i + 1))
         gpsList.append((startPt, endPt))
+        
     return gpsList    

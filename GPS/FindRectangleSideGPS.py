@@ -17,11 +17,14 @@ def FindRectangleSideGPS(region):
               extreme GPS of this region.
     """
 
+    # Initialize the borders.
     top = region.lat
     bottom = region.lat
     right = region.lng
     left = region.lng
 
+    # Loop over the whole borders to find the top, 
+    # bottom, right, and left of this region.
     while region != None:
         if region.lat > top:
             top = region.lat

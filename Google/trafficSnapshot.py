@@ -22,33 +22,45 @@ def trafficSnapshot(gpsPoint, numOfShot, interval, size):
       (int) interval: the interval (in seconds) between two captured images
       (int) size: the size of the map (from 3(big) to 21(detail))
     """
-    #create Google MAP with traffic info request url
+    
+    # Create Google MAP with traffic info request url
     url = "https://www.google.com/maps/@" 
     gps = str(gpsPoint.lat) + ',' + str(gpsPoint.lng)
+    # The scale of the map.
     size = str(size) + "z"
+    # Street view parameter.
     traffic_param = "/data=!5m1!1e1"
-    #combine request url
+    
+    # Combine request url
     url = url + gps + "," + size + traffic_param
 
+    # Create the output directory if it doesn't exist.
     createDirectory(TRAFFIC_IMAGE_DIRECTORY)
 
     for i in range(numOfShot):
+        # Open the Google MAP street view on a web browser.
         webbrowser.open(url)
-        #wait for the page opens
+        
+        # Wait for the page opens
         sleep(3) 
-        #get the current time of the location
+        
+        # Get the current time of the location
         timezone, current_time = findTimeZone(gpsPoint)
         imgName = TRAFFIC_IMAGE_DIRECTORY + "traffic-" + current_time + ".png"
         command = "screencapture " + imgName
-        #screen shot
+        
+        # Screen shot
         os.system(command)
         im = Image.open(imgName)
-        #get captured image size
+        
+        # Get captured image size
         width, height = im.size
-        #crop the captured area, need to be customized depending on different computer
+        
+        # Crop the captured area, need to be customized depending on different computer
         im.crop((500, 350, width-300, height-30)).save(imgName)
         print imgName + " captured!"
-        #program sleeps for the interval time
+        
+        # Program sleeps for the interval time
         sleep(interval)
 
 

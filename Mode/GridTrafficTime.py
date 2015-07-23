@@ -58,7 +58,7 @@ def GridTrafficTime(region):
             destStr = str(destination.lat) + "," + str(destination.lng)
             direction = getDirection(sourceStr, destStr)
             if direction != None:
-                directions.append()
+                directions.append(direction)
             
             # To avoid exceed the limit on the requests per second.
             # for free Google API account.

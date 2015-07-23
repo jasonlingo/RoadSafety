@@ -6,7 +6,7 @@ from GPS.GPSPoint import GPSPoint
 
 class Car(GPSPoint):
     """
-    A class of car object
+    A class of car object.
     """
 
     def __init__(self, lat, lng, next=None, speed=1.0, size=1.0, available=True):

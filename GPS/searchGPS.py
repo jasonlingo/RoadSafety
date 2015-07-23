@@ -71,8 +71,6 @@ def searchGPSByTime(gpsData, time):
 
 
 
-
-
 def searchGPSByDistance(gpsData, startIdx, distance):
     """
     Search the GPS data that has the distance close to the target distance

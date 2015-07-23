@@ -330,6 +330,8 @@ class GridMap:
         For each direction stored in self.directions, find the GPS positions that 
         each of them has a certain distance away from its consecutive GPS positions.
         """
+        # Initialize the list for storing GPS data for street images' location.
+        GPSList = []
         for direction in self.directions:
             pass
             #direction.printNode()
@@ -373,5 +375,23 @@ class GridMap:
             self.source = source
             self.destination = destination
             self.waypoints = waypoints
+
+    class StreetViewGPS:
+        """
+        A class that stores street view image's GPS location and 
+        bearing.
+        """
+
+        def __init__(self, lat, lng, bearing):
+            """
+            Construct a StreetViewGPS object.
+
+            Args:
+              (float) lat, lng: the GPS data of this street view.
+              (float) bearing: the compass bearing of this street view.
+            """
+            self.lat = lat
+            self.lng = lng
+            self.bearing = bearing
 
 

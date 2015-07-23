@@ -13,8 +13,8 @@ def main():
     """
     A starting point of each program for different experiments.
  
-    opts (-m + option[1~5]):
-
+    options (-m + option):
+    Road safety project:
     1. Get street view images from road videos. Extract video frames
        every certain distance according to GPS data. 
     
@@ -24,20 +24,24 @@ def main():
     3. Get street view images from Google street view API according to 
        a direction from Google Direction API. 
 
-    4. Get street view images from Google street view on a webbrowser 
+    4. Get street view images from Google MAP street view on a web browser 
        according to a route created by "Google My MAP" service.
 
-    5. Automatically find the major roads in a region (or city) and 
+    5. Automatically find the roads in a region (or city) and 
        get their street view images from Google street view API.
 
-    6. Divide the given region into grids and calculate point-to-point 
+    Taxi-based EMS project.
+    a. Divide the given region into grids and calculate point-to-point 
        traffic time.
 
-    7. Taxi-based EMS Simulation: 
+    b. Taxi-based EMS Simulation: 
        When a crash happens, find the taxi that can arrive the 
        crash's location with shortest time among all the taxis in 
        the region. Then send this patient from the crash's location 
-       to a nearest hospital.
+       to a nearest hospital. Finally output the average time that a 
+       patient is sent to a hospital.
+
+    c. 
     """    
     optparser = optparse.OptionParser()
     optparser.add_option("-m", "--mode", dest="mode", default="1", help="mode of getting Street view")
@@ -48,6 +52,14 @@ def main():
         """
         Get street view images from road videos. Extract video frames
         every certain distance according to corresponding GPS data. 
+
+        1. Parse GPS data.
+        2. Extract video frames according to GPS data.
+        3. Upload extracted images to Googld Drive.
+        4. Output uploaded images' public link and their GPS data 
+           to a csv file.
+        5. Show the path and the locations of extracted images on 
+           Google map.
         """
         from config import VIDEO_DIRECTORY, GPS_DIRECTORY
         from config import VIDEO_TYPE, GPS_TYPE
@@ -88,11 +100,16 @@ def main():
 
     elif opts.mode == "2":
         """
+        Get street view images from Google street view API according to 
+        a route created by "Google My MAP" service. 
+        
         1. Get route from a KMZ file.
         2. Get street view images using Google street view API.
         3. Upload images to Google Drive.
-        4. Output a csv file that contains image names, image links, and GPS data.
-        5. Show the path and street view images' locations on Google map.
+        4. Output uploaded images' public link and their GPS data 
+           to a csv file.
+        5. Show the path and the locations of street view images on 
+           Google map.
         """
         from Google.StreetView import getStreetView
         from Google.showPath import showPath
@@ -116,11 +133,17 @@ def main():
 
     elif opts.mode == "3":
         """
-        1. Input addresses for start and end points.
-        2. Get direction from Google MAP API.
-        3. Extrace GPS data from direction.
-        4. Get and store street view images according to GPS and bearing.
-        5. Show path and street view points on Google map.
+        Get street view images from Google street view API according to 
+        a direction from Google Direction API. 
+        
+        1. Enter addresses for start and end points.
+        2. Get direction using Google Directoin API.
+        3. Extract street view images according to the direction route.
+        4. Upload images to Google Drive.
+        5. Output uploaded images' public link and their GPS data 
+           to a csv file.
+        6. Show the path and the locations of street view images on 
+           Google map.
         """
         from Google.Direction import getDirection
         from Google.StreetView import getStreetView
@@ -159,8 +182,12 @@ def main():
 
     elif opts.mode == "4":
         """
+        Get street view images from Google MAP street view on a web browser 
+        according to a route created by "Google My MAP" service.
+        
         1. Get route from KMZ file
-        2. Get street view image using Google street view url
+        2. Capture street view image using Google MAP street view on a web browser 
+           according to the route.
         3. Upload images to Google Drive
         4. Output a csv file that contains image names, image links, and GPS data,
         5. Show path and street view points on Google map      
@@ -191,6 +218,8 @@ def main():
     elif opts.mode == "5":
         """
         Get street view images of roads in a region/city.
+
+        Still working on thie function.
         """
         from Mode.GetRegionStreetView import GetRegionStreetView
         
@@ -272,7 +301,7 @@ def main():
 
     elif opts.mode == "c":
         """
-        Capture Google traffic snapshot periodically
+        Snapshot Google MAP traffic periodically.
         """
         from Google.trafficSnapshot import trafficSnapshot
         from GPS.GPSPoint import GPSPoint
