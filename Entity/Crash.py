@@ -26,7 +26,7 @@ class Crash(GPSPoint):
         #find the nearest hospital
         #self.getNearestHospital()
 
-
+ 
     def getNearestHospital(self):
         """
         Find the distance between current location and 

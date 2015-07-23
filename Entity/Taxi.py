@@ -56,8 +56,14 @@ class Taxi(Car):
             # Google Direction API.
             direction = getDirection(curLoc, hosLoc)
 
-            # Get the traffic time of this direction.
-            duration = direction.getTotalDuration()
+            # Initialize the duration to be float("inf")
+            # in order to prevent this direction from being recorded
+            # as the shortest direction if the direction is None
+            # replied from getDirection().
+            duration = float("inf")
+            if direction != None:
+                # Get the traffic time of this direction.
+                duration = direction.getTotalDuration()
             
             if duration < Hduration:
                 # The traffic time is less than shortest traffic time so far, 

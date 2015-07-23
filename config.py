@@ -34,7 +34,7 @@ GPS_TIME_ZONE = -5
 The GPS recorder is based on UTC/GMT+0 time, so it needs to be calibrated.
 """
 
-GRID_DISTANCE = 10
+GRID_DISTANCE = 3
 """Grid distance (km)"""
 
 METER_TYPE = "K"

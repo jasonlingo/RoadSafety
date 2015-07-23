@@ -11,7 +11,7 @@ from GPS.FindRectangleSideGPS import FindRectangleSideGPS
 from config import GRID_DISTANCE
 
 
-class MapMatrix():
+class MapMatrix:
     """
     A map that divides a region into several sub-areas. Each area 
     can store lists of taxi, crash, and hospitals. 
@@ -215,7 +215,7 @@ class MapMatrix():
                     area.crashes.printNode()
 
 
-    class Area():
+    class Area:
         """The sub-area in the matrix"""
 
         def __init__(self, top, bottom, right, left, row, col):

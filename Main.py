@@ -190,12 +190,12 @@ def main():
 
     elif opts.mode == "5":
         """
-        Get street view images of major roads in a region/city.
+        Get street view images of roads in a region/city.
         """
         from Mode.GetRegionStreetView import GetRegionStreetView
         
         # Parse the kmz file and get a GPSPoing linked list.
-        head = KmzParser("GPS_data/Delhi.kmz")
+        head = KmzParser("GPS_data/Bangkok_region.kmz")
 
         # Create a GetRegionStreetView object.
         rsv = GetRegionStreetView(head)
@@ -277,7 +277,10 @@ def main():
         from Google.trafficSnapshot import trafficSnapshot
         from GPS.GPSPoint import GPSPoint
 
+        # Set the center of this traffic map.
         center = GPSPoint(13.7246005,100.6331108)
+
+        # Start capturing traffic images.
         trafficSnapshot(center, 5, 2, 12)
 
 

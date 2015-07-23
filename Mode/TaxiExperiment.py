@@ -332,8 +332,11 @@ class TaxiExperiment:
                                 # Get a direction from the taxi's location to 
                                 # the crash's location using Google Direciton API.
                                 source = str(taxi.lat) + "," + str(taxi.lng)
+
                                 direction = getDirection(source, destination)
-                                duration = direction.getTotalDuration()
+                                duration = float("inf")
+                                if direction != None:
+                                    duration = direction.getTotalDuration()
                                 if duration < shortestTime:
                                     # Update the nearest taxi's data.
                                     shortestTime = duration

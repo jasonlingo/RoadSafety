@@ -56,7 +56,9 @@ def GridTrafficTime(region):
             # in order to keep the total number of query smaller.
             # A and B is the grid points.
             destStr = str(destination.lat) + "," + str(destination.lng)
-            directions.append(getDirection(sourceStr, destStr))
+            direction = getDirection(sourceStr, destStr)
+            if direction != None:
+                directions.append()
             
             # To avoid exceed the limit on the requests per second.
             # for free Google API account.
