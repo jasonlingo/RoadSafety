@@ -41,7 +41,7 @@ def main():
        to a nearest hospital. Finally output the average time that a 
        patient is sent to a hospital.
 
-    c. 
+    c. Snapshot Google MAP traffic periodically.
     """    
     optparser = optparse.OptionParser()
     optparser.add_option("-m", "--mode", dest="mode", default="1", help="mode of getting Street view")
@@ -116,7 +116,7 @@ def main():
         from File.Directory import createDirectory
 
         # Parse the kmz file and get a GPSPoing linked list.
-        head = KmzParser("GPS_data/Thailand_roads/Rattanathibet.kmz")
+        head = KmzParser("Data/Thailand_roads/Rattanathibet.kmz")
         
         # Set the output folder.
         outputDirectory = VIDEO_FRAME_DIRECTORY + "mode2/Rattanathibet/"
@@ -197,7 +197,7 @@ def main():
         from File.Directory import createDirectory
 
         # Parse the kmz file and get a GPSPoing linked list.
-        head = KmzParser("GPS_data/Thailand_roads/Sukhumvit.kmz")
+        head = KmzParser("Data/Thailand_roads/Sukhumvit.kmz")
 
         # Print the GPS data on screen.
         head.printNode()
@@ -224,7 +224,7 @@ def main():
         from Mode.GetRegionStreetView import GetRegionStreetView
         
         # Parse the kmz file and get a GPSPoing linked list.
-        head = KmzParser("GPS_data/Bangkok_region.kmz")
+        head = KmzParser("Data/Bangkok_region.kmz")
 
         # Create a GetRegionStreetView object.
         rsv = GetRegionStreetView(head)
@@ -241,7 +241,7 @@ def main():
         from Mode.GridTrafficTime import GridTrafficTime
 
         # Parse the kmz file and get a GPSPoing linked list of the region's border.
-        head = KmzParser("GPS_data/Delhi.kmz")
+        head = KmzParser("Data/Delhi.kmz")
         
         # Get the traffic time point-to-point in a grid map of the region.
         GridTrafficTime(head)
@@ -257,13 +257,13 @@ def main():
         from Mode.TaxiExperiment import TaxiExperiment
 
         # Create an experiment object of the given region.
-        ex = TaxiExperiment("GPS_data/Delhi.kmz")
+        ex = TaxiExperiment("Data/Delhi.kmz")
 
         # Hospitals must be added before adding taxis and crashes.
-        ex.addHospital("GPS_data/Hospital.kmz")
+        ex.addHospital("Data/Hospital.kmz")
 
         # If you want to add taxis at pre-defined locations, use the command.
-        ex.addTaxi("GPS_data/Taxi.kmz")
+        ex.addTaxi("Data/Taxi.kmz")
         
         # Ask the number of randomly generated taxis.
         try:
@@ -311,6 +311,58 @@ def main():
 
         # Start capturing traffic images.
         trafficSnapshot(center, 5, 2, 12)
+
+    elif opts.mode == "d":
+        """
+        A similar mode like mode b but add a function to 
+        draw the result on a line chart.
+        """
+        from Mode.TaxiExperiment2 import TaxiExperiment2
+
+        # Create an experiment object of the given region.
+        ex = TaxiExperiment2("Data/Delhi.kmz")
+
+        # Hospitals must be added before adding taxis and crashes.
+        ex.addHospital("Data/Hospital.kmz")
+
+        # Add taxi's hot spots.
+        ex.addTaxiHotSpot("Data/Taxi_hotspot.kmz")
+
+        # If you want to add taxis at pre-defined locations, use this command.
+        ex.addTaxi("Data/Taxi.kmz")
+        
+        # Ask the number of randomly generated taxis.
+        try:
+            taxiNum = raw_input("How many taxis? ")
+            taxiNum = int(taxiNum)
+        except ValueError:
+            print "The input format is wrong. We will use 50"\
+                  "taxis in this experiment."
+            taxiNum = 50;
+
+        # Generate taxis at random locations.
+        ex.addRandomTaxi(taxiNum)
+
+        totTaxi = ex.taxis.nodeNum()
+
+        print "The total number of taxis is %d, including %d pre-defined taxis." \
+                                 % (totTaxi, totTaxi - taxiNum) 
+
+        # Add crashes to this experiment.
+        # Ask the number of crashes that are going to be generated randomly.
+        try:
+            crashNum = int(raw_input("How many crashes do you want to add in this experiment? "))
+            crashNum = int(crashNum)
+            ex.addRandomCrash(crashNum)
+        except ValueError:
+            print "Wrong format!"
+            sys.exit()
+
+        # Send patients from the crash locations to hospitals.
+        ex.sendPatients()
+
+        # Show the result.
+        ex.showMap()        
 
 
 

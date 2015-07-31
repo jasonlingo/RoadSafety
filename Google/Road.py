@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from GPS.GPSPoint import GPSPoint
-from GPS.Haversine import Haversine
+from GPS.Distance import Haversine
 from config import API_KEY
 from pprint import pprint
 import json, requests

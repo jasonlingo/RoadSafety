@@ -5,7 +5,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from Entity.Taxi import Taxi
 from Entity.Crash import Crash
 from GPS.GPSPoint import GPSPoint
-from GPS.Haversine import Haversine
+from GPS.Distance import Haversine
 from shapely.geometry import LineString
 from GPS.FindRectangleSideGPS import FindRectangleSideGPS
 from config import GRID_DISTANCE

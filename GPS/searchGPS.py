@@ -4,7 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import datetime
 import operator
-from GPS.Haversine import Haversine
+from GPS.Distance import Haversine
 
 
 def searchGPSByTime(gpsData, time):

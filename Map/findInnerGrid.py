@@ -4,7 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from config import GRID_DISTANCE
 from GPS.GPSPoint import GPSPoint 
-from GPS.Haversine import Haversine
+from GPS.Distance import Haversine
 from GPS.FindRectangleSideGPS import FindRectangleSideGPS
 from shapely.geometry import LineString
 

@@ -34,7 +34,7 @@ GPS_TIME_ZONE = -5
 The GPS recorder is based on UTC/GMT+0 time, so it needs to be calibrated.
 """
 
-GRID_DISTANCE = 8
+GRID_DISTANCE = 1
 """Grid distance (km)"""
 
 METER_TYPE = "K"
@@ -48,7 +48,7 @@ OUTPUT_DIRECTORY = "output/"
 VIDEO_DIRECTORY = "media/"
 """The directory of the videos"""
 
-GPS_DIRECTORY = "GPS_data/"
+GPS_DIRECTORY = "Data/"
 """The directory of GPS files"""
 
 VIDEO_OUTPUT_DIRECTORY = VIDEO_DIRECTORY + "out/"

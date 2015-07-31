@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from GPS.GPSPoint import GPSPoint
-from GPS.Haversine import Haversine
+from GPS.Distance import Haversine
 from Google.Direction import getDirection
 from Google.Road import getRoadGPS
 from GPS.FindRectangleSideGPS import FindRectangleSideGPS
@@ -79,7 +79,9 @@ class GridMap:
             gridLng = self.left # From left to right.
             while gridLng <= self.right: 
                 # Append the newly generated grid point into the last row.
-                self.grids[-1].append(self.gridPoint(gridLat, gridLng))
+                newGPS = getRoadGPS(GPSPoint(gridLat, gridLng))
+
+                self.grids[-1].append(self.gridPoint(newGPS.lat, newGPS.lng))
                 
                 if gridLng != self.right and gridLng + self.lngDiff > self.right:
                     # The last longitude uses the residual length.

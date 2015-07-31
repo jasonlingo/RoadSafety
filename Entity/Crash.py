@@ -10,7 +10,7 @@ class Crash(GPSPoint):
     A class of crash object.
     """
 
-    def __init__(self, lat, lng, next=None):
+    def __init__(self, lat, lng, next=None, crashDate=None, crashTime=None):
         """Constructor.
         
         Args:
@@ -22,4 +22,7 @@ class Crash(GPSPoint):
         # To make whether the patient of this crash is saved.
         self.isSaved = False
 
+        # The date and time of this crash.
+        self.crashDate = crashDate
+        self.crashTime = crashTime
  

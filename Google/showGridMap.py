@@ -7,7 +7,7 @@ import webbrowser
 from config import OUTPUT_DIRECTORY, GRID_DISTANCE
 from datetime import datetime, date, time
 from GPS.GPSPoint import GPSPoint 
-from GPS.Haversine import Haversine
+from GPS.Distance import Haversine
 
 
 

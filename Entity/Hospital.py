@@ -55,7 +55,6 @@ class Hospital(GPSPoint):
             else:
                 pointer = self.patients.getTail()
                 pointer.next = patient
-            # Reduce the capacity.
             return True
         else:
             # Has no capacity.

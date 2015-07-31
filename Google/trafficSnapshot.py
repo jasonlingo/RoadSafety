@@ -42,7 +42,7 @@ def trafficSnapshot(gpsPoint, numOfShot, interval, size):
         webbrowser.open(url)
         
         # Wait for the page opens
-        sleep(3) 
+        sleep(5) 
         
         # Get the current time of the location
         timezone, current_time = findTimeZone(gpsPoint)

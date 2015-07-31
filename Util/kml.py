@@ -1,6 +1,6 @@
 from zipfile import ZipFile
 from GPS.GPSPoint import GPSPoint
-from GPS.Haversine import Haversine
+from GPS.Distance import Haversine
 
 
 def KmzParser(filename):
