@@ -2,8 +2,8 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from config import METER_TYPE
-from math import radians, cos, sin, asin, sqrt
+from config import METER_TYPE, EARTH_RADIUS_MILE, EARTH_RADIUS_KM
+from math import radians, cos, sin, asin, sqrt, degrees, atan2
 
 
 def Haversine(lat1, lng1, lat2, lng2):
@@ -26,36 +26,48 @@ def Haversine(lat1, lng1, lat2, lng2):
     a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlng / 2) ** 2
     c = 2 * asin(sqrt(a)) 
 
-    # Radius of earth in kilometers. 
-    # Use 6371 for kilometers, 3956 for miles.
+    # The radius of earth in kilometers. 
     if METER_TYPE == "K":
-        r = 6371 
+        r = EARTH_RADIUS_KM # The radius of earth in kilometers.
     else:
-        r = 3956
+        r = EARTH_RADIUS_MILE # The radius of earth in miles.
     return c * r
 
 
 def FindRadiusPoint(lat, lng, bearing, distance):
-    
-    R = 6378.1 #Radius of the Earth
-    brng = 0 #Bearing is 90 degrees converted to radians.
-    d = 1 #Distance in km
+    """
+    Given a point (with its latitude and longitude), find another point 
+    that has a distance equals to the given "distance" parameter 
+    between them and has the bearing equals to the given "bearing" parameter.
 
-    #lat2  52.20444 - the lat result I'm hoping for
-    #lon2  0.36056 - the long result I'm hoping for.
+    Args:
+      (float) lat, lng: the latitude and longitude of the given point.
+      (float) bearing: the bearing between the given point and the point 
+              this function is going to find.
+              north=90; east=90; west=-90; south=180
+      (float) distance: the distance between two points.
+    Return:
+      (float) lat2, lng2: the found point's latitude and longitude.
+    """
+    # The radius of earth in kilometers. 
+    if METER_TYPE == "K":
+        r = EARTH_RADIUS_KM # The radius of the Earth in kilometers.
+    else:
+        r = EARTH_RADIUS_MILE # The radius of the Earth in miles.
 
-    lat1 = math.radians(52.20472) #Current lat point converted to radians
-    lon1 = math.radians(0.14056) #Current long point converted to radians
 
-    lat2 = math.asin( math.sin(lat1)*math.cos(d/R) +
-         math.cos(lat1)*math.sin(d/R)*math.cos(brng))
+    lat1 = radians(lat) # Current latitude point converted to radians
+    lng1 = radians(lng) # Current longitude point converted to radians
+    bearing = radians(bearing) # Current bearing converted to radians
 
-    lon2 = lon1 + math.atan2(math.sin(brng)*math.sin(d/R)*math.cos(lat1),
-                 math.cos(d/R)-math.sin(lat1)*math.sin(lat2))
+    lat2 = asin( sin(lat1) * cos(distance / r) +
+           cos(lat1) * sin(distance / r) * cos(bearing))
 
-    lat2 = math.degrees(lat2)
-    lon2 = math.degrees(lon2)
+    lng2 = lng1 + atan2(sin(bearing) * sin(distance / r) * cos(lat1),
+                  cos(distance / r) - sin(lat1) * sin(lat2))
 
-    print(lat2)
-    print(lon2)
+    lat2 = degrees(lat2)
+    lng2 = degrees(lng2)
+
+    return lat2, lng2
 

@@ -29,17 +29,45 @@ to find the nearest calibration time.
 GPS_DISTANCE = 1.0
 """The GPS distance between every video frame (km)"""
 
-GPS_TIME_ZONE = -5
+GPS_TIME_ZONE = -5.0
 """Timezone for GPS
 The GPS recorder is based on UTC/GMT+0 time, so it needs to be calibrated.
 """
 
-GRID_DISTANCE = 1
+GRID_DISTANCE = 8.0
 """Grid distance (km)"""
+
+TAXI_HOT_SPOT_REGION_DIST = 1.0
+"""
+The distance from the border of a square region to its center 
+that is a taxi's hot spot.
+"""
+
+HOT_SPOT_THREADHOLD = 0.0
+"""
+The probability threadhold for taxi's hot spot region.
+If the probability of a randomly generated taxi's location is higher than 
+this threadhold, then add this taxi's location into a experiment.
+"""
+
+NON_HOT_SPOT_THREADHOLD = 0.98
+"""
+The probability threadhold for region that is not a taxi's hot spot.
+If the probability of a randomly generated taxi's location is higher than 
+this threadhold, then add this taxi's location into a experiment.
+"""
+
+DATABASE_ADDRESS = "Database/taxi_ems.db"
+"""The address of experiment database"""
 
 METER_TYPE = "K"
 """Use kilometer (K) or mile (M) for the haversine function"""
 
+EARTH_RADIUS_MILE = 3959.0
+"""The radius of the earth in miles"""
+
+EARTH_RADIUS_KM = 6371.0
+"""The radius of the earth in kilometers"""
 
 ### Directories ###
 OUTPUT_DIRECTORY = "output/"

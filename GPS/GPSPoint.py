@@ -1,4 +1,4 @@
-class GPSPoint:
+class GPSPoint(object):
     """
     A class of GPS point with a linked list data structure
     """
@@ -9,11 +9,11 @@ class GPSPoint:
         self.lat  = latitude
         self.lng  = longitude
 
-        # direction data
+        # Direction data
         self.distance = distance # distance from this node to the next node
         self.duration = duration # time (seconds) from this node to the next node
         
-        # next node
+        # Next node
         self.next = next
 
 

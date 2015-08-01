@@ -3,6 +3,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from config import OUTPUT_DIRECTORY
+from config import TAXI_HOT_SPOT_REGION_DIST, HOT_SPOT_THREADHOLD, NON_HOT_SPOT_THREADHOLD
 from Util.kml import KmzParser
 from Map.MapMatrix import MapMatrix
 from Google.Direction import getDirection
@@ -11,14 +12,16 @@ from Entity.Taxi import Taxi
 from Entity.Crash import Crash
 from Entity.Hospital import Hospital
 from GPS.GPSPoint import GPSPoint
+from GPS.Distance import FindRadiusPoint
+from Entity.HotSpot import HotSpot
 from File.Directory import createDirectory
 from random import uniform 
 from time import sleep
 import pygmaps
 import webbrowser
+import sqlite3 as lite
 
-
-class TaxiExperiment2:
+class TaxiExperiment2(object):
     """
     This program is for Taxi-based EMS experiment.
 
@@ -43,17 +46,23 @@ class TaxiExperiment2:
     sendHistory = []
 
 
-    def __init__(self, region_filename):
+    def __init__(self, region_filename, exId, db):
         """
         Construct an experiment.
 
         Args:
           (String) region_filename: the location of the region 
-                   file from Google MAP kmz file
+                   file from Google MAP kmz file.
+          (int) exId: the number of experiment.
+          (String) db: the address of the experiment database.
         """
         # Parse a the region stored in a kmz file and get its GPS data stored
         # in GPSPoint linked list.
         self.region = KmzParser(region_filename)
+
+        # Keep the current experiment number and database address.
+        self.exId = exId
+        self.db = db
         
         # Create a MapMatrix used to store useful information for this experiment.
         self.Map = MapMatrix(self.region)
@@ -95,12 +104,59 @@ class TaxiExperiment2:
         # stored in a linked list (GPSPoint).
         self.TaxiHotSpot = KmzParser(hotSpotFilename)
 
-        # 
+        # Find a square region centered at every given taxi's hot spot.
+        # The length of each side of the square region is TAXI_HOT_SPOT_REGION * 2.
+        self.hotSpotRegion = []
+        pointer = self.TaxiHotSpot
+        while pointer != None:
+            # Find the top, bottom, right, and left of this square region.            
+            # bearing: north=0; east=90; west=-90; south=180
+            topLat, topLng       = FindRadiusPoint(pointer.lat, pointer.lng, 0, TAXI_HOT_SPOT_REGION_DIST)
+            bottomLat, bottomLng = FindRadiusPoint(pointer.lat, pointer.lng, 180, TAXI_HOT_SPOT_REGION_DIST)
+            rightLat, rightLng   = FindRadiusPoint(pointer.lat, pointer.lng, 90, TAXI_HOT_SPOT_REGION_DIST)
+            leftLat, leftLng     = FindRadiusPoint(pointer.lat, pointer.lng, -90, TAXI_HOT_SPOT_REGION_DIST)
+            top    = GPSPoint(topLat, topLng)
+            bottom = GPSPoint(bottomLat, bottomLng)
+            right  = GPSPoint(rightLat, rightLng)
+            left   = GPSPoint(leftLat, leftLng)
 
+            # Store the data in a HotSpot object and append it to the self.TaxiHotSpot list.
+            self.hotSpotRegion.append( HotSpot(topLat, bottomLat, rightLng, leftLng) )
+            
+            pointer = pointer.next
 
+        """test
+        midLat = (self.Map.top + self.Map.bottom) / 2.0
+        midLng = (self.Map.left + self.Map.right) / 2.0
+        mymap = pygmaps.maps(midLat, midLng, 10)   
 
+        pointer = self.TaxiHotSpot
+        while pointer != None:
+            mymap.addpoint(pointer.lat, pointer.lng, "#FF0000")
+            pointer = pointer.next
 
+        for hs in self.hotSpotRegion:
+            mymap.addpoint(hs.top, (hs.right + hs.left) / 2.0, "#0000FF")
+            mymap.addpoint(hs.bottom, (hs.right + hs.left) / 2.0, "#0000FF")
+            mymap.addpoint( (hs.top + hs.bottom) / 2.0 , hs.right, "#0000FF")
+            mymap.addpoint( (hs.top + hs.bottom) / 2.0, hs.left, "#0000FF")
+        
+        # The output directory.
+        output_directory = OUTPUT_DIRECTORY + "Taxi_based_EMS/"   
 
+        # Check whether the output directory exists. If not, create the directory.
+        createDirectory(output_directory)  
+
+        # The file name of the result map. 
+        mapFilename = output_directory + "hotSpotMap.html"
+        
+        # Draw the map.
+        mymap.draw('./' + mapFilename)
+        
+        # Open the map file on a web browser.
+        url = "file://" + os.getcwd() + "/" + mapFilename
+        webbrowser.open_new(url)    
+        """
 
     def addTaxi(self, taxisFilename):
         """
@@ -138,7 +194,7 @@ class TaxiExperiment2:
 
     def addRandomTaxi(self, num):
         """
-        Add taxis at random location in the region.
+        Add taxis at random locations in the region.
 
         Args:
           (int) num: the number of taxis to be added.
@@ -184,6 +240,95 @@ class TaxiExperiment2:
                 else:
                     pointer.next = taxi2
                     pointer = pointer.next
+
+
+
+
+    def addWeightedRandomTaxi(self, num):
+        """
+        Add taxis at random locations in the region according to 
+        a weighted function. The weighted function is described below:
+        When a random location was initialized, it will be examined 
+        to see whether it is inside a taxi's hot spot. If yes, then 
+        the random location will have higher chance to be gernerated;
+        otherwise, it will have lower chance to be generated.
+
+        Args:
+          (int) num: the number of taxis to be added.
+        """
+        if self.taxis != None:
+            # If this region already has taxis, append the new taxi 
+            # to the tail of the taxi list.
+            pointer = self.taxis.getTail()
+
+        while num > 0:
+            # Randomly create taxi's location.
+            # uniform(a, b) will gererate a number between a and b in 
+            # a uniform distribution manner.
+            lat = uniform(self.Map.bottom, self.Map.top)
+            lng = uniform(self.Map.left, self.Map.right)
+            
+            # create the taxi's GPS point.
+            taxiGPS = GPSPoint(lat, lng)
+
+            # Sometimes the genreated location is not on a road.
+            # If we want the location to be on a road, perform 
+            # getRoadGPS() to get nearest road's GPS to that random 
+            # location.
+            # taxiGPS = getRoadGPS(taxiGPS)
+            
+            # Assign different probability threadhold to different generated location.
+            # If the location is in a taix's hot spot region, then it will have
+            # higher chance to be added to this experiment.
+            addTaxi = False
+            chance = uniform(0.0, 1.0)
+            if self.containedInHotSpot(taxiGPS):
+                # This taxiGPS is contained in a taxi's hot spot region.
+                if chance >= HOT_SPOT_THREADHOLD:
+                    addTaxi = True
+            else:
+                # This taxiGPS is not contained in any taxi's hot spot region.
+                if chance >= NON_HOT_SPOT_THREADHOLD:
+                    addTaxi = True
+
+            if addTaxi:
+                num -= 1;
+                # Find the sub-area that contains the GPS location of this taxi.
+                area = self.Map.findArea(taxiGPS)
+                # Create two identical taxi objects in order to prevent "pass by reference".
+                taxi = Taxi(taxiGPS.lat, taxiGPS.lng)
+                taxi2 = Taxi(taxiGPS.lat, taxiGPS.lng) 
+                taxi.next = None
+                area.addTaxi(taxi)
+                
+                # Add this taxi to the taxis linked list.
+                if self.taxis == None:
+                    self.taxis = taxi2
+                    pointer = self.taxis
+                else:
+                    pointer.next = taxi2
+                    pointer = pointer.next
+
+
+    def containedInHotSpot(self, gps):
+        """
+        Check whether the gps point is contained in a taxi's hot spot.
+
+        Args:
+          (GPSPoint) gps: the gps point to be checked.
+        Return: 
+          (boolean) True: if the gps point is contained in a taxi's hot spot;
+                    False: otherwise.
+        """
+        # for the given gps point, check it with a HotSpot object in the list.
+        # If any hot spot region contains this gps point, then break the loop 
+        # and return True.
+        for hs in self.hotSpotRegion:
+            if hs.containPoint(gps.lat, gps.lng):
+                return True
+        return False
+
+
 
     def addCrash(self, crash_filename):
         """
@@ -497,12 +642,29 @@ class TaxiExperiment2:
                 totalDuration += direction.getTotalDuration()
         
         # Calculate average traffic time.
+        # The unit of avgDuration is seconds
         i = len(self.sendHistory)
         if i > 0:
-            avgDuration = totalDuration / i
+            avgDuration = totalDuration / float(i)
             sec = avgDuration % 60
-            mins = (avgDuration - sec) / 60
+            mins = (avgDuration - sec) / 60.0
             print "Average traffic time: %dmins %dsec" % (mins, sec)
+
+        
+        # Write the average hospital transfer time back to the database.
+        conn = lite.connect(self.db)
+        c = conn.cursor()
+
+        # Update command.
+        command = '''
+        update Experiment
+        set avg_tot_transfer_time = ?
+        where id = ?
+        '''
+
+        c.execute(command, (int(avgDuration) + 480, self.exId)) # Add 600 seconds to the average total transfer time.
+        conn.commit()
+        conn.close()
 
         # The output directory.
         output_directory = OUTPUT_DIRECTORY + "Taxi_based_EMS/"   
@@ -511,7 +673,7 @@ class TaxiExperiment2:
         createDirectory(output_directory)  
 
         # The file name of the result map. 
-        mapFilename = output_directory + "map.html"
+        mapFilename = output_directory + "Experiment_%d_map.html" % self.exId
         
         # Draw the map.
         mymap.draw('./' + mapFilename)
@@ -519,4 +681,6 @@ class TaxiExperiment2:
         # Open the map file on a web browser.
         url = "file://" + os.getcwd() + "/" + mapFilename
         webbrowser.open_new(url)
+
+        return avgDuration + 480
 

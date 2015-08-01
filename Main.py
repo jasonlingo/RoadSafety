@@ -312,57 +312,89 @@ def main():
         # Start capturing traffic images.
         trafficSnapshot(center, 5, 2, 12)
 
+
+
     elif opts.mode == "d":
         """
         A similar mode like mode b but add a function to 
         draw the result on a line chart.
         """
         from Mode.TaxiExperiment2 import TaxiExperiment2
+        from config import DATABASE_ADDRESS
+        import sqlite3 as lite
 
-        # Create an experiment object of the given region.
-        ex = TaxiExperiment2("Data/Delhi.kmz")
-
-        # Hospitals must be added before adding taxis and crashes.
-        ex.addHospital("Data/Hospital.kmz")
-
-        # Add taxi's hot spots.
-        ex.addTaxiHotSpot("Data/Taxi_hotspot.kmz")
-
-        # If you want to add taxis at pre-defined locations, use this command.
-        ex.addTaxi("Data/Taxi.kmz")
+        ###
+        # Write a record for this experiment into the table
+        # "Experiment" in the "taxi_ems.db".
         
-        # Ask the number of randomly generated taxis.
-        try:
-            taxiNum = raw_input("How many taxis? ")
-            taxiNum = int(taxiNum)
-        except ValueError:
-            print "The input format is wrong. We will use 50"\
-                  "taxis in this experiment."
-            taxiNum = 50;
+        # Connect DB.
+        conn = lite.connect(DATABASE_ADDRESS)
+        c = conn.cursor()
 
-        # Generate taxis at random locations.
-        ex.addRandomTaxi(taxiNum)
 
-        totTaxi = ex.taxis.nodeNum()
+        # Find the largest experiment id and add one to the number
+        # to get the new experiment id.
+        command = '''
+        select id from Experiment 
+        order by id desc
+        limit 1
+        '''
 
-        print "The total number of taxis is %d, including %d pre-defined taxis." \
-                                 % (totTaxi, totTaxi - taxiNum) 
+        # Quota for Google direciton API. 
+        apiQuota = 1930
 
-        # Add crashes to this experiment.
-        # Ask the number of crashes that are going to be generated randomly.
-        try:
-            crashNum = int(raw_input("How many crashes do you want to add in this experiment? "))
-            crashNum = int(crashNum)
-            ex.addRandomCrash(crashNum)
-        except ValueError:
-            print "Wrong format!"
-            sys.exit()
 
-        # Send patients from the crash locations to hospitals.
-        ex.sendPatients()
+        while apiQuota > 0:
+            c.execute(command)
+            result = c.fetchone()
+            if result == None or result == ():
+                exId = 1
+            else:
+                exId = result[0] + 1
 
-        # Show the result.
-        ex.showMap()        
+            # Create an experiment object of the given region.
+            ex = TaxiExperiment2("Data/Delhi.kmz", exId, DATABASE_ADDRESS)
+
+            # Hospitals must be added before adding taxis and crashes.
+            ex.addHospital("Data/Hospital.kmz")
+
+            # Add taxi's hot spots.
+            ex.addTaxiHotSpot("Data/Taxi_hotspot.kmz")
+
+            # If you want to add taxis at pre-defined locations, use this command.
+            # ex.addTaxi("Data/Taxi.kmz")
+
+            # Generate taxis at random locations.
+            ex.addWeightedRandomTaxi(taxiNum)
+
+
+            # Add crashes to this experiment.
+            # Ask the number of crashes that are going to be generated randomly.
+            try:
+                crashNum = int(raw_input("How many crashes do you want to add in this experiment? "))
+                crashNum = int(crashNum)
+                ex.addRandomCrash(crashNum)
+            except ValueError:
+                print "Wrong format!"
+                sys.exit()
+
+            # Write a new record for this experiment.
+            # values (id, num_of_taxi, num_of_hospital, num_of_crash, 
+            #         avg_taxi_arrival_time, avg_to_hospital_time)
+            totHospital = ex.hospitals.nodeNum()
+            command = '''
+            insert into Experiment values (%d, %d, %d, %d, 0, 0, 0)
+            ''' % (exId, totTaxi, totHospital, crashNum)
+            c.execute(command)
+            conn.commit()
+
+
+            conn.close()
+            # Send patients from the crash locations to hospitals.
+            ex.sendPatients()
+
+            # Show the result.
+            ex.showMap()        
 
 
 
