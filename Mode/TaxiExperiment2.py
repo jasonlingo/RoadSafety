@@ -21,7 +21,7 @@ import pygmaps
 import webbrowser
 import sqlite3 as lite
 
-class TaxiExperiment2(object):
+class TaxiExperiment2:
     """
     This program is for Taxi-based EMS experiment.
 
@@ -35,18 +35,9 @@ class TaxiExperiment2(object):
     time.
     """
 
-    ### Instance variable ###
-    # (Taxi) the location of all taxis.
-    taxis = None
-    # (Crash) the location of car creahes .
-    crashes = None
-    # (GPSPoint) list of hospital.
-    hospitals = None
-    # Send-to-hospital record, for average traffic time use.
-    sendHistory = []
 
 
-    def __init__(self, region_filename, exId, db):
+    def __init__(self, region_filename, exId):
         """
         Construct an experiment.
 
@@ -62,10 +53,22 @@ class TaxiExperiment2(object):
 
         # Keep the current experiment number and database address.
         self.exId = exId
-        self.db = db
+        #self.db = db
         
         # Create a MapMatrix used to store useful information for this experiment.
         self.Map = MapMatrix(self.region)
+
+        # (Taxi) the location of all taxis.
+        self.taxis = None
+        
+        # (Crash) the location of car creahes .
+        self.crashes = None
+        
+        # (GPSPoint) list of hospital.
+        self.hospitals = None
+        
+        # Send-to-hospital record, for average traffic time use.
+        self.sendHistory = []
 
 
     def addHospital(self, hospital_filename):
@@ -340,15 +343,18 @@ class TaxiExperiment2(object):
         """
         # Parse the locations of crashes stored in a kmz file, and get 
         # their GPS data in a linked list (GPSPoint).
+        self.crashes = KmzParser(crash_filename)
+
+        """
         newCrashes = KmzParser(crash_filename)
 
         # Add each crash to its area.
-        pointer = self.crashes
+        pointer = newCrashes
         while pointer != None:
             # Find the sub-area that contains the GPS location of this crash.
             area = self.Map.findArea(pointer)
             # Create a crash object.
-            crash = Crash(pointer.lat, pointer.lng, self.hospitals)
+            crash = Crash(pointer.lat, pointer.lng)
             # Add this crash to this area.
             area.addCrash(crash)
             # Next crash.
@@ -362,7 +368,8 @@ class TaxiExperiment2(object):
         else:
             # There is no taxi in thie experiemnt region, so just replace 
             # the linked list.
-            self.taxis = newCrashes      
+            self.taxis = newCrashes   
+        """   
 
 
     def addRandomCrash(self, num):
@@ -419,7 +426,7 @@ class TaxiExperiment2(object):
             # No patient
             return
         # Print every patient's location on screen.
-        self.crashes.printNode()
+        # self.crashes.printNode()
 
         pointer = self.crashes
         while pointer != None:
@@ -636,6 +643,8 @@ class TaxiExperiment2(object):
 
         # Add taxi routes.
         totalDuration = 0
+
+        print "send history:", len(self.sendHistory)
         if len(self.sendHistory) > 0:
             for direction in self.sendHistory:
                 mymap.addpath(direction.toList(), "#0000FF") #blue
@@ -644,27 +653,12 @@ class TaxiExperiment2(object):
         # Calculate average traffic time.
         # The unit of avgDuration is seconds
         i = len(self.sendHistory)
+        avgDuration = 0
         if i > 0:
-            avgDuration = totalDuration / float(i)
+            avgDuration = totalDuration / float(i) + 480 # add 480 seconds for loading patients
             sec = avgDuration % 60
             mins = (avgDuration - sec) / 60.0
             print "Average traffic time: %dmins %dsec" % (mins, sec)
-
-        
-        # Write the average hospital transfer time back to the database.
-        conn = lite.connect(self.db)
-        c = conn.cursor()
-
-        # Update command.
-        command = '''
-        update Experiment
-        set avg_tot_transfer_time = ?
-        where id = ?
-        '''
-
-        c.execute(command, (int(avgDuration) + 480, self.exId)) # Add 600 seconds to the average total transfer time.
-        conn.commit()
-        conn.close()
 
         # The output directory.
         output_directory = OUTPUT_DIRECTORY + "Taxi_based_EMS/"   
@@ -679,8 +673,7 @@ class TaxiExperiment2(object):
         mymap.draw('./' + mapFilename)
         
         # Open the map file on a web browser.
-        url = "file://" + os.getcwd() + "/" + mapFilename
-        webbrowser.open_new(url)
+        # url = "file://" + os.getcwd() + "/" + mapFilename
+        # webbrowser.open_new(url)
 
-        return avgDuration + 480
-
+        return avgDuration

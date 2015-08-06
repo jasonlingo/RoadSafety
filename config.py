@@ -34,7 +34,7 @@ GPS_TIME_ZONE = -5.0
 The GPS recorder is based on UTC/GMT+0 time, so it needs to be calibrated.
 """
 
-GRID_DISTANCE = 8.0
+GRID_DISTANCE = 5.0
 """Grid distance (km)"""
 
 TAXI_HOT_SPOT_REGION_DIST = 1.0
@@ -88,19 +88,57 @@ VIDEO_FRAME_DIRECTORY = OUTPUT_DIRECTORY + "VideoFrame/"
 TRAFFIC_IMAGE_DIRECTORY = OUTPUT_DIRECTORY + "Traffic_image/"
 """Directory for cpatured traffic images"""
 
-
-### Google APIs ###
-CLIENT_ID = '789788175176-rm2oshegfhah677o7ipkr048cccla62s.apps.googleusercontent.com'
-"""A client id for Google API"""
-
-CLIENT_SECRET = '8A9OL4byJy_S7IprQBAztbmY'
-"""The client secret for Google API"""
-
 FOLDER_NAME = "RoadSafety"
 """The forder name on Google Drive for uploading images"""
 
-API_KEY = "AIzaSyCuOTTRq_mfEyzQCBYXnbD9Jr0XDRYnOAg"
+
+
+### Google APIs ###
+### Client ID ###
+# TaxiEMS001
+#CLIENT_ID = '789788175176-rm2oshegfhah677o7ipkr048cccla62s.apps.googleusercontent.com'
+
+# TaxiEMS002
+#CLIENT_ID = '99884106802-qtdhil4arhkvlh7hpu381ot4oho8dgaj.apps.googleusercontent.com'
+
+# TaxiEMS003
+CLIENT_ID = '162874875707-c2mg2jaghj7qn7bhvc2cqkkucmahnbjr.apps.googleusercontent.com'
+
+# TaxiEMS004
+#CLIENT_ID = '806917284882-qitni6p4ckrnhn8rmkv2q5nmpld2480v.apps.googleusercontent.com'
+"""A client id for Google API"""
+
+### Client secret ###
+# TaxiEMS001
+#CLIENT_SECRET = '8A9OL4byJy_S7IprQBAztbmY'
+
+# TaxiEMS002
+#CLIENT_SECRET = 'Y2mMbKObDF7QSA_w-Uz2mGBv'
+
+# TaxiEMS003
+CLIENT_SECRET = 'ohkLwAIq4r_movgWZDNHTEiC'
+
+# TaxiEMS004
+#CLIENT_SECRET = '5aMu8A3lorilQxOmROZ5Wg0'
+"""The client secret for Google API"""
+
+### API_KEY ###
+# TaxiEMS001
+#API_KEY = "AIzaSyCuOTTRq_mfEyzQCBYXnbD9Jr0XDRYnOAg"
+
+# TaxiEMS002
+#API_KEY = 'AIzaSyCeDV3O8B3PJjRF3GYACJr7RNIa_WvJcsM'
+
+# TaxiEMS003
+API_KEY = "AIzaSyCLP5d5vcwI1dY_2uLLYu17_3Itf4FWH_I"
+
+# TaxiEMS004
+#API_KEY = 'AIzaSyDnAcnSF0c8EUI9Q2VQlYOK09nHUusUvnY'
 """The API key for Google API"""
+
+
+
+
 
 
 

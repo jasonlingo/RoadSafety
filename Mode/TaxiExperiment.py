@@ -32,16 +32,6 @@ class TaxiExperiment:
     time.
     """
 
-    ### Instance variable ###
-    # (Taxi) the location of all taxis.
-    taxis = None
-    # (Crash) the location of car creahes .
-    crashes = None
-    # (GPSPoint) list of hospital.
-    hospitals = None
-    # Send-to-hospital record, for average traffic time use.
-    sendHistory = []
-
 
     def __init__(self, region_filename):
         """
@@ -57,6 +47,18 @@ class TaxiExperiment:
         
         # Create a MapMatrix used to store useful information for this experiment.
         self.Map = MapMatrix(self.region)
+
+        # (Taxi) the location of all taxis.
+        taxis = None
+
+        # (Crash) the location of car creahes .
+        crashes = None
+        
+        # (GPSPoint) list of hospital.
+        hospitals = None
+        
+        # Send-to-hospital record, for average traffic time use.
+        sendHistory = []
 
 
     def addHospital(self, hospital_filename):
@@ -184,7 +186,7 @@ class TaxiExperiment:
             # Find the sub-area that contains the GPS location of this crash.
             area = self.Map.findArea(pointer)
             # Create a crash object.
-            crash = Crash(pointer.lat, pointer.lng, self.hospitals)
+            crash = Crash(pointer.lat, pointer.lng)
             # Add this crash to this area.
             area.addCrash(crash)
             # Next crash.

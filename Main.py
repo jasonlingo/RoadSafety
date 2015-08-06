@@ -9,6 +9,9 @@ from config import VIDEO_FRAME_DIRECTORY
 from Util.kml import KmzParser
 from File.Directory import createDirectory
 
+
+
+
 def main():
     """
     A starting point of each program for different experiments.
@@ -319,7 +322,6 @@ def main():
         A similar mode like mode b but add a function to 
         draw the result on a line chart.
         """
-        from Mode.TaxiExperiment2 import TaxiExperiment2
         from config import DATABASE_ADDRESS
         import sqlite3 as lite
 
@@ -334,67 +336,77 @@ def main():
 
         # Find the largest experiment id and add one to the number
         # to get the new experiment id.
-        command = '''
+        command1 = '''
         select id from Experiment 
         order by id desc
         limit 1
         '''
 
         # Quota for Google direciton API. 
-        apiQuota = 1930
+        # apiQuota = 1930
 
+        # Initial number of taxis.
+        taxiNum = 50
+        crashNum = 3 # should modify this to automatically get the number
 
-        while apiQuota > 0:
-            c.execute(command)
+        while taxiNum <= 50:
+            c.execute(command1)
             result = c.fetchone()
             if result == None or result == ():
                 exId = 1
             else:
                 exId = result[0] + 1
 
-            # Create an experiment object of the given region.
-            ex = TaxiExperiment2("Data/Delhi.kmz", exId, DATABASE_ADDRESS)
+            print "Experiment No.%2d -----------------------------" % exId
 
-            # Hospitals must be added before adding taxis and crashes.
-            ex.addHospital("Data/Hospital.kmz")
-
-            # Add taxi's hot spots.
-            ex.addTaxiHotSpot("Data/Taxi_hotspot.kmz")
-
-            # If you want to add taxis at pre-defined locations, use this command.
-            # ex.addTaxi("Data/Taxi.kmz")
-
-            # Generate taxis at random locations.
-            ex.addWeightedRandomTaxi(taxiNum)
-
-
-            # Add crashes to this experiment.
-            # Ask the number of crashes that are going to be generated randomly.
-            try:
-                crashNum = int(raw_input("How many crashes do you want to add in this experiment? "))
-                crashNum = int(crashNum)
-                ex.addRandomCrash(crashNum)
-            except ValueError:
-                print "Wrong format!"
-                sys.exit()
+            totHospital, avgTransferTime = TaxiProcess(taxiNum, crashNum, exId)
 
             # Write a new record for this experiment.
             # values (id, num_of_taxi, num_of_hospital, num_of_crash, 
             #         avg_taxi_arrival_time, avg_to_hospital_time)
-            totHospital = ex.hospitals.nodeNum()
-            command = '''
-            insert into Experiment values (%d, %d, %d, %d, 0, 0, 0)
-            ''' % (exId, totTaxi, totHospital, crashNum)
-            c.execute(command)
+            command2 = '''
+            insert into Experiment values (%d, %d, %d, %d, 0, 0, %d)
+            ''' % (exId, taxiNum, totHospital, crashNum, avgTransferTime + 480)
+            c.execute(command2)
             conn.commit()
 
+            taxiNum += 50 
 
-            conn.close()
-            # Send patients from the crash locations to hospitals.
-            ex.sendPatients()
+        conn.close()
 
-            # Show the result.
-            ex.showMap()        
+
+
+def TaxiProcess(taxiNum, crashNum, exId):
+    from Mode.TaxiExperiment2 import TaxiExperiment2
+
+    # Create an experiment object of the given region.
+    ex = TaxiExperiment2("Data/Delhi.kmz", exId)
+
+    # Hospitals must be added before adding taxis and crashes.
+    ex.addHospital("Data/Hospital.kmz")
+
+    # Add taxi's hot spots.
+    ex.addTaxiHotSpot("Data/Taxi_hotspot.kmz")
+
+    # Generate taxis at random locations.
+    ex.addWeightedRandomTaxi(taxiNum)
+
+    # Total number of hospitals.
+    totHospital = ex.hospitals.nodeNum()
+
+    # Add random crashes.
+    #ex.addRandomCrash(crashNum)
+    #ex.addCrash('Data/Crashes.kmz')
+
+    # Send patients from the crash locations to hospitals.
+    ex.sendPatients()
+
+    # Show the result.
+    avgTransferTime = int(ex.showMap())
+
+    #ex.clearSelf()
+
+    return totHospital, avgTransferTime
 
 
 

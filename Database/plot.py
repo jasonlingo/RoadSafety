@@ -1,9 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import sqlite3 as lite
 
 
 
-def lineChart(dataset, xLabel, yLabel, outputDirectory):
+def lineChart(dataX, dataY, xLabel, yLabel, outputDirectory):
     """
     Draw experiment data on a line chart.
 
@@ -11,13 +12,15 @@ def lineChart(dataset, xLabel, yLabel, outputDirectory):
       (XYNode) dataset: the dataset of this chart.
     """
     # Get the two lists that contains data of x and y respectively.
-    XList, YList = dataset.toLists()
-
-    plt.plot(XList, YList, '-')
+    #XList, YList = dataset.toLists()
+    plt.plot(dataX, dataY, linewidth=2.0, label="New Delhi")
+    plt.plot((0, 500),(42, 42), linewidth=1.5, color='red', linestyle='--', label="Benchmark")
+    plt.text(500, 42, "42")
+    plt.title("Sample Taxi-based EMS experiment result.")
     plt.xlabel(xLabel)
     plt.ylabel(yLabel)
+    plt.legend()
     plt.show()
-    plt.savefig(outputDirectory)
     plt.close()
 
 
@@ -62,9 +65,42 @@ class XYNode(object):
 
         return XList, YList
 
+def main():
+    """
+    Plot result.
+    """
+
+    # Connect db and query data.
+    conn = lite.connect('taxi_ems.db')
+    c = conn.cursor()
+    command = '''
+    select num_of_taxi, avg(avg_tot_transfer_time) from Experiment
+    where id >= 31 and id <=66
+    group by num_of_taxi 
+    order by num_of_taxi;
+    '''
+
+    c.execute(command)
+    result = c.fetchall()
+
+
+    dataX = []
+    dataY = []
+    for r in result:
+        dataX.append(r[0])
+        dataY.append(r[1] / 60.0)
+
+    labelX = "Number of taxis in the system."
+    labelY = "Avg. hospital transfer time (minute)."
+    lineChart(dataX, dataY, labelX, labelY, "result.png")
 
 
 
+
+if __name__ == '__main__':
+    main()
+
+"""
 head = XYNode(10,40)
 pointer = head
 pointer.next = XYNode(50,30)
@@ -74,4 +110,4 @@ pointer = pointer.next
 pointer.next = XYNode(500, 18)
 
 lineChart(head, "# of Taxis", "Time to Hospital", "experiment.png")
-
+"""

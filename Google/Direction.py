@@ -4,12 +4,13 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from GPS.GPSPoint import GPSPoint
 from config import API_KEY
-from time import sleep
+from time import sleep, mktime
+from datetime import datetime, timedelta
 import json, requests
 import time
 
 
-def getDirection(originAdd, destAdd, waypoints=None):
+def getDirection(originAdd, destAdd, waypoints=None, departure_time=None):
     """
     Get direction from the starting address to the destination
     
@@ -18,6 +19,7 @@ def getDirection(originAdd, destAdd, waypoints=None):
       (String) destAdd: the destination GPS position or address
       (GPSPoint) waypoints: the middle points between source and
                             destination points.
+      (datetime) departure_time: the dpearture time of this direction.
     Return:
       (GPSPoint) a linked list of direction
     """
@@ -25,19 +27,32 @@ def getDirection(originAdd, destAdd, waypoints=None):
     # API url.
     DIRECTION_API_URL = 'https://maps.googleapis.com/maps/api/directions/json?'
     
+    # Process departure_time.
+    # If using a specific departure time, convert it to seconds from 1/1/1970 midnight 
+    # to the specific time.
+    if departure_time == None:
+        # Using the current time as the departure time.
+        currentTime = datetime.now() + timedelta(0, 5)
+        dTime = int(time.mktime(currentTime.timetuple()))
+    else:
+        # Using the specific departure time. 
+        # The time must be in the future or current time.
+        dTime = int(mktime(departure_time.timetuple()))
+
     # Parameters for API.
     params = dict(
         # Address or GPS of the source point.
-        origin=originAdd,
+        origin = originAdd,
         # Address or GPS of the destination point.
-        destination=destAdd,
+        destination = destAdd,
         # Intermediate points between source and destination.
-        waypoints=waypointsConvert(waypoints), 
+        waypoints = waypointsConvert(waypoints), 
         # Return distance in meter.
-        unit='metric', 
-        # Departure time. (default: now)
-        departure_time=str(time.strftime("%H%M%S")), #format: HHMMSS
-        key=API_KEY
+        unit = 'metric', 
+        # Departure time.
+        departure_time = dTime,
+        # Google API key.
+        key = API_KEY
     )
 
     # Get direction from Google MAP API.
