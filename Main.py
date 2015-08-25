@@ -333,7 +333,6 @@ def main():
         conn = lite.connect(DATABASE_ADDRESS)
         c = conn.cursor()
 
-
         # Find the largest experiment id and add one to the number
         # to get the new experiment id.
         command1 = '''
@@ -346,10 +345,10 @@ def main():
         # apiQuota = 1930
 
         # Initial number of taxis.
-        taxiNum = 50
+        taxiNum = 100
         crashNum = 3 # should modify this to automatically get the number
 
-        while taxiNum <= 50:
+        while taxiNum <= 100:
             c.execute(command1)
             result = c.fetchone()
             if result == None or result == ():
@@ -359,7 +358,7 @@ def main():
 
             print "Experiment No.%2d -----------------------------" % exId
 
-            totHospital, avgTransferTime = TaxiProcess(taxiNum, crashNum, exId)
+            totHospital, avgTransferTime = TaxiProcess(taxiNum, crashNum, exId, c)
 
             # Write a new record for this experiment.
             # values (id, num_of_taxi, num_of_hospital, num_of_crash, 
@@ -376,11 +375,12 @@ def main():
 
 
 
-def TaxiProcess(taxiNum, crashNum, exId):
+def TaxiProcess(taxiNum, crashNum, exId, db):
     from Mode.TaxiExperiment2 import TaxiExperiment2
+    from config import TAXI_DISTANCE
 
     # Create an experiment object of the given region.
-    ex = TaxiExperiment2("Data/Delhi.kmz", exId)
+    ex = TaxiExperiment2("Data/Delhi.kmz", exId, db)
 
     # Hospitals must be added before adding taxis and crashes.
     ex.addHospital("Data/Hospital.kmz")
@@ -391,12 +391,15 @@ def TaxiProcess(taxiNum, crashNum, exId):
     # Generate taxis at random locations.
     ex.addWeightedRandomTaxi(taxiNum)
 
+    # Add taxis on major roads.
+    ex.addMajorRoadTaxi("Data/shapefile/delhi_highway/delhi_highway.shp", TAXI_DISTANCE)
+
     # Total number of hospitals.
     totHospital = ex.hospitals.nodeNum()
 
     # Add random crashes.
     #ex.addRandomCrash(crashNum)
-    #ex.addCrash('Data/Crashes.kmz')
+    ex.addCrash('Data/Crashes.kmz')
 
     # Send patients from the crash locations to hospitals.
     ex.sendPatients()

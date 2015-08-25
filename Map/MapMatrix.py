@@ -186,7 +186,7 @@ class MapMatrix:
         if (GPS.lat > self.top or GPS.lat < self.bottom or 
             GPS.lng < self.left or GPS.lng > self.right):
             # The GPS is not even in the whole MapMatrix.
-            print "Wrong GPS location!!"
+            print "GPS location is outside experiment region!!"
             return None
 
         widthNum = int((GPS.lng - self.left) / self.lngDiff)

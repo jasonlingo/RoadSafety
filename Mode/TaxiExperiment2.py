@@ -6,13 +6,14 @@ from config import OUTPUT_DIRECTORY
 from config import TAXI_HOT_SPOT_REGION_DIST, HOT_SPOT_THREADHOLD, NON_HOT_SPOT_THREADHOLD
 from Util.kml import KmzParser
 from Map.MapMatrix import MapMatrix
+from Map.Shapefile import ParseShapefile
 from Google.Direction import getDirection
 from Google.Road import getRoadGPS
 from Entity.Taxi import Taxi
 from Entity.Crash import Crash
 from Entity.Hospital import Hospital
 from GPS.GPSPoint import GPSPoint
-from GPS.Distance import FindRadiusPoint
+from GPS.Distance import Haversine, FindRadiusPoint
 from Entity.HotSpot import HotSpot
 from File.Directory import createDirectory
 from random import uniform 
@@ -20,6 +21,7 @@ from time import sleep
 import pygmaps
 import webbrowser
 import sqlite3 as lite
+
 
 class TaxiExperiment2:
     """
@@ -37,7 +39,7 @@ class TaxiExperiment2:
 
 
 
-    def __init__(self, region_filename, exId):
+    def __init__(self, region_filename, exId, db):
         """
         Construct an experiment.
 
@@ -45,15 +47,15 @@ class TaxiExperiment2:
           (String) region_filename: the location of the region 
                    file from Google MAP kmz file.
           (int) exId: the number of experiment.
-          (String) db: the address of the experiment database.
+          (sqlite3.Cursor) db: the database cursor.
         """
         # Parse a the region stored in a kmz file and get its GPS data stored
         # in GPSPoint linked list.
         self.region = KmzParser(region_filename)
 
-        # Keep the current experiment number and database address.
+        # Keep the current experiment number and database cursor.
         self.exId = exId
-        #self.db = db
+        self.db = db
         
         # Create a MapMatrix used to store useful information for this experiment.
         self.Map = MapMatrix(self.region)
@@ -245,8 +247,6 @@ class TaxiExperiment2:
                     pointer = pointer.next
 
 
-
-
     def addWeightedRandomTaxi(self, num):
         """
         Add taxis at random locations in the region according to 
@@ -311,6 +311,66 @@ class TaxiExperiment2:
                 else:
                     pointer.next = taxi2
                     pointer = pointer.next
+
+
+    def addMajorRoadTaxi(self, shapefile, distance):
+        """
+        Get GPS data of major roads from a shapefile, and then add taxis 
+        on major roads with a distance between every two consecutive taxis 
+        on the same road.
+
+        Args:
+          (String) shapefile: the file name of a shapefile.
+          (int) distance: the distance between every two consecutive taxis on 
+                          the same road.
+        """
+        
+        # Get GPS data of major roads.
+        roadPoint = ParseShapefile(shapefile)
+
+        # If this region already has taxis, then get the pointer to the last taxi 
+        # in the (linked) list so that the program can append the new taxi to the 
+        # tail of the taxi list.
+        if self.taxis != None:
+            pointer = self.taxis.getTail()
+
+
+        # For every road in the roadPoint list, add taxis on the road.
+        for road in roadPoint:
+            # Add a taxi at the first point on the road.
+            # Find the sub-area that contains the GPS location of this taxi.
+            taxiGPS = GPSPoint(road[0][0], road[0][1])
+            area = self.Map.findArea(taxiGPS)
+            # Create two identical taxi objects in order to prevent "pass by reference".
+            taxi1 = Taxi(road[0][0], road[0][1])
+            taxi2 = Taxi(road[0][0], road[0][1]) 
+            if area != None:
+                area.addTaxi(taxi1)
+            if self.taxis == None:
+                self.taxis = taxi2
+                pointer = self.taxis
+            else:
+                pointer.next = taxi2
+                pointer = pointer.next
+
+            # Start from the second point in the list, check the distance between 
+            # this point and its previous point. If the distance is larger or equal
+            # to the given "distance" parameter.
+            tempDist = 0
+            for i, point in enumerate(road[1:]):
+                tempDist += Haversine(road[i][0], road[i][1], point[0], point[1])
+                if tempDist >= distance:
+                    # Find the sub-area that contains the GPS location of this taxi.
+                    taxiGPS = GPSPoint(road[0][0], road[0][1])
+                    area = self.Map.findArea(taxiGPS)
+                    # Create two identical taxi objects in order to prevent "pass by reference".
+                    taxi1 = Taxi(road[0][0], road[0][1])
+                    taxi2 = Taxi(road[0][0], road[0][1]) 
+                    if area != None:
+                        area.addTaxi(taxi1)                    
+                    pointer.next = taxi2
+                    pointer = pointer.next
+                    tempDist = 0
 
 
     def containedInHotSpot(self, gps):
@@ -557,6 +617,8 @@ class TaxiExperiment2:
                 # Append this direction to the sendHistory list for calculating the 
                 # average traffic time.      
                 self.sendHistory.append(nearestDirection)
+                print "Total distance------------------------------------------------ "\
+                      "%dm" % (nearestDirection.getTotalDistance())
                 break
 
             i += 1
@@ -644,7 +706,7 @@ class TaxiExperiment2:
         # Add taxi routes.
         totalDuration = 0
 
-        print "send history:", len(self.sendHistory)
+        print "Number of sent patients:", len(self.sendHistory)
         if len(self.sendHistory) > 0:
             for direction in self.sendHistory:
                 mymap.addpath(direction.toList(), "#0000FF") #blue
@@ -658,7 +720,7 @@ class TaxiExperiment2:
             avgDuration = totalDuration / float(i) + 480 # add 480 seconds for loading patients
             sec = avgDuration % 60
             mins = (avgDuration - sec) / 60.0
-            print "Average traffic time: %dmins %dsec" % (mins, sec)
+            print "Average traffic time (including 8 minutes for loading patients): %dmins %dsec" % (mins, sec)
 
         # The output directory.
         output_directory = OUTPUT_DIRECTORY + "Taxi_based_EMS/"   

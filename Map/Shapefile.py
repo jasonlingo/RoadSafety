@@ -26,7 +26,6 @@ def ParseShapefile(filename):
             for point in sr.shape.points:
                 shapePoint[-1].append((point[1], point[0]))
 
-
     return shapePoint
 
 
