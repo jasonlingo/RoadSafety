@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
+"""
+@author: Jason, Li-Yi Lin
+"""
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -380,7 +383,7 @@ def TaxiProcess(taxiNum, crashNum, exId, db):
     from config import TAXI_DISTANCE
 
     # Create an experiment object of the given region.
-    ex = TaxiExperiment2("Data/Delhi.kmz", exId, db)
+    ex = TaxiExperiment2("Data/New_Delhi.kmz", exId, db)
 
     # Hospitals must be added before adding taxis and crashes.
     ex.addHospital("Data/Hospital.kmz")

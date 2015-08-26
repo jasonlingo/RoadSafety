@@ -61,7 +61,7 @@ If the probability of a randomly generated taxi's location is higher than
 this threadhold, then add this taxi's location into a experiment.
 """
 
-DATABASE_ADDRESS = "Database/taxi_ems_v2.db"
+DATABASE_ADDRESS = "Database/taxi_ems.db"
 """The address of experiment database"""
 
 METER_TYPE = "K"
