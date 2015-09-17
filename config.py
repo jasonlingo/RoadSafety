@@ -99,45 +99,15 @@ FOLDER_NAME = "RoadSafety"
 
 ### Google APIs ###
 ### Client ID ###
-# TaxiEMS001
-#CLIENT_ID = '789788175176-rm2oshegfhah677o7ipkr048cccla62s.apps.googleusercontent.com'
-
-# TaxiEMS002
-#CLIENT_ID = '99884106802-qtdhil4arhkvlh7hpu381ot4oho8dgaj.apps.googleusercontent.com'
-
-# TaxiEMS003
-CLIENT_ID = '162874875707-c2mg2jaghj7qn7bhvc2cqkkucmahnbjr.apps.googleusercontent.com'
-
-# TaxiEMS004
-#CLIENT_ID = '806917284882-qitni6p4ckrnhn8rmkv2q5nmpld2480v.apps.googleusercontent.com'
+CLIENT_ID = 'Google Client ID'
 """A client id for Google API"""
 
 ### Client secret ###
-# TaxiEMS001
-#CLIENT_SECRET = '8A9OL4byJy_S7IprQBAztbmY'
-
-# TaxiEMS002
-#CLIENT_SECRET = 'Y2mMbKObDF7QSA_w-Uz2mGBv'
-
-# TaxiEMS003
-CLIENT_SECRET = 'ohkLwAIq4r_movgWZDNHTEiC'
-
-# TaxiEMS004
-#CLIENT_SECRET = '5aMu8A3lorilQxOmROZ5Wg0'
+CLIENT_SECRET = 'Google Client Secret'
 """The client secret for Google API"""
 
 ### API_KEY ###
-# TaxiEMS001
-#API_KEY = "AIzaSyCuOTTRq_mfEyzQCBYXnbD9Jr0XDRYnOAg"
-
-# TaxiEMS002
-#API_KEY = 'AIzaSyCeDV3O8B3PJjRF3GYACJr7RNIa_WvJcsM'
-
-# TaxiEMS003
-API_KEY = "AIzaSyCLP5d5vcwI1dY_2uLLYu17_3Itf4FWH_I"
-
-# TaxiEMS004
-#API_KEY = 'AIzaSyDnAcnSF0c8EUI9Q2VQlYOK09nHUusUvnY'
+API_KEY = "Google API Key"
 """The API key for Google API"""
 
 
